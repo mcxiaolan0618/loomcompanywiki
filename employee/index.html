@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>员工 - Loom Company 同人维基</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="top-nav-inner">
+            <a href="../index.html" class="nav-home">◆ 首页</a>
+            <span class="nav-separator">|</span>
+            <span class="nav-label">数据分类</span>
+            <a href="../data/identities.html" class="nav-link">人格</a>
+            <span class="nav-divider">|</span>
+            <a href="../data/egos.html" class="nav-link">EGO</a>
+            <span class="nav-divider">|</span>
+            <a href="../data/enemies.html" class="nav-link">敌人</a>
+            <span class="nav-divider">|</span>
+            <a href="../data/abnormalities.html" class="nav-link">异想体</a>
+            <span class="nav-divider">|</span>
+            <a href="../data/status-effects.html" class="nav-link">状态效果</a>
+            <span class="nav-divider">|</span>
+            <a href="../data/ego-gifts.html" class="nav-link">E.G.O饰品</a>
+            <span class="nav-divider">|</span>
+            <a href="../data/events.html" class="nav-link">探索事件</a>
+            <span class="nav-separator">|</span>
+            <span class="nav-label">剧情分类</span>
+            <a href="../story/main-story.html" class="nav-link">主线剧情</a>
+            <span class="nav-divider">|</span>
+            <a href="../story/identity-story.html" class="nav-link">人格剧情</a>
+            <span class="nav-divider">|</span>
+            <a href="../story/event-story.html" class="nav-link">活动剧情</a>
+            <span class="nav-divider">|</span>
+            <a href="../story/story-characters.html" class="nav-link">剧情角色</a>
+            <span class="nav-divider">|</span>
+            <a href="../story/odin-notes.html" class="nav-link">奥丁笔记</a>
+            <span class="nav-divider">|</span>
+            <a href="index.html" class="nav-link active">员工</a>
+        </div>
+    </nav>
+
+    <div class="staff-page">
+        <h2>员 工 名 单</h2>
+        <div class="staff-grid" id="staffGrid"></div>
+
+        <div class="section-header">
+            <span class="line"></span>
+            <span>来 源 与 角 色</span>
+            <span class="line"></span>
+        </div>
+        <div class="source-table-wrap">
+            <table class="source-table">
+                <thead>
+                    <tr>
+                        <th>原著</th>
+                        <th>原著作者</th>
+                        <th>角色</th>
+                        <th>类型</th>
+                    </tr>
+                </thead>
+                <tbody id="sourceTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
+
+    <script>
+        const AVATAR_DIR = '../img/avatars/';
+        const AVATAR_EXT = '.jpg';
+
+        const STAFF_LIST = [
+            { name: '萨尔温', file: 'saerwen' },
+            { name: '于连', file: 'yulian' },
+            { name: '帕菲', file: 'pafei' },
+            { name: '圣华', file: 'shenghua' },
+            { name: '爱德蒙', file: 'aidemeng' },
+            { name: '伍符', file: 'wufu' },
+            { name: '墨严卿', file: 'moyanqing' },
+            { name: '贝德维尔', file: 'beideweier' },
+            { name: '阿里', file: 'ali' },
+            { name: '珂赛特', file: 'kesaite' },
+            { name: '风', file: 'feng', spoiler: true },
+            { name: '基拉', file: 'jila', spoiler: true }
+        ];
+
+        const SOURCE_DATA = [
+            { source: '魔山', author: '托马斯·曼', character: '萨尔温', type: '剧情改编' },
+            { source: '红与黑', author: '司汤达', character: '于连', type: '角色+剧情改编' },
+            { source: '吉尔伽美什史诗', author: '佚名（苏美尔文明）', character: '帕菲', type: '角色+剧情改编' },
+            { source: '福尔摩斯', author: '阿瑟·柯南·道尔', character: '圣华', type: '剧情改编' },
+            { source: '基督山伯爵', author: '大仲马', character: '爱德蒙', type: '角色+剧情改编' },
+            { source: '伊阿宋与赫拉克勒斯', author: '古希腊神话（阿波罗尼俄斯等）', character: '伍符', type: '角色+剧情改编' },
+            { source: '化身博士', author: '罗伯特·路易斯·史蒂文森', character: '墨严卿', type: '角色+剧情改编' },
+            { source: '亚瑟王传奇', author: '托马斯·马洛礼等', character: '贝德维尔', type: '角色+剧情改编' },
+            { source: '百年孤独', author: '加西亚·马尔克斯', character: '阿里', type: '角色+剧情改编' },
+            { source: '悲惨世界', author: '维克多·雨果', character: '珂赛特', type: '角色+剧情改编' },
+            { source: '致杜鹃', author: '威廉·华兹华斯', character: '风', type: '剧情改编', spoiler: true },
+            { source: '红与黑', author: '司汤达', character: '基拉', type: '剧情改编', spoiler: true }
+        ];
+
+        function getAvatar(staff) {
+            return AVATAR_DIR + staff.file + AVATAR_EXT;
+        }
+
+        function addLongPress(el, callback) {
+            let timer;
+            const start = function(e) {
+                e.preventDefault();
+                timer = setTimeout(callback, 400);
+            };
+            const cancel = function() {
+                clearTimeout(timer);
+            };
+            el.addEventListener('mousedown', start);
+            el.addEventListener('mouseup', cancel);
+            el.addEventListener('mouseleave', cancel);
+            el.addEventListener('touchstart', start, { passive: false });
+            el.addEventListener('touchend', cancel);
+            el.addEventListener('touchmove', cancel);
+            el.addEventListener('touchcancel', cancel);
+        }
+
+        function renderStaffGrid() {
+            const grid = document.getElementById('staffGrid');
+            grid.innerHTML = STAFF_LIST.map(s => {
+                const spoilerClass = s.spoiler ? ' spoiler' : '';
+                const nameSpoilerClass = s.spoiler ? ' spoiler-name' : '';
+                return `
+                <a href="../character/${s.file}.html" class="staff-card">
+                    <div class="staff-avatar${spoilerClass}">
+                        <img src="${getAvatar(s)}" alt="${s.name}" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\\'no-avatar\\'>暂无<br>头像</span>'">
+                    </div>
+                    <div class="staff-name${nameSpoilerClass}">${s.name}</div>
+                </a>`;
+            }).join('');
+        }
+
+        function renderSourceTable() {
+            const tbody = document.getElementById('sourceTableBody');
+            tbody.innerHTML = SOURCE_DATA.map(row => {
+                const spoilerClass = row.spoiler ? ' spoiler-cell' : '';
+                return `
+                <tr>
+                    <td>${row.source}</td>
+                    <td>${row.author}</td>
+                    <td class="${spoilerClass}">${row.character}</td>
+                    <td class="${spoilerClass}">${row.type}</td>
+                </tr>`;
+            }).join('');
+        }
+
+        function bindSpoilerEvents() {
+            document.querySelectorAll('.staff-avatar.spoiler').forEach(el => {
+                addLongPress(el, function() { el.classList.add('reveal-temp'); });
+                el.addEventListener('mouseup', function() { el.classList.remove('reveal-temp'); });
+                el.addEventListener('mouseleave', function() { el.classList.remove('reveal-temp'); });
+                el.addEventListener('touchend', function() { el.classList.remove('reveal-temp'); });
+                el.addEventListener('touchcancel', function() { el.classList.remove('reveal-temp'); });
+            });
+
+            document.querySelectorAll('.spoiler-name').forEach(el => {
+                addLongPress(el, function() { el.classList.add('reveal-temp'); });
+                el.addEventListener('mouseup', function() { el.classList.remove('reveal-temp'); });
+                el.addEventListener('mouseleave', function() { el.classList.remove('reveal-temp'); });
+                el.addEventListener('touchend', function() { el.classList.remove('reveal-temp'); });
+                el.addEventListener('touchcancel', function() { el.classList.remove('reveal-temp'); });
+            });
+
+            document.querySelectorAll('.spoiler-cell').forEach(el => {
+                addLongPress(el, function() { el.classList.add('reveal-temp'); });
+                el.addEventListener('mouseup', function() { el.classList.remove('reveal-temp'); });
+                el.addEventListener('mouseleave', function() { el.classList.remove('reveal-temp'); });
+                el.addEventListener('touchend', function() { el.classList.remove('reveal-temp'); });
+                el.addEventListener('touchcancel', function() { el.classList.remove('reveal-temp'); });
+            });
+        }
+
+        renderStaffGrid();
+        renderSourceTable();
+        bindSpoilerEvents();
+    </script>
+
+</body>
+</html>
