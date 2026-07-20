@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人格 - Loom Company 同人维基</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .identities-page {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+        .identities-page h2 {
+            text-align: center;
+            color: var(--gold);
+            font-size: 1.6rem;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+
+        .expandable {
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .expandable-header {
+            background: var(--surface);
+            padding: 12px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            user-select: none;
+        }
+        .expandable-header:hover { background: var(--surface2); }
+        .expandable-header .arrow {
+            transition: transform 0.3s;
+            color: var(--gold);
+            font-size: 0.8rem;
+        }
+        .expandable.open .expandable-header .arrow { transform: rotate(90deg); }
+        .expandable-body {
+            display: none;
+            padding: 16px;
+            background: var(--surface2);
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            line-height: 1.8;
+        }
+        .expandable.open .expandable-body { display: block; }
+        .expandable-body a { color: var(--gold); text-decoration: none; }
+        .expandable-body a:hover { text-decoration: underline; }
+
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+            align-items: center;
+            justify-content: center;
+        }
+        .filter-bar select {
+            padding: 8px 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            font-size: 0.8rem;
+            font-family: inherit;
+            cursor: pointer;
+        }
+        .filter-bar select:focus { border-color: var(--gold); outline: none; }
+        .filter-label { color: var(--text-dim); font-size: 0.7rem; letter-spacing: 1px; }
+
+        .identity-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+        }
+        .identity-card-full {
+            width: 280px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .identity-card-full:hover {
+            border-color: var(--gold);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+        }
+        .identity-card-full .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .identity-card-full .faction-name {
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+        .identity-card-full .rarity {
+            font-family: 'Times New Roman', serif;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .rarity.r3 { color: #c9a65c; }
+        .rarity.r2 { color: #b87fd4; }
+        .rarity.r1 { color: #7ab87a; }
+        .identity-card-full .extract-source {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+        }
+        .identity-card-full .resist-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 0.75rem;
+        }
+        .identity-card-full .resist-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-dim);
+        }
+        .identity-card-full .resist-item img { width: 20px; height: 20px; }
+        .identity-card-full .skill-block { margin-bottom: 6px; }
+        .identity-card-full .skill-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            margin-bottom: 2px;
+        }
+        .identity-card-full .skill-row img { width: 24px; height: 24px; }
+        .identity-card-full .skill-icons { display: flex; gap: 2px; }
+        .identity-card-full .passive-block { margin-bottom: 6px; font-size: 0.7rem; color: var(--text-dim); }
+        .identity-card-full .passive-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 2px;
+        }
+        .identity-card-full .passive-row img { width: 18px; height: 18px; }
+        .identity-card-full .keyword-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 8px;
+        }
+        .identity-card-full .keyword-tag {
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            border-radius: 3px;
+            background: rgba(201,166,92,0.15);
+            color: var(--gold-dim);
+            letter-spacing: 1px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
+        .pagination button {
+            padding: 6px 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .pagination button:hover { border-color: var(--gold); color: var(--gold); }
+        .pagination button.active {
+            background: rgba(201,166,92,0.2);
+            border-color: var(--gold);
+            color: var(--gold);
+            font-weight: bold;
+        }
+        .pagination button:disabled { opacity: 0.3; cursor: not-allowed; }
+        .no-result { text-align: center; color: var(--text-dim); padding: 40px; font-style: italic; }
+
+        @media (max-width: 500px) {
+            .identity-card-full { width: 100%; }
+            .filter-bar { flex-direction: column; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="top-nav-inner">
+            <a href="../index.html" class="nav-home">◆ 首页</a>
+            <span class="nav-separator">|</span>
+            <span class="nav-label">数据分类</span>
+            <a href="identities.html" class="nav-link active">人格</a>
+            <span class="nav-divider">|</span>
+            <a href="egos.html" class="nav-link">EGO</a>
+            <span class="nav-divider">|</span>
+            <a href="enemies.html" class="nav-link">敌人</a>
+            <span class="nav-divider">|</span>
+            <a href="abnormalities.html" class="nav-link">异想体</a>
+            <span class="nav-divider">|</span>
+            <a href="status-effects.html" class="nav-link">状态效果</a>
+            <span class="nav-divider">|</span>
+            <a href="ego-gifts.html" class="nav-link">E.G.O饰品</a>
+            <span class="nav-divider">|</span>
+            <a href="events.html" class="nav-link">探索事件</a>
+            <span class="nav-separator">|</span>
+            <span class="nav-label">剧情分类</span>
+            <a href="../story/main-story.html" class="nav-link">主线剧情</a>
+            <span class="nav-divider">|</span>
+            <a href="../story/identity-story.html" class="nav-link">人格剧情</a>
+            <span class="nav-divider">|</span>
+            <a href="../story/event-story.html" class="nav-link">活动剧情</a>
+            <span class="nav-divider">|</span>
+            <a href="../story/story-characters.html" class="nav-link">剧情角色</a>
+            <span class="nav-divider">|</span>
+            <a href="../story/odin-notes.html" class="nav-link">奥丁笔记</a>
+            <span class="nav-divider">|</span>
+            <a href="../employee/index.html" class="nav-link">员工</a>
+        </div>
+    </nav>
+
+    <div class="identities-page">
+        <h2>人 格</h2>
+
+        <div class="expandable" id="infoExpandable">
+            <div class="expandable-header" onclick="toggleExpandable()">
+                <span class="arrow">▶</span>
+                <span style="color:var(--gold);font-weight:bold;">基本概念（点击以展开）</span>
+            </div>
+            <div class="expandable-body">
+                <p><strong>人格</strong>是边狱公司中的基本机制，类似于RPG游戏中的角色。</p>
+                <p>我们的剧情中，奥丁从自身E.G.O.中抽取人格卡和E.G.O并装备在终端上，进入战斗时，被插入凹槽的人格卡和E.G.O就会反映到罪人们身上。提取的范围为罪人们从过去到未来的3年之内，但这一范围会在<strong>瓦尔普吉斯之夜</strong>发生时变为10年。说不定范围还会扩大到比这更大的区间。</p>
+                <p>初始拥有所有员工的θ人格，而其他θθ或θθθ人格一般需要从剧情中击败敌人，进行提取获得。各人格拥有不同的技能效果与被动技能效果，其属性数值之间也有所差异。</p>
+                <p><strong>镜之世界</strong></p>
+                <p>罪人的非初始θ人格对应着镜中世界下罪人们所属不同势力的可能性，可能性越低的人格，其θ级也就越高。人格所属势力包括但不限于各个协会、公司、帮派。</p>
+                <p>有关人格的世界观内容可参考页面：<a href="../story/odin-notes.html">奥丁笔记</a> 都市科技一栏中有关人格的内容。</p>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <span class="filter-label">筛选：</span>
+            <select id="filterEmployee"><option value="all">全部员工</option></select>
+            <select id="filterExtract"><option value="all">全部提取来源</option></select>
+            <select id="filterRarity">
+                <option value="all">全部稀有度</option>
+                <option value="3">θ θ θ</option>
+                <option value="2">θ θ</option>
+                <option value="1">θ</option>
+            </select>
+            <select id="filterKeyword"><option value="all">全部特性关键词</option></select>
+        </div>
+
+        <div class="identity-grid" id="identityGrid"></div>
+        <div class="pagination" id="pagination"></div>
+        <div class="no-result" id="noResult" style="display:none;">没有匹配的人格。</div>
+    </div>
+
+    <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
+
+    <script src="identities-index.js"></script>
+    <script>
+        const ITEMS_PER_PAGE = 15;
+        let currentPage = 1;
+
+        function toggleExpandable() {
+            document.getElementById('infoExpandable').classList.toggle('open');
+        }
+
+        function parseId(id) {
+            const idx = id.lastIndexOf('-');
+            return { faction: id.substring(0, idx), name: id.substring(idx + 1) };
+        }
+
+        function getThetaText(rarity) {
+            if (rarity === 3) return 'θ θ θ';
+            if (rarity === 2) return 'θ θ';
+            return 'θ';
+        }
+
+        function getRarityClass(rarity) {
+            if (rarity === 3) return 'r3';
+            if (rarity === 2) return 'r2';
+            return 'r1';
+        }
+
+        function collectUnique(field) {
+            const values = new Set();
+            IDENTITIES_INDEX.forEach(item => {
+                if (field === 'employee') values.add(parseId(item.id).name);
+                else if (field === 'extract') values.add(item.extract);
+                else if (field === 'keyword') (item.keywords || []).forEach(k => values.add(k));
+            });
+            return Array.from(values).sort();
+        }
+
+        function populateFilters() {
+            const emp = document.getElementById('filterEmployee');
+            collectUnique('employee').forEach(v => { emp.innerHTML += `<option value="${v}">${v}</option>`; });
+            const ext = document.getElementById('filterExtract');
+            collectUnique('extract').forEach(v => { ext.innerHTML += `<option value="${v}">${v}</option>`; });
+            const kw = document.getElementById('filterKeyword');
+            collectUnique('keyword').forEach(v => { kw.innerHTML += `<option value="${v}">${v}</option>`; });
+        }
+
+        function getFiltered() {
+            const emp = document.getElementById('filterEmployee').value;
+            const ext = document.getElementById('filterExtract').value;
+            const rarity = document.getElementById('filterRarity').value;
+            const kw = document.getElementById('filterKeyword').value;
+            return IDENTITIES_INDEX.filter(item => {
+                const { name } = parseId(item.id);
+                if (emp !== 'all' && name !== emp) return false;
+                if (ext !== 'all' && item.extract !== ext) return false;
+                if (rarity !== 'all' && item.rarity !== parseInt(rarity)) return false;
+                if (kw !== 'all' && !(item.keywords || []).includes(kw)) return false;
+                return true;
+            });
+        }
+
+        function renderCard(item) {
+            const thetaText = getThetaText(item.rarity);
+            const rarityClass = getRarityClass(item.rarity);
+            const r = item.resist;
+
+            const resistHTML = `
+                <div class="resist-row">
+                    <span class="resist-item"><img src="../img/${r.slash.physics}.png"> ${r.slash.resistance}</span>
+                    <span class="resist-item"><img src="../img/${r.pierce.physics}.png"> ${r.pierce.resistance}</span>
+                    <span class="resist-item"><img src="../img/${r.blunt.physics}.png"> ${r.blunt.resistance}</span>
+                </div>`;
+
+            const s = item;
+            const skillHTML = `
+                <div class="skill-block">
+                    <div class="skill-row">
+                        <span>一技能：</span>
+                        <div class="skill-icons">${'<img src="../img/技能-' + s.skillTop.physics + '-' + s.skillTop.sin + '.png">'.repeat(3)}</div>
+                        <span>3</span>
+                    </div>
+                    <div class="skill-row">
+                        <span>二技能：</span>
+                        <div class="skill-icons">${'<img src="../img/技能-' + s.skillMiddle.physics + '-' + s.skillMiddle.sin + '.png">'.repeat(2)}</div>
+                        <span>2</span>
+                    </div>
+                    <div class="skill-row">
+                        <span>三技能：</span>
+                        <div class="skill-icons">${'<img src="../img/技能-' + s.skillBottom.physics + '-' + s.skillBottom.sin + '.png">'.repeat(1)}</div>
+                        <span>1</span>
+                    </div>
+                </div>`;
+
+            const cp = item.combatPassive;
+            const sp = item.supportPassive;
+            const passiveHTML = `
+                <div class="passive-block">
+                    <div class="passive-row">
+                        <span>战斗被动：</span>
+                        <img src="../img/${cp.sin}.png">
+                        <span>${cp.way} × ${cp.need}</span>
+                    </div>
+                    <div class="passive-row">
+                        <span>支援被动：</span>
+                        <img src="../img/${sp.sin}.png">
+                        <span>${sp.way} × ${sp.need}</span>
+                    </div>
+                </div>`;
+
+            return `
+            <a href="identity/${item.id}.html" class="identity-card-full">
+                <div class="card-header">
+                    <span class="faction-name">${item.id}</span>
+                    <span class="rarity ${rarityClass}">${thetaText}</span>
+                </div>
+                <div class="extract-source">${item.extract}</div>
+                ${resistHTML}
+                ${skillHTML}
+                ${passiveHTML}
+                <div class="keyword-tags">
+                    ${(item.keywords || []).map(k => `<span class="keyword-tag">${k}</span>`).join('')}
+                </div>
+            </a>`;
+        }
+
+        function renderGrid() {
+            const filtered = getFiltered();
+            const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE) || 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+            const start = (currentPage - 1) * ITEMS_PER_PAGE;
+            const pageItems = filtered.slice(start, start + ITEMS_PER_PAGE);
+
+            document.getElementById('noResult').style.display = filtered.length === 0 ? 'block' : 'none';
+            document.getElementById('identityGrid').innerHTML = filtered.length ? pageItems.map(renderCard).join('') : '';
+            renderPagination(totalPages);
+        }
+
+        function renderPagination(totalPages) {
+            const p = document.getElementById('pagination');
+            let html = '';
+            html += `<button ${currentPage === 1 ? 'disabled' : ''} onclick="goToPage(${currentPage - 1})">← 上一页</button>`;
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button class="${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
+            html += `<button ${currentPage === totalPages ? 'disabled' : ''} onclick="goToPage(${currentPage + 1})">下一页 →</button>`;
+            p.innerHTML = html;
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            renderGrid();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function onFilterChange() {
+            currentPage = 1;
+            renderGrid();
+        }
+
+        document.getElementById('filterEmployee').addEventListener('change', onFilterChange);
+        document.getElementById('filterExtract').addEventListener('change', onFilterChange);
+        document.getElementById('filterRarity').addEventListener('change', onFilterChange);
+        document.getElementById('filterKeyword').addEventListener('change', onFilterChange);
+
+        populateFilters();
+        renderGrid();
+    </script>
+
+</body>
+</html>
