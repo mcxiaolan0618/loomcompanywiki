@@ -114,18 +114,24 @@
             display: flex;
             flex-wrap: wrap;
             align-items: baseline;
-            gap: 6px;
+            gap: 8px;
             margin-bottom: 8px;
             font-size: 0.85rem;
         }
         .stat-row .stat-label { color: var(--text-dim); min-width: 70px; }
         .stat-row .stat-value { color: var(--text); font-weight: bold; }
-        .stat-row .stat-formula { color: var(--text-dim); font-size: 0.75rem; }
-        .stat-row .stat-base { color: var(--text-dim); font-size: 0.78rem; margin-left: 4px; }
+        .stat-row .stat-base { color: var(--text-dim); font-size: 0.78rem; }
 
         .speed-row { display: flex; gap: 12px; flex-wrap: wrap; }
         .speed-item { color: var(--text-dim); font-size: 0.82rem; }
         .speed-item span { color: var(--text); }
+
+        .story-link {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .story-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -174,7 +180,11 @@
 
             <div class="info-row">
                 <span class="info-item"><strong>更新时间</strong> <span id="updateTime"></span></span>
-                <span class="info-item"><strong>获取方式</strong> <span id="obtainWay"></span></span>
+                <span class="info-item"><strong>获取方式</strong> <span id="extractDisplay"></span></span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-item"><strong><a id="storyLink" class="story-link">观看剧情</a></strong></span>
             </div>
 
             <div class="ego-resources" id="egoResources"></div>
@@ -200,7 +210,6 @@
             <div class="stat-row">
                 <span class="stat-label">生命值：</span>
                 <span class="stat-value" id="hpValue"></span>
-                <span class="stat-formula" id="hpFormula"></span>
                 <span class="stat-base">基础值：<span id="hpBase"></span></span>
                 <span class="stat-base">成长系数：<span id="hpGrowth"></span></span>
             </div>
@@ -208,15 +217,13 @@
             <div class="stat-row">
                 <span class="stat-label">防御等级：</span>
                 <span class="stat-value" id="defValue"></span>
-                <span class="stat-formula" id="defFormula"></span>
                 <span class="stat-base">基础值：<span id="defBase"></span></span>
                 <span class="stat-base">变动值：<span id="defShift"></span></span>
             </div>
 
-            <div class="stat-row" id="staggerRow">
+            <div class="stat-row">
                 <span class="stat-label">混乱阈值：</span>
                 <span class="stat-value" id="staggerValues"></span>
-                <span class="stat-formula" id="staggerFormula"></span>
                 <span class="stat-base">基础值：<span id="staggerBase"></span></span>
             </div>
 
@@ -230,61 +237,23 @@
 
     <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
 
-    <script src="../identities-index.js"></script>
+    <script src="../identities.js"></script>
     <script>
-        /*
-        ╔══════════════════════════════════════════╗
-        ║  自动读取（无需手写）：               ║
-        ║  - 人格名称（MY_ID）                  ║
-        ║  - keywords（从索引）                 ║
-        ║  - resist（从索引）                   ║
-        ║  - skillTop/Middle/Bottom（从索引）    ║
-        ║  - combatPassive/supportPassive（索引）║
-        ╚══════════════════════════════════════════╝
-        */
-
-        // ===== 在此填写：索引中的id =====
         const MY_ID = '在此填写人格id，如：LCR员工-萨尔温';
 
-        /*
-        ╔══════════════════════════════════════════╗
-        ║  以下变量需手动填写                     ║
-        ╚══════════════════════════════════════════╝
-        */
-
-        // ===== 默认等级（可自行修改）=====
         const DEFAULT_LEVEL = 30;
-
-        // ===== 更新时间（如：2026/6/18）=====
         const UPDATE_TIME = '在此填写更新时间';
-
-        // ===== 获取方式（如：常驻提取 / 活动提取 / 观看剧情）=====
-        const OBTAIN_WAY = '在此填写获取方式';
-
-        // ===== 生命值 =====
         const HP_BASE = 0;
         const HP_GROWTH = 0;
-
-        // ===== 防御等级 =====
         const DEF_BASE = 0;
         const DEF_SHIFT = 0;
-
-        // ===== 混乱阈值（数组长度=条数，数值=比例）=====
         const STAGGER_RATIOS = [0, 0, 0];
-
-        // ===== 速度 I~IV =====
         const SPEED = {
             I:  { min: 0, max: 0 },
             II: { min: 0, max: 0 },
             III:{ min: 0, max: 0 },
             IV: { min: 0, max: 0 }
         };
-
-        /*
-        ╔══════════════════════════════════════════╗
-        ║  渲染逻辑                               ║
-        ╚══════════════════════════════════════════╝
-        */
 
         const myData = IDENTITIES_INDEX.find(item => item.id === MY_ID);
 
@@ -295,7 +264,10 @@
 
         document.getElementById('identityName').textContent = MY_ID;
         document.getElementById('updateTime').textContent = UPDATE_TIME;
-        document.getElementById('obtainWay').textContent = OBTAIN_WAY;
+        document.getElementById('extractDisplay').textContent = myData.extract;
+
+        const storyLink = document.getElementById('storyLink');
+        storyLink.href = '../../story/identity-story/' + MY_ID + '.html';
 
         const s = myData;
         const egoHTML = `
@@ -334,15 +306,12 @@
 
             const hp = Math.floor(HP_BASE + HP_GROWTH * level);
             document.getElementById('hpValue').textContent = hp;
-            document.getElementById('hpFormula').textContent = `（${HP_BASE}+${HP_GROWTH}×${level}）`;
 
             const def = Math.floor(DEF_BASE * level + DEF_SHIFT);
             document.getElementById('defValue').textContent = def;
-            document.getElementById('defFormula').textContent = `（${DEF_BASE}×${level}+${DEF_SHIFT}）`;
 
             const staggerValues = STAGGER_RATIOS.map(r => Math.floor(hp * r));
             document.getElementById('staggerValues').textContent = staggerValues.join(' ');
-            document.getElementById('staggerFormula').textContent = `（${hp}×${STAGGER_RATIOS.join('/')}）`;
         }
 
         updateStats();
