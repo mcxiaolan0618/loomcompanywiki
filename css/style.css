@@ -391,3 +391,50 @@ body {
     .staff-card { width: 100px; }
     .staff-avatar { width: 80px; height: 80px; }
 }
+/* ========== 404 施工页面 ========== */
+.construction-page {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 60px 16px;
+    text-align: center;
+}
+.construction-icon {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    opacity: 0.6;
+}
+.construction-page h2 {
+    color: var(--gold);
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+}
+.construction-page p {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+.construction-page .back-link {
+    display: inline-block;
+    margin-top: 24px;
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 8px 20px;
+    border: 1px solid var(--gold-dim);
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+.construction-page .back-link:hover {
+    background: rgba(201, 166, 92, 0.1);
+    border-color: var(--gold);
+}
+.gear-icon {
+    display: inline-block;
+    animation: spin 8s linear infinite;
+}
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
