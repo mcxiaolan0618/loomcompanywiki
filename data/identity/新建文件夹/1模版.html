@@ -132,6 +132,46 @@
             font-size: 0.85rem;
         }
         .story-link:hover { text-decoration: underline; }
+
+        .sanity-section {
+            margin-top: 14px;
+        }
+        .sanity-box {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+        .sanity-box.positive {
+            border: 1px solid #3a6ab5;
+            background: rgba(58,106,181,0.08);
+        }
+        .sanity-box.positive .sanity-title {
+            color: #5a9af5;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+        .sanity-box.negative {
+            border: 1px solid #8b3a3a;
+            background: rgba(139,58,58,0.08);
+        }
+        .sanity-box.negative .sanity-title {
+            color: #d04a4a;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+        .sanity-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sanity-box li {
+            color: var(--text-dim);
+            padding: 2px 0;
+        }
+        .sanity-box li::before {
+            content: '• ';
+        }
     </style>
 </head>
 <body>
@@ -197,39 +237,53 @@
                 <span class="info-item"><strong>物理抗性</strong></span>
                 <div class="resist-display" id="resistDisplay"></div>
             </div>
-        </div>
 
-        <div class="info-card">
-            <h3>能力值</h3>
+            <div style="margin-top:16px;">
+                <h3>能力值</h3>
 
-            <div class="level-input-row">
-                <span class="label">请输入等级</span>
-                <input type="number" id="levelInput" min="1" max="50" onchange="updateStats()">
+                <div class="level-input-row">
+                    <span class="label">请输入等级</span>
+                    <input type="number" id="levelInput" min="1" max="50" onchange="updateStats()">
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">生命值：</span>
+                    <span class="stat-value" id="hpValue"></span>
+                    <span class="stat-base">基础值：<span id="hpBase"></span></span>
+                    <span class="stat-base">成长系数：<span id="hpGrowth"></span></span>
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">防御等级：</span>
+                    <span class="stat-value" id="defValue"></span>
+                    <span class="stat-base">基础值：<span id="defBase"></span></span>
+                    <span class="stat-base">变动值：<span id="defShift"></span></span>
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">混乱阈值：</span>
+                    <span class="stat-value" id="staggerValues"></span>
+                    <span class="stat-base">基础值：<span id="staggerBase"></span></span>
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">速度：</span>
+                    <div class="speed-row" id="speedDisplay"></div>
+                </div>
             </div>
 
-            <div class="stat-row">
-                <span class="stat-label">生命值：</span>
-                <span class="stat-value" id="hpValue"></span>
-                <span class="stat-base">基础值：<span id="hpBase"></span></span>
-                <span class="stat-base">成长系数：<span id="hpGrowth"></span></span>
-            </div>
+            <div class="sanity-section">
+                <h3>理智值</h3>
 
-            <div class="stat-row">
-                <span class="stat-label">防御等级：</span>
-                <span class="stat-value" id="defValue"></span>
-                <span class="stat-base">基础值：<span id="defBase"></span></span>
-                <span class="stat-base">变动值：<span id="defShift"></span></span>
-            </div>
+                <div class="sanity-box positive">
+                    <div class="sanity-title">基础理智值增加条件</div>
+                    <ul id="sanityPositive"></ul>
+                </div>
 
-            <div class="stat-row">
-                <span class="stat-label">混乱阈值：</span>
-                <span class="stat-value" id="staggerValues"></span>
-                <span class="stat-base">基础值：<span id="staggerBase"></span></span>
-            </div>
-
-            <div class="stat-row">
-                <span class="stat-label">速度：</span>
-                <div class="speed-row" id="speedDisplay"></div>
+                <div class="sanity-box negative">
+                    <div class="sanity-title">基础理智值减少条件</div>
+                    <ul id="sanityNegative"></ul>
+                </div>
             </div>
         </div>
 
@@ -255,6 +309,15 @@
             IV: { min: 0, max: 0 }
         };
 
+        // ===== 理智值条件 =====
+        // 数组内每条为一行，如：'拼点胜利时，增加10'
+        const SANITY_POSITIVE = [
+            // 在此填写，如：'拼点胜利时，增加10'
+        ];
+        const SANITY_NEGATIVE = [
+            // 在此填写，如：'拼点失败时，减少5'
+        ];
+
         const myData = IDENTITIES_INDEX.find(item => item.id === MY_ID);
 
         if (!myData) {
@@ -271,9 +334,9 @@
 
         const s = myData;
         const egoHTML = `
-            <span class="ego-resource-item"><img src="../../img/${s.skillTop.sin}.png">×3</span>
-            <span class="ego-resource-item"><img src="../../img/${s.skillMiddle.sin}.png">×2</span>
-            <span class="ego-resource-item"><img src="../../img/${s.skillBottom.sin}.png">×1</span>
+            <span class="ego-resource-item"><img src="../../img/${s.skillTop.sin}.png"> ×3</span>
+            <span class="ego-resource-item"><img src="../../img/${s.skillMiddle.sin}.png"> ×2</span>
+            <span class="ego-resource-item"><img src="../../img/${s.skillBottom.sin}.png"> ×1</span>
         `;
         document.getElementById('egoResources').innerHTML = egoHTML;
 
@@ -281,9 +344,9 @@
 
         const r = myData.resist;
         const resistHTML = `
-            <span class="resist-item"><img src="../../img/${r.slash.physics}.png"> ${r.slash.physics} ${r.slash.resistance}</span>
-            <span class="resist-item"><img src="../../img/${r.pierce.physics}.png"> ${r.pierce.physics} ${r.pierce.resistance}</span>
-            <span class="resist-item"><img src="../../img/${r.blunt.physics}.png"> ${r.blunt.physics} ${r.blunt.resistance}</span>
+            <span class="resist-item"><img src="../../img/${r.slash.physics}.png"> ${r.slash.resistance}</span>
+            <span class="resist-item"><img src="../../img/${r.pierce.physics}.png"> ${r.pierce.resistance}</span>
+            <span class="resist-item"><img src="../../img/${r.blunt.physics}.png"> ${r.blunt.resistance}</span>
         `;
         document.getElementById('resistDisplay').innerHTML = resistHTML;
 
@@ -300,6 +363,9 @@
             speedHTML += `<span class="speed-item">${key} <span>${val.min}-${val.max}</span></span>`;
         }
         document.getElementById('speedDisplay').innerHTML = speedHTML || '（未设置）';
+
+        document.getElementById('sanityPositive').innerHTML = SANITY_POSITIVE.map(t => `<li>${t}</li>`).join('') || '<li>（未设置）</li>';
+        document.getElementById('sanityNegative').innerHTML = SANITY_NEGATIVE.map(t => `<li>${t}</li>`).join('') || '<li>（未设置）</li>';
 
         function updateStats() {
             const level = parseInt(document.getElementById('levelInput').value) || 1;
