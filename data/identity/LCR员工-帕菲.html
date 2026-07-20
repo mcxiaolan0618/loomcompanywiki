@@ -132,6 +132,46 @@
             font-size: 0.85rem;
         }
         .story-link:hover { text-decoration: underline; }
+
+        .sanity-section {
+            margin-top: 14px;
+        }
+        .sanity-box {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+        .sanity-box.positive {
+            border: 1px solid #3a6ab5;
+            background: rgba(58,106,181,0.08);
+        }
+        .sanity-box.positive .sanity-title {
+            color: #5a9af5;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+        .sanity-box.negative {
+            border: 1px solid #8b3a3a;
+            background: rgba(139,58,58,0.08);
+        }
+        .sanity-box.negative .sanity-title {
+            color: #d04a4a;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+        .sanity-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sanity-box li {
+            color: var(--text-dim);
+            padding: 2px 0;
+        }
+        .sanity-box li::before {
+            content: '• ';
+        }
     </style>
 </head>
 <body>
@@ -197,39 +237,439 @@
                 <span class="info-item"><strong>物理抗性</strong></span>
                 <div class="resist-display" id="resistDisplay"></div>
             </div>
+
+            <div style="margin-top:16px;">
+                <h3>能力值</h3>
+
+                <div class="level-input-row">
+                    <span class="label">请输入等级</span>
+                    <input type="number" id="levelInput" min="1" max="50" onchange="updateStats()">
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">生命值：</span>
+                    <span class="stat-value" id="hpValue"></span>
+                    <span class="stat-base">基础值：<span id="hpBase"></span></span>
+                    <span class="stat-base">成长系数：<span id="hpGrowth"></span></span>
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">防御等级：</span>
+                    <span class="stat-value" id="defValue"></span>
+                    <span class="stat-base">基础值：<span id="defBase"></span></span>
+                    <span class="stat-base">变动值：<span id="defShift"></span></span>
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">混乱阈值：</span>
+                    <span class="stat-value" id="staggerValues"></span>
+                    <span class="stat-base">基础值：<span id="staggerBase"></span></span>
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">速度：</span>
+                    <div class="speed-row" id="speedDisplay"></div>
+                </div>
+            </div>
+
+            <div class="sanity-section">
+                <h3>理智值</h3>
+
+                <div class="sanity-box positive">
+                    <div class="sanity-title">基础理智值增加条件</div>
+                    <ul id="sanityPositive"></ul>
+                </div>
+
+                <div class="sanity-box negative">
+                    <div class="sanity-title">基础理智值减少条件</div>
+                    <ul id="sanityNegative"></ul>
+                </div>
+            </div>
         </div>
 
+    </div>
+
+    <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
+
+    <script src="../identities.js"></script>
+    <script>
+        const MY_ID = '在此填写人格id，如：LCR员工-萨尔温';
+
+        const DEFAULT_LEVEL = 30;
+        const UPDATE_TIME = '在此填写更新时间';
+        const HP_BASE = 0;
+        const HP_GROWTH = 0;
+        const DEF_BASE = 0;
+        const DEF_SHIFT = 0;
+        const STAGGER_RATIOS = [0, 0, 0];
+        const SPEED = {
+            I:  { min: 0, max: 0 },
+            II: { min: 0, max: 0 },
+            III:{ min: 0, max: 0 },
+            IV: { min: 0, max: 0 }
+        };
+
+        // ===== 理智值条件 =====
+        // 数组内每条为一行，如：'拼点胜利时，增加10'
+        const SANITY_POSITIVE = [
+            // 在此填写，如：'拼点胜利时，增加10'
+        ];
+        const SANITY_NEGATIVE = [
+            // 在此填写，如：'拼点失败时，减少5'
+        ];
+
+        const myData = IDENTITIES_INDEX.find(item => item.id === MY_ID);
+
+        if (!myData) {
+            document.body.innerHTML = '<div style="text-align:center;color:var(--gold);padding:60px;"><h2>人格未找到</h2><p>请在索引文件中添加此人格，或检查 MY_ID 是否正确。</p><a href="../identities.html" style="color:var(--gold-dim);">← 返回人格列表</a></div>';
+            throw new Error('人格未找到：' + MY_ID);
+        }
+
+        document.getElementById('identityName').textContent = MY_ID;
+        document.getElementById('updateTime').textContent = UPDATE_TIME;
+        document.getElementById('extractDisplay').textContent = myData.extract;
+
+        const storyLink = document.getElementById('storyLink');
+        storyLink.href = '../../story/identity-story/' + MY_ID + '.html';
+
+        const s = myData;
+        const egoHTML = `
+            <span class="ego-resource-item"><img src="../../img/${s.skillTop.sin}.png"> ×3</span>
+            <span class="ego-resource-item"><img src="../../img/${s.skillMiddle.sin}.png"> ×2</span>
+            <span class="ego-resource-item"><img src="../../img/${s.skillBottom.sin}.png"> ×1</span>
+        `;
+        document.getElementById('egoResources').innerHTML = egoHTML;
+
+        document.getElementById('keywordsDisplay').textContent = (myData.keywords || []).join(' / ');
+
+        const r = myData.resist;
+        const resistHTML = `
+            <span class="resist-item"><img src="../../img/${r.slash.physics}.png"> ${r.slash.resistance}</span>
+            <span class="resist-item"><img src="../../img/${r.pierce.physics}.png"> ${r.pierce.resistance}</span>
+            <span class="resist-item"><img src="../../img/${r.blunt.physics}.png"> ${r.blunt.resistance}</span>
+        `;
+        document.getElementById('resistDisplay').innerHTML = resistHTML;
+
+        document.getElementById('levelInput').value = DEFAULT_LEVEL;
+
+        document.getElementById('hpBase').textContent = HP_BASE;
+        document.getElementById('hpGrowth').textContent = HP_GROWTH;
+        document.getElementById('defBase').textContent = DEF_BASE;
+        document.getElementById('defShift').textContent = (DEF_SHIFT >= 0 ? '+' : '') + DEF_SHIFT;
+        document.getElementById('staggerBase').textContent = STAGGER_RATIOS.join(' ');
+
+        let speedHTML = '';
+        for (const [key, val] of Object.entries(SPEED)) {
+            speedHTML += `<span class="speed-item">${key} <span>${val.min}-${val.max}</span></span>`;
+        }
+        document.getElementById('speedDisplay').innerHTML = speedHTML || '（未设置）';
+
+        document.getElementById('sanityPositive').innerHTML = SANITY_POSITIVE.map(t => `<li>${t}</li>`).join('') || '<li>（未设置）</li>';
+        document.getElementById('sanityNegative').innerHTML = SANITY_NEGATIVE.map(t => `<li>${t}</li>`).join('') || '<li>（未设置）</li>';
+
+        function updateStats() {
+            const level = parseInt(document.getElementById('levelInput').value) || 1;
+
+            const hp = Math.floor(HP_BASE + HP_GROWTH * level);
+            document.getElementById('hpValue').textContent = hp;
+
+            const def = Math.floor(DEF_BASE * level + DEF_SHIFT);
+            document.getElementById('defValue').textContent = def;
+
+            const staggerValues = STAGGER_RATIOS.map(r => Math.floor(hp * r));
+            document.getElementById('staggerValues').textContent = staggerValues.join(' ');
+        }
+
+        updateStats();
+    </script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人格详情 - Loom Company 同人维基</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+        .identity-detail {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+        .identity-detail .back-link {
+            display: inline-block;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+            padding: 4px 12px;
+            border: 1px solid var(--gold-dim);
+            border-radius: 4px;
+        }
+        .identity-detail .back-link:hover { background: rgba(201,166,92,0.1); }
+
+        .detail-title {
+            text-align: center;
+            color: var(--gold);
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            margin-bottom: 24px;
+        }
+
+        .info-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        .info-card h3 {
+            color: var(--gold);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+        }
+        .info-item {
+            color: var(--text-dim);
+        }
+        .info-item strong {
+            color: var(--text);
+        }
+
+        .ego-resources {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .ego-resources img { width: 28px; height: 28px; }
+        .ego-resource-item {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        .resist-display {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+        .resist-display .resist-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+        .resist-display img { width: 24px; height: 24px; }
+
+        .level-input-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .level-input-row input {
+            width: 80px;
+            padding: 6px 10px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            font-size: 0.9rem;
+            font-family: inherit;
+            text-align: center;
+        }
+        .level-input-row input:focus { border-color: var(--gold); outline: none; }
+        .level-input-row .label { color: var(--text-dim); font-size: 0.85rem; }
+
+        .stat-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+        .stat-row .stat-label { color: var(--text-dim); min-width: 70px; }
+        .stat-row .stat-value { color: var(--text); font-weight: bold; }
+        .stat-row .stat-base { color: var(--text-dim); font-size: 0.78rem; }
+
+        .speed-row { display: flex; gap: 12px; flex-wrap: wrap; }
+        .speed-item { color: var(--text-dim); font-size: 0.82rem; }
+        .speed-item span { color: var(--text); }
+
+        .story-link {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .story-link:hover { text-decoration: underline; }
+
+        .sanity-section {
+            margin-top: 14px;
+        }
+        .sanity-box {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+        .sanity-box.positive {
+            border: 1px solid #3a6ab5;
+            background: rgba(58,106,181,0.08);
+        }
+        .sanity-box.positive .sanity-title {
+            color: #5a9af5;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+        .sanity-box.negative {
+            border: 1px solid #8b3a3a;
+            background: rgba(139,58,58,0.08);
+        }
+        .sanity-box.negative .sanity-title {
+            color: #d04a4a;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+        .sanity-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sanity-box li {
+            color: var(--text-dim);
+            padding: 2px 0;
+        }
+        .sanity-box li::before {
+            content: '• ';
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="top-nav-inner">
+            <a href="../../index.html" class="nav-home">◆ 首页</a>
+            <span class="nav-separator">|</span>
+            <span class="nav-label">数据分类</span>
+            <a href="../identities.html" class="nav-link">人格</a>
+            <span class="nav-divider">|</span>
+            <a href="../egos.html" class="nav-link">EGO</a>
+            <span class="nav-divider">|</span>
+            <a href="../enemies.html" class="nav-link">敌人</a>
+            <span class="nav-divider">|</span>
+            <a href="../abnormalities.html" class="nav-link">异想体</a>
+            <span class="nav-divider">|</span>
+            <a href="../status-effects.html" class="nav-link">状态效果</a>
+            <span class="nav-divider">|</span>
+            <a href="../ego-gifts.html" class="nav-link">E.G.O饰品</a>
+            <span class="nav-divider">|</span>
+            <a href="../events.html" class="nav-link">探索事件</a>
+            <span class="nav-separator">|</span>
+            <span class="nav-label">剧情分类</span>
+            <a href="../../story/main-story.html" class="nav-link">主线剧情</a>
+            <span class="nav-divider">|</span>
+            <a href="../../story/identity-story.html" class="nav-link">人格剧情</a>
+            <span class="nav-divider">|</span>
+            <a href="../../story/event-story.html" class="nav-link">活动剧情</a>
+            <span class="nav-divider">|</span>
+            <a href="../../story/story-characters.html" class="nav-link">剧情角色</a>
+            <span class="nav-divider">|</span>
+            <a href="../../story/odin-notes.html" class="nav-link">奥丁笔记</a>
+            <span class="nav-divider">|</span>
+            <a href="../../employee/index.html" class="nav-link">员工</a>
+        </div>
+    </nav>
+
+    <div class="identity-detail">
+        <a href="../identities.html" class="back-link">← 返回人格列表</a>
+
+        <h1 class="detail-title" id="identityName"></h1>
+
         <div class="info-card">
-            <h3>能力值</h3>
+            <h3>人格信息</h3>
 
-            <div class="level-input-row">
-                <span class="label">请输入等级</span>
-                <input type="number" id="levelInput" min="1" max="50" onchange="updateStats()">
+            <div class="info-row">
+                <span class="info-item"><strong>更新时间</strong> <span id="updateTime"></span></span>
+                <span class="info-item"><strong>获取方式</strong> <span id="extractDisplay"></span></span>
             </div>
 
-            <div class="stat-row">
-                <span class="stat-label">生命值：</span>
-                <span class="stat-value" id="hpValue"></span>
-                <span class="stat-base">基础值：<span id="hpBase"></span></span>
-                <span class="stat-base">成长系数：<span id="hpGrowth"></span></span>
+            <div class="info-row">
+                <span class="info-item"><strong><a id="storyLink" class="story-link">观看剧情</a></strong></span>
             </div>
 
-            <div class="stat-row">
-                <span class="stat-label">防御等级：</span>
-                <span class="stat-value" id="defValue"></span>
-                <span class="stat-base">基础值：<span id="defBase"></span></span>
-                <span class="stat-base">变动值：<span id="defShift"></span></span>
+            <div class="ego-resources" id="egoResources"></div>
+
+            <div class="info-row" style="margin-top:8px;">
+                <span class="info-item"><strong>特性关键词</strong> <span id="keywordsDisplay"></span></span>
             </div>
 
-            <div class="stat-row">
-                <span class="stat-label">混乱阈值：</span>
-                <span class="stat-value" id="staggerValues"></span>
-                <span class="stat-base">基础值：<span id="staggerBase"></span></span>
+            <div class="info-row">
+                <span class="info-item"><strong>物理抗性</strong></span>
+                <div class="resist-display" id="resistDisplay"></div>
             </div>
 
-            <div class="stat-row">
-                <span class="stat-label">速度：</span>
-                <div class="speed-row" id="speedDisplay"></div>
+            <div style="margin-top:16px;">
+                <h3>能力值</h3>
+
+                <div class="level-input-row">
+                    <span class="label">请输入等级</span>
+                    <input type="number" id="levelInput" min="1" max="50" onchange="updateStats()">
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">生命值：</span>
+                    <span class="stat-value" id="hpValue"></span>
+                    <span class="stat-base">基础值：<span id="hpBase"></span></span>
+                    <span class="stat-base">成长系数：<span id="hpGrowth"></span></span>
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">防御等级：</span>
+                    <span class="stat-value" id="defValue"></span>
+                    <span class="stat-base">基础值：<span id="defBase"></span></span>
+                    <span class="stat-base">变动值：<span id="defShift"></span></span>
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">混乱阈值：</span>
+                    <span class="stat-value" id="staggerValues"></span>
+                    <span class="stat-base">基础值：<span id="staggerBase"></span></span>
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">速度：</span>
+                    <div class="speed-row" id="speedDisplay"></div>
+                </div>
+            </div>
+
+            <div class="sanity-section">
+                <h3>理智值</h3>
+
+                <div class="sanity-box positive">
+                    <div class="sanity-title">基础理智值增加条件</div>
+                    <ul id="sanityPositive"></ul>
+                </div>
+
+                <div class="sanity-box negative">
+                    <div class="sanity-title">基础理智值减少条件</div>
+                    <ul id="sanityNegative"></ul>
+                </div>
             </div>
         </div>
 
@@ -255,6 +695,15 @@
             IV: { min: 0, max: 0 }
         };
 
+        // ===== 理智值条件 =====
+        // 数组内每条为一行，如：'拼点胜利时，增加10'
+        const SANITY_POSITIVE = [
+            '拼点胜利时，增加10'
+        ];
+        const SANITY_NEGATIVE = [
+            '拼点失败时，减少5'
+        ];
+
         const myData = IDENTITIES_INDEX.find(item => item.id === MY_ID);
 
         if (!myData) {
@@ -271,9 +720,9 @@
 
         const s = myData;
         const egoHTML = `
-            <span class="ego-resource-item"><img src="../../img/${s.skillTop.sin}.png">×3</span>
-            <span class="ego-resource-item"><img src="../../img/${s.skillMiddle.sin}.png">×2</span>
-            <span class="ego-resource-item"><img src="../../img/${s.skillBottom.sin}.png">×1</span>
+            <span class="ego-resource-item"><img src="../../img/${s.skillTop.sin}.png"> ×3</span>
+            <span class="ego-resource-item"><img src="../../img/${s.skillMiddle.sin}.png"> ×2</span>
+            <span class="ego-resource-item"><img src="../../img/${s.skillBottom.sin}.png"> ×1</span>
         `;
         document.getElementById('egoResources').innerHTML = egoHTML;
 
@@ -281,9 +730,9 @@
 
         const r = myData.resist;
         const resistHTML = `
-            <span class="resist-item"><img src="../../img/${r.slash.physics}.png"> ${r.slash.physics} ${r.slash.resistance}</span>
-            <span class="resist-item"><img src="../../img/${r.pierce.physics}.png"> ${r.pierce.physics} ${r.pierce.resistance}</span>
-            <span class="resist-item"><img src="../../img/${r.blunt.physics}.png"> ${r.blunt.physics} ${r.blunt.resistance}</span>
+            <span class="resist-item"><img src="../../img/${r.slash.physics}.png"> ${r.slash.resistance}</span>
+            <span class="resist-item"><img src="../../img/${r.pierce.physics}.png"> ${r.pierce.resistance}</span>
+            <span class="resist-item"><img src="../../img/${r.blunt.physics}.png"> ${r.blunt.resistance}</span>
         `;
         document.getElementById('resistDisplay').innerHTML = resistHTML;
 
@@ -300,6 +749,9 @@
             speedHTML += `<span class="speed-item">${key} <span>${val.min}-${val.max}</span></span>`;
         }
         document.getElementById('speedDisplay').innerHTML = speedHTML || '（未设置）';
+
+        document.getElementById('sanityPositive').innerHTML = SANITY_POSITIVE.map(t => `<li>${t}</li>`).join('') || '<li>（未设置）</li>';
+        document.getElementById('sanityNegative').innerHTML = SANITY_NEGATIVE.map(t => `<li>${t}</li>`).join('') || '<li>（未设置）</li>';
 
         function updateStats() {
             const level = parseInt(document.getElementById('levelInput').value) || 1;
