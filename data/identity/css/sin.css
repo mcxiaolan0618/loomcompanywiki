@@ -5,11 +5,10 @@
 .skill-card.sin-wrath {
     --sin-color: #d0423a;
     --sin-color-light: #f05a50;
-    --sin-color-dark: #8b1e1a;
-    --sin-glow: rgba(208, 66, 58, 0.3);
+    --sin-glow: rgba(208, 66, 58, 0.5);
     --sin-bg: rgba(208, 66, 58, 0.06);
-    --sin-border: rgba(208, 66, 58, 0.35);
-    --sin-texture: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(240,90,80,0.04) 3px, rgba(240,90,80,0.04) 6px);
+    --sin-border: rgba(208, 66, 58, 0.5);
+    --sin-accent: #d0423a;
 }
 
 /* 色欲 - 橙 */
@@ -17,11 +16,10 @@
 .skill-card.sin-lust {
     --sin-color: #e8883a;
     --sin-color-light: #f5a060;
-    --sin-color-dark: #9b4a1a;
-    --sin-glow: rgba(232, 136, 58, 0.3);
+    --sin-glow: rgba(232, 136, 58, 0.5);
     --sin-bg: rgba(232, 136, 58, 0.06);
-    --sin-border: rgba(232, 136, 58, 0.35);
-    --sin-texture: repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(245,160,96,0.04) 4px, rgba(245,160,96,0.04) 8px);
+    --sin-border: rgba(232, 136, 58, 0.5);
+    --sin-accent: #e8883a;
 }
 
 /* 怠惰 - 黄 - 石头 */
@@ -29,12 +27,10 @@
 .skill-card.sin-sloth {
     --sin-color: #c9a62c;
     --sin-color-light: #e0c040;
-    --sin-color-dark: #7a5e1a;
-    --sin-glow: rgba(201, 166, 44, 0.3);
+    --sin-glow: rgba(201, 166, 44, 0.5);
     --sin-bg: rgba(201, 166, 44, 0.06);
-    --sin-border: rgba(201, 166, 44, 0.35);
-    --sin-texture: radial-gradient(circle at 20% 30%, rgba(224,192,64,0.06) 1px, transparent 1px), radial-gradient(circle at 70% 60%, rgba(224,192,64,0.04) 1px, transparent 1px);
-    background-size: 12px 12px, 16px 16px;
+    --sin-border: rgba(201, 166, 44, 0.5);
+    --sin-accent: #c9a62c;
 }
 
 /* 暴食 - 绿 - 树叶 */
@@ -42,11 +38,10 @@
 .skill-card.sin-gluttony {
     --sin-color: #5a9a3a;
     --sin-color-light: #7ab85c;
-    --sin-color-dark: #2e5a1a;
-    --sin-glow: rgba(90, 154, 58, 0.3);
+    --sin-glow: rgba(90, 154, 58, 0.5);
     --sin-bg: rgba(90, 154, 58, 0.06);
-    --sin-border: rgba(90, 154, 58, 0.35);
-    --sin-texture: repeating-linear-gradient(-30deg, transparent, transparent 5px, rgba(122,184,92,0.04) 5px, rgba(122,184,92,0.04) 10px);
+    --sin-border: rgba(90, 154, 58, 0.5);
+    --sin-accent: #5a9a3a;
 }
 
 /* 忧郁 - 青 - 水 */
@@ -54,11 +49,10 @@
 .skill-card.sin-gloom {
     --sin-color: #3a8aaa;
     --sin-color-light: #5ab8d0;
-    --sin-color-dark: #1a4a5a;
-    --sin-glow: rgba(58, 138, 170, 0.3);
+    --sin-glow: rgba(58, 138, 170, 0.5);
     --sin-bg: rgba(58, 138, 170, 0.06);
-    --sin-border: rgba(58, 138, 170, 0.35);
-    --sin-texture: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(90,184,208,0.05) 2px, rgba(90,184,208,0.05) 4px);
+    --sin-border: rgba(58, 138, 170, 0.5);
+    --sin-accent: #3a8aaa;
 }
 
 /* 傲慢 - 蓝 - 剑 */
@@ -66,12 +60,10 @@
 .skill-card.sin-pride {
     --sin-color: #3a5ab5;
     --sin-color-light: #5a7ad5;
-    --sin-color-dark: #1a2a6b;
-    --sin-glow: rgba(58, 90, 181, 0.3);
+    --sin-glow: rgba(58, 90, 181, 0.5);
     --sin-bg: rgba(58, 90, 181, 0.06);
-    --sin-border: rgba(58, 90, 181, 0.35);
-    --sin-texture: linear-gradient(135deg, transparent 40%, rgba(90,122,213,0.05) 40%, rgba(90,122,213,0.05) 42%, transparent 42%), linear-gradient(-45deg, transparent 40%, rgba(90,122,213,0.05) 40%, rgba(90,122,213,0.05) 42%, transparent 42%);
-    background-size: 20px 20px, 20px 20px;
+    --sin-border: rgba(58, 90, 181, 0.5);
+    --sin-accent: #3a5ab5;
 }
 
 /* 嫉妒 - 紫 - 荆棘 */
@@ -79,14 +71,13 @@
 .skill-card.sin-envy {
     --sin-color: #7a3a9a;
     --sin-color-light: #a05ac0;
-    --sin-color-dark: #3a1a5a;
-    --sin-glow: rgba(122, 58, 154, 0.3);
+    --sin-glow: rgba(122, 58, 154, 0.5);
     --sin-bg: rgba(122, 58, 154, 0.06);
-    --sin-border: rgba(122, 58, 154, 0.35);
-    --sin-texture: repeating-linear-gradient(60deg, transparent, transparent 3px, rgba(160,90,192,0.04) 3px, rgba(160,90,192,0.04) 6px);
+    --sin-border: rgba(122, 58, 154, 0.5);
+    --sin-accent: #7a3a9a;
 }
 
-/* ========== 技能卡片自动应用边框和纹理 ========== */
+/* ========== 技能卡片边框特效 ========== */
 .skill-card.sin-wrath,
 .skill-card.sin-lust,
 .skill-card.sin-sloth,
@@ -95,16 +86,59 @@
 .skill-card.sin-pride,
 .skill-card.sin-envy {
     border: 1px solid var(--sin-border) !important;
+    border-left: 4px solid var(--sin-accent) !important;
     background-color: var(--sin-bg) !important;
-    background-image: var(--sin-texture, none) !important;
-    box-shadow: 0 0 6px var(--sin-glow);
+    box-shadow: 0 0 10px var(--sin-glow), inset 0 0 10px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 右下角色块 */
+.skill-card.sin-wrath::after,
+.skill-card.sin-lust::after,
+.skill-card.sin-sloth::after,
+.skill-card.sin-gluttony::after,
+.skill-card.sin-gloom::after,
+.skill-card.sin-pride::after,
+.skill-card.sin-envy::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-bottom: 20px solid var(--sin-accent);
+    opacity: 0.3;
+}
+
+/* ========== 守备技能卡片 ========== */
+.skill-card.defense-card {
+    border: 1px solid #8a7e6b !important;
+    border-left: 4px solid #8a7e6b !important;
+    background-color: rgba(138, 126, 107, 0.06) !important;
+    box-shadow: 0 0 8px rgba(138, 126, 107, 0.25), inset 0 0 10px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+}
+.skill-card.defense-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-bottom: 20px solid #8a7e6b;
+    opacity: 0.3;
 }
 
 /* ========== 技能边框组件（独立使用） ========== */
 .skill-frame {
     border: 1px solid var(--sin-border);
+    border-left: 4px solid var(--sin-accent);
     border-radius: 8px;
-    background: var(--sin-bg) var(--sin-texture, none);
+    background-color: var(--sin-bg);
     box-shadow: 0 0 6px var(--sin-glow);
     padding: 10px 14px;
     margin-bottom: 6px;
