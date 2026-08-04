@@ -37,7 +37,7 @@
     <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
 
     <script>
-        const AVATAR_DIR = '../img/avatars/';
+        const AVATAR_DIR = '/loomcompanywiki/img/avatars/';
         const AVATAR_EXT = '.jpg';
 
         const STAFF_LIST = [
@@ -48,7 +48,7 @@
             { name: '爱德蒙', file: 'aidemeng' },
             { name: '伍符', file: 'wufu' },
             { name: '墨严卿', file: 'moyanqing' },
-            { name: '加拉哈德', file: 'beideweier' },
+            { name: '贝德维尔', file: 'beideweier' },
             { name: '阿里', file: 'ali' },
             { name: '珂赛特', file: 'kesaite' },
             { name: '风', file: 'feng', spoiler: true },
@@ -63,11 +63,11 @@
             { source: '基督山伯爵', author: '大仲马', character: '爱德蒙', type: '角色+剧情改编' },
             { source: '伊阿宋与赫拉克勒斯', author: '古希腊神话（阿波罗尼俄斯等）', character: '伍符', type: '角色+剧情改编' },
             { source: '化身博士', author: '罗伯特·路易斯·史蒂文森', character: '墨严卿', type: '角色+剧情改编' },
-            { source: '亚瑟王传奇', author: '托马斯·马洛礼等', character: '加拉哈德', type: '角色+剧情改编' },
+            { source: '亚瑟王传奇', author: '托马斯·马洛礼等', character: '贝德维尔', type: '角色+剧情改编' },
             { source: '百年孤独', author: '加西亚·马尔克斯', character: '阿里', type: '角色+剧情改编' },
             { source: '悲惨世界', author: '维克多·雨果', character: '珂赛特', type: '角色+剧情改编' },
             { source: '致杜鹃', author: '威廉·华兹华斯', character: '风', type: '剧情改编', spoiler: true },
-            { source: '无', author: '无', character: '基拉', type: '剧情改编', spoiler: true }
+            { source: '红与黑', author: '司汤达', character: '基拉', type: '剧情改编', spoiler: true }
         ];
 
         function getAvatar(staff) {
@@ -96,7 +96,7 @@
                 const spoilerClass = s.spoiler ? ' spoiler' : '';
                 const nameSpoilerClass = s.spoiler ? ' spoiler-name' : '';
                 return `
-                <a href="../character/${s.file}.html" class="staff-card">
+                <a href="/loomcompanywiki/character/${s.file}.html" class="staff-card">
                     <div class="staff-avatar${spoilerClass}">
                         <img src="${getAvatar(s)}" alt="${s.name}" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\\'no-avatar\\'>暂无<br>头像</span>'">
                     </div>
@@ -149,7 +149,7 @@
     </script>
 
     <script>
-        fetch('/nav.html')
+        fetch('/loomcompanywiki/nav.html')
             .then(res => res.text())
             .then(html => {
                 document.getElementById('nav-placeholder').innerHTML = html;
