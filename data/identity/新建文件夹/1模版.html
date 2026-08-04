@@ -356,14 +356,6 @@
         const SANITY_POSITIVE = [];
         const SANITY_NEGATIVE = [];
 
-        /*
-        ╔══════════════════════════════════════════╗
-        ║  技能数据 - 在此修改                    ║
-        ║  sin 用于自动匹配 sin.css 边框          ║
-        ║  罪孽属性: 暴怒/色欲/怠惰/暴食/忧郁/傲慢/嫉妒 ║
-        ║  英文对照: wrath/lust/sloth/gluttony/gloom/pride/envy ║
-        ╚══════════════════════════════════════════╝
-        */
         const SKILLS = [
             {
                 name: '技能一名称',
@@ -411,15 +403,8 @@
                     'IV': 'IV阶段技能描述'
                 }
             },
-            // 如果技能一有两个，复制上面的对象再粘贴一份在这里
         ];
 
-        /*
-        ╔══════════════════════════════════════════╗
-        ║  守备技能 - 在此修改                    ║
-        ║  守备技能可能有1-2个，数组长度决定数量  ║
-        ╚══════════════════════════════════════════╝
-        */
         const DEFENSE_SKILLS = [
             {
                 name: '守备技能名称',
@@ -433,7 +418,6 @@
                 },
                 extraSin: '傲慢',
             },
-            // 如果有第二个守备技能，复制上面的对象再粘贴一份在这里
         ];
 
         const SIN_MAP = {
@@ -452,6 +436,7 @@
 
             SKILLS.forEach((skill, idx) => {
                 const sinEn = SIN_MAP[skill.sin] || 'wrath';
+                const defaultStage = skill.stages[skill.stages.length - 1];
                 html += `
                 <div class="info-card skill-card sin-${sinEn}">
                     <div class="skill-header">
@@ -468,16 +453,17 @@
                         </span>
                     </div>
                     <div class="stage-tabs">
-                        ${skill.stages.map(s => `<button class="stage-tab" onclick="switchStage('skill',${idx},'${s}')">${s}阶段</button>`).join('')}
+                        ${skill.stages.map(s => `<button class="stage-tab${s === defaultStage ? ' active' : ''}" onclick="switchStage('skill',${idx},'${s}')">${s}阶段</button>`).join('')}
                     </div>
                     <div class="skill-desc-row" id="skill-desc-${idx}">
                         <img src="/loomcompanywiki/img/${skill.skillImg}" onerror="this.style.display='none'">
-                        <span class="skill-desc-text">${skill.desc[skill.stages[0]] || ''}</span>
+                        <span class="skill-desc-text">${skill.desc[defaultStage] || ''}</span>
                     </div>
                 </div>`;
             });
 
             DEFENSE_SKILLS.forEach((skill, idx) => {
+                const defaultStage = skill.stages[skill.stages.length - 1];
                 html += `
                 <div class="info-card skill-card defense-card">
                     <div class="skill-header">
@@ -493,11 +479,11 @@
                         </span>
                     </div>
                     <div class="stage-tabs">
-                        ${skill.stages.map(s => `<button class="stage-tab" onclick="switchDefStage(${idx},'${s}')">${s}阶段${s === 'IV' && skill.extraSin ? ' 追加：' + skill.extraSin : ''}</button>`).join('')}
+                        ${skill.stages.map(s => `<button class="stage-tab${s === defaultStage ? ' active' : ''}" onclick="switchDefStage(${idx},'${s}')">${s}阶段${s === 'IV' && skill.extraSin ? ' 追加：' + skill.extraSin : ''}</button>`).join('')}
                     </div>
                     <div class="skill-desc-row" id="def-desc-${idx}">
                         <img src="/loomcompanywiki/img/${skill.extraSin ? skill.extraSin + '.png' : ''}" onerror="this.style.display='none'">
-                        <span class="skill-desc-text">${skill.desc[skill.stages[0]] || ''}</span>
+                        <span class="skill-desc-text">${skill.desc[defaultStage] || ''}</span>
                     </div>
                 </div>`;
             });
