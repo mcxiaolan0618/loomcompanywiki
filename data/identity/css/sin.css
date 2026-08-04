@@ -95,7 +95,8 @@
 .skill-card.sin-pride,
 .skill-card.sin-envy {
     border: 1px solid var(--sin-border) !important;
-    background: var(--sin-bg) var(--sin-texture, none) !important;
+    background-color: var(--sin-bg) !important;
+    background-image: var(--sin-texture, none) !important;
     box-shadow: 0 0 6px var(--sin-glow);
 }
 
