@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>人格详情 - Loom Company 同人维基</title>
     <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../人格/css/sin.css">
     <style>
         .identity-detail {
             max-width: 800px;
@@ -54,12 +55,8 @@
             margin-bottom: 10px;
             font-size: 0.85rem;
         }
-        .info-item {
-            color: var(--text-dim);
-        }
-        .info-item strong {
-            color: var(--text);
-        }
+        .info-item { color: var(--text-dim); }
+        .info-item strong { color: var(--text); }
 
         .ego-resources {
             display: flex;
@@ -133,9 +130,7 @@
         }
         .story-link:hover { text-decoration: underline; }
 
-        .sanity-section {
-            margin-top: 14px;
-        }
+        .sanity-section { margin-top: 14px; }
         .sanity-box {
             padding: 12px;
             border-radius: 6px;
@@ -169,46 +164,12 @@
             color: var(--text-dim);
             padding: 2px 0;
         }
-        .sanity-box li::before {
-            content: '• ';
-        }
+        .sanity-box li::before { content: '• '; }
     </style>
 </head>
 <body>
 
-    <nav class="top-nav">
-        <div class="top-nav-inner">
-            <a href="../../index.html" class="nav-home">◆ 首页</a>
-            <span class="nav-separator">|</span>
-            <span class="nav-label">数据分类</span>
-            <a href="../identities.html" class="nav-link">人格</a>
-            <span class="nav-divider">|</span>
-            <a href="../egos.html" class="nav-link">EGO</a>
-            <span class="nav-divider">|</span>
-            <a href="../enemies.html" class="nav-link">敌人</a>
-            <span class="nav-divider">|</span>
-            <a href="../abnormalities.html" class="nav-link">异想体</a>
-            <span class="nav-divider">|</span>
-            <a href="../status-effects.html" class="nav-link">状态效果</a>
-            <span class="nav-divider">|</span>
-            <a href="../ego-gifts.html" class="nav-link">E.G.O饰品</a>
-            <span class="nav-divider">|</span>
-            <a href="../events.html" class="nav-link">探索事件</a>
-            <span class="nav-separator">|</span>
-            <span class="nav-label">剧情分类</span>
-            <a href="../../story/main-story.html" class="nav-link">主线剧情</a>
-            <span class="nav-divider">|</span>
-            <a href="../../story/identity-story.html" class="nav-link">人格剧情</a>
-            <span class="nav-divider">|</span>
-            <a href="../../story/event-story.html" class="nav-link">活动剧情</a>
-            <span class="nav-divider">|</span>
-            <a href="../../story/story-characters.html" class="nav-link">剧情角色</a>
-            <span class="nav-divider">|</span>
-            <a href="../../story/odin-notes.html" class="nav-link">奥丁笔记</a>
-            <span class="nav-divider">|</span>
-            <a href="../../employee/index.html" class="nav-link">员工</a>
-        </div>
-    </nav>
+    <div id="nav-placeholder"></div>
 
     <div class="identity-detail">
         <a href="../identities.html" class="back-link">← 返回人格列表</a>
@@ -309,14 +270,8 @@
             IV: { min: 0, max: 0 }
         };
 
-        // ===== 理智值条件 =====
-        // 数组内每条为一行，如：'拼点胜利时，增加10'
-        const SANITY_POSITIVE = [
-            // 在此填写，如：'拼点胜利时，增加10'
-        ];
-        const SANITY_NEGATIVE = [
-            // 在此填写，如：'拼点失败时，减少5'
-        ];
+        const SANITY_POSITIVE = [];
+        const SANITY_NEGATIVE = [];
 
         const myData = IDENTITIES_INDEX.find(item => item.id === MY_ID);
 
@@ -381,6 +336,16 @@
         }
 
         updateStats();
+    </script>
+
+    <script>
+        fetch('/nav.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('nav-placeholder').innerHTML = html;
+                const current = document.querySelector('[data-nav="identities"]');
+                if (current) current.classList.add('active');
+            });
     </script>
 
 </body>

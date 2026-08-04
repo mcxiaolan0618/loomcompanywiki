@@ -8,39 +8,7 @@
 </head>
 <body>
 
-    <nav class="top-nav">
-        <div class="top-nav-inner">
-            <a href="index.html" class="nav-home">◆ 首页</a>
-            <span class="nav-separator">|</span>
-            <span class="nav-label">数据分类</span>
-            <a href="data/identities.html" class="nav-link">人格</a>
-            <span class="nav-divider">|</span>
-            <a href="data/egos.html" class="nav-link">EGO</a>
-            <span class="nav-divider">|</span>
-            <a href="data/enemies.html" class="nav-link">敌人</a>
-            <span class="nav-divider">|</span>
-            <a href="data/abnormalities.html" class="nav-link">异想体</a>
-            <span class="nav-divider">|</span>
-            <a href="data/status-effects.html" class="nav-link">状态效果</a>
-            <span class="nav-divider">|</span>
-            <a href="data/ego-gifts.html" class="nav-link">E.G.O饰品</a>
-            <span class="nav-divider">|</span>
-            <a href="data/events.html" class="nav-link">探索事件</a>
-            <span class="nav-separator">|</span>
-            <span class="nav-label">剧情分类</span>
-            <a href="story/main-story.html" class="nav-link">主线剧情</a>
-            <span class="nav-divider">|</span>
-            <a href="story/identity-story.html" class="nav-link">人格剧情</a>
-            <span class="nav-divider">|</span>
-            <a href="story/event-story.html" class="nav-link">活动剧情</a>
-            <span class="nav-divider">|</span>
-            <a href="story/story-characters.html" class="nav-link">剧情角色</a>
-            <span class="nav-divider">|</span>
-            <a href="story/odin-notes.html" class="nav-link">奥丁笔记</a>
-            <span class="nav-divider">|</span>
-            <a href="employee/index.html" class="nav-link">员工</a>
-        </div>
-    </nav>
+    <div id="nav-placeholder"></div>
 
     <div class="main-content">
 
@@ -101,6 +69,14 @@
     </div>
 
     <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
+
+    <script>
+        fetch('/nav.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('nav-placeholder').innerHTML = html;
+            });
+    </script>
 
 </body>
 </html>
