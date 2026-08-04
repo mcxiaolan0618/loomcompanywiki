@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>人格详情 - Loom Company 同人维基</title>
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="/loomcompanywiki/css/style.css">
+    <link rel="stylesheet" href="/loomcompanywiki/data/identity/人格/css/sin.css">
     <style>
         .identity-detail {
             max-width: 800px;
@@ -54,12 +55,8 @@
             margin-bottom: 10px;
             font-size: 0.85rem;
         }
-        .info-item {
-            color: var(--text-dim);
-        }
-        .info-item strong {
-            color: var(--text);
-        }
+        .info-item { color: var(--text-dim); }
+        .info-item strong { color: var(--text); }
 
         .ego-resources {
             display: flex;
@@ -133,9 +130,7 @@
         }
         .story-link:hover { text-decoration: underline; }
 
-        .sanity-section {
-            margin-top: 14px;
-        }
+        .sanity-section { margin-top: 14px; }
         .sanity-box {
             padding: 12px;
             border-radius: 6px;
@@ -160,61 +155,110 @@
             font-weight: bold;
             margin-bottom: 6px;
         }
-        .sanity-box ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+        .sanity-box ul { list-style: none; padding: 0; margin: 0; }
+        .sanity-box li { color: var(--text-dim); padding: 2px 0; }
+        .sanity-box li::before { content: '• '; }
+
+        /* ========== 技能卡片 ========== */
+        .skill-card {
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 12px;
         }
-        .sanity-box li {
+        .skill-card .skill-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .skill-card .skill-name {
+            font-weight: bold;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+        .skill-card .skill-icons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .skill-card .skill-icons img {
+            width: 22px;
+            height: 22px;
+        }
+        .skill-card .skill-icons .icon-label {
+            font-size: 0.75rem;
             color: var(--text-dim);
-            padding: 2px 0;
         }
-        .sanity-box li::before {
-            content: '• ';
+        .skill-card .stage-tabs {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+        .skill-card .stage-tab {
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 0.72rem;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        .skill-card .stage-tab:hover { border-color: var(--gold); color: var(--gold); }
+        .skill-card .stage-tab.active {
+            border-color: var(--sin-border);
+            background: var(--sin-bg);
+            color: var(--sin-color);
+            font-weight: bold;
+        }
+        .skill-card .skill-desc-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .skill-card .skill-desc-row img {
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .skill-card .skill-desc-text {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .skill-card .skill-desc-text .sin-text { font-weight: bold; }
+        .sin-text.sin-wrath { color: #d0423a; }
+        .sin-text.sin-lust { color: #e8883a; }
+        .sin-text.sin-sloth { color: #c9a62c; }
+        .sin-text.sin-gluttony { color: #5a9a3a; }
+        .sin-text.sin-gloom { color: #3a8aaa; }
+        .sin-text.sin-pride { color: #3a5ab5; }
+        .sin-text.sin-envy { color: #7a3a9a; }
+
+        .skill-card.defense-card .stage-tab.active {
+            border-color: #8a7e6b;
+            background: rgba(138,126,107,0.12);
+            color: #b0a590;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <nav class="top-nav">
-        <div class="top-nav-inner">
-            <a href="../../index.html" class="nav-home">◆ 首页</a>
-            <span class="nav-separator">|</span>
-            <span class="nav-label">数据分类</span>
-            <a href="../identities.html" class="nav-link">人格</a>
-            <span class="nav-divider">|</span>
-            <a href="../egos.html" class="nav-link">EGO</a>
-            <span class="nav-divider">|</span>
-            <a href="../enemies.html" class="nav-link">敌人</a>
-            <span class="nav-divider">|</span>
-            <a href="../abnormalities.html" class="nav-link">异想体</a>
-            <span class="nav-divider">|</span>
-            <a href="../status-effects.html" class="nav-link">状态效果</a>
-            <span class="nav-divider">|</span>
-            <a href="../ego-gifts.html" class="nav-link">E.G.O饰品</a>
-            <span class="nav-divider">|</span>
-            <a href="../events.html" class="nav-link">探索事件</a>
-            <span class="nav-separator">|</span>
-            <span class="nav-label">剧情分类</span>
-            <a href="../../story/main-story.html" class="nav-link">主线剧情</a>
-            <span class="nav-divider">|</span>
-            <a href="../../story/identity-story.html" class="nav-link">人格剧情</a>
-            <span class="nav-divider">|</span>
-            <a href="../../story/event-story.html" class="nav-link">活动剧情</a>
-            <span class="nav-divider">|</span>
-            <a href="../../story/story-characters.html" class="nav-link">剧情角色</a>
-            <span class="nav-divider">|</span>
-            <a href="../../story/odin-notes.html" class="nav-link">奥丁笔记</a>
-            <span class="nav-divider">|</span>
-            <a href="../../employee/index.html" class="nav-link">员工</a>
-        </div>
-    </nav>
+    <div id="nav-placeholder"></div>
 
     <div class="identity-detail">
-        <a href="../identities.html" class="back-link">← 返回人格列表</a>
+        <a href="/loomcompanywiki/data/identities.html" class="back-link">← 返回人格列表</a>
 
         <h1 class="detail-title" id="identityName"></h1>
 
+        <!-- 人格信息 -->
         <div class="info-card">
             <h3>人格信息</h3>
 
@@ -274,12 +318,10 @@
 
             <div class="sanity-section">
                 <h3>理智值</h3>
-
                 <div class="sanity-box positive">
                     <div class="sanity-title">基础理智值增加条件</div>
                     <ul id="sanityPositive"></ul>
                 </div>
-
                 <div class="sanity-box negative">
                     <div class="sanity-title">基础理智值减少条件</div>
                     <ul id="sanityNegative"></ul>
@@ -287,41 +329,209 @@
             </div>
         </div>
 
+        <!-- 技能 -->
+        <div id="skillsContainer"></div>
+
     </div>
 
     <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
 
-    <script src="../identities.js"></script>
+    <script src="/loomcompanywiki/data/identities.js"></script>
     <script>
         const MY_ID = 'LCR员工-帕菲';
 
         const DEFAULT_LEVEL = 30;
-        const UPDATE_TIME = '在此填写更新时间';
-        const HP_BASE = 0;
-        const HP_GROWTH = 0;
-        const DEF_BASE = 0;
-        const DEF_SHIFT = 0;
+        const UPDATE_TIME = '2026/08/04';
+        const HP_BASE = 99;
+        const HP_GROWTH = 2.3;
+        const DEF_BASE = +1;
+        const DEF_SHIFT = -1;
         const STAGGER_RATIOS = [0, 0, 0];
         const SPEED = {
-            I:  { min: 0, max: 0 },
-            II: { min: 0, max: 0 },
-            III:{ min: 0, max: 0 },
-            IV: { min: 0, max: 0 }
+            I:  { min: 2, max: 3 },
+            II: { min: 3, max: 3 },
+            III:{ min: 3, max: 3 },
+            IV: { min: 3, max: 3 }
+        };
+        const SANITY_POSITIVE = ['4'];
+        const SANITY_NEGATIVE = ['4'];
+
+        /*
+        ╔══════════════════════════════════════════╗
+        ║  技能数据 - 在此修改                    ║
+        ║  sin 用于自动匹配 sin.css 边框          ║
+        ║  罪孽属性: 暴怒/色欲/怠惰/暴食/忧郁/傲慢/嫉妒 ║
+        ║  英文对照: wrath/lust/sloth/gluttony/gloom/pride/envy ║
+        ╚══════════════════════════════════════════╝
+        */
+        const SKILLS = [
+            {
+                name: '技能一名称',
+                sin: '暴怒',
+                count: 3,
+                coin: 0,
+                attack: 0,
+                capacity: 0,
+                stages: ['I', 'II', 'III', 'IV'],
+                skillImg: '技能-物理-罪孽.png',
+                desc: {
+                    'I': 'I阶段技能描述',
+                    'II': 'II阶段技能描述',
+                    'III': 'III阶段技能描述',
+                    'IV': 'IV阶段技能描述'
+                }
+            },
+            {
+                name: '技能二名称',
+                sin: '色欲',
+                count: 2,
+                coin: 0,
+                attack: 0,
+                capacity: 0,
+                stages: ['I', 'II', 'III', 'IV'],
+                skillImg: '技能-物理-罪孽.png',
+                desc: {
+                    'I': 'I阶段技能描述',
+                    'II': 'II阶段技能描述',
+                    'III': 'III阶段技能描述',
+                    'IV': 'IV阶段技能描述'
+                }
+            },
+            {
+                name: '技能三名称',
+                sin: '怠惰',
+                count: 1,
+                coin: 0,
+                attack: 0,
+                capacity: 0,
+                stages: ['III', 'IV'],
+                skillImg: '技能-物理-罪孽.png',
+                desc: {
+                    'III': 'III阶段技能描述',
+                    'IV': 'IV阶段技能描述'
+                }
+            },
+            // 如果技能一有两个，复制上面的对象再粘贴一份在这里
+        ];
+
+        /*
+        ╔══════════════════════════════════════════╗
+        ║  守备技能 - 在此修改                    ║
+        ║  守备技能可能有1-2个，数组长度决定数量  ║
+        ╚══════════════════════════════════════════╝
+        */
+        const DEFENSE_SKILLS = [
+            {
+                name: '守备技能名称',
+                coin: 0,
+                defense: 0,
+                capacity: 0,
+                stages: ['I-III', 'IV'],
+                desc: {
+                    'I-III': 'I-III阶段技能描述',
+                    'IV': 'IV阶段技能描述'
+                },
+                extraSin: '傲慢',
+            },
+            // 如果有第二个守备技能，复制上面的对象再粘贴一份在这里
+        ];
+
+        const SIN_MAP = {
+            '暴怒': 'wrath',
+            '色欲': 'lust',
+            '怠惰': 'sloth',
+            '暴食': 'gluttony',
+            '忧郁': 'gloom',
+            '傲慢': 'pride',
+            '嫉妒': 'envy'
         };
 
-        // ===== 理智值条件 =====
-        // 数组内每条为一行，如：'拼点胜利时，增加10'
-        const SANITY_POSITIVE = [
-            '拼点胜利时，增加10'
-        ];
-        const SANITY_NEGATIVE = [
-            '拼点失败时，减少5'
-        ];
+        function renderSkills() {
+            const container = document.getElementById('skillsContainer');
+            let html = '';
 
+            SKILLS.forEach((skill, idx) => {
+                const sinEn = SIN_MAP[skill.sin] || 'wrath';
+                html += `
+                <div class="info-card skill-card sin-${sinEn}">
+                    <div class="skill-header">
+                        <span class="skill-name sin-text sin-${sinEn}">${skill.name}</span>
+                        <span class="sin-text sin-${sinEn}">×${skill.count}</span>
+                        <span class="skill-icons">
+                            <img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}
+                        </span>
+                        <span class="skill-icons">
+                            <img src="/loomcompanywiki/img/Attack.png"> ${skill.attack}
+                        </span>
+                        <span class="skill-icons">
+                            <img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}
+                        </span>
+                    </div>
+                    <div class="stage-tabs">
+                        ${skill.stages.map(s => `<button class="stage-tab" onclick="switchStage('skill',${idx},'${s}')">${s}阶段</button>`).join('')}
+                    </div>
+                    <div class="skill-desc-row" id="skill-desc-${idx}">
+                        <img src="/loomcompanywiki/img/${skill.skillImg}" onerror="this.style.display='none'">
+                        <span class="skill-desc-text">${skill.desc[skill.stages[0]] || ''}</span>
+                    </div>
+                </div>`;
+            });
+
+            DEFENSE_SKILLS.forEach((skill, idx) => {
+                html += `
+                <div class="info-card skill-card defense-card">
+                    <div class="skill-header">
+                        <span class="skill-name" style="color:#b0a590;">${skill.name}</span>
+                        <span class="skill-icons">
+                            <img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}
+                        </span>
+                        <span class="skill-icons">
+                            <img src="/loomcompanywiki/img/守备.png"> ${skill.defense}
+                        </span>
+                        <span class="skill-icons">
+                            <img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}
+                        </span>
+                    </div>
+                    <div class="stage-tabs">
+                        ${skill.stages.map(s => `<button class="stage-tab" onclick="switchDefStage(${idx},'${s}')">${s}阶段${s === 'IV' && skill.extraSin ? ' 追加：' + skill.extraSin : ''}</button>`).join('')}
+                    </div>
+                    <div class="skill-desc-row" id="def-desc-${idx}">
+                        <img src="/loomcompanywiki/img/${skill.extraSin ? skill.extraSin + '.png' : ''}" onerror="this.style.display='none'">
+                        <span class="skill-desc-text">${skill.desc[skill.stages[0]] || ''}</span>
+                    </div>
+                </div>`;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function switchStage(type, idx, stage) {
+            const skill = SKILLS[idx];
+            const descEl = document.getElementById('skill-desc-' + idx).querySelector('.skill-desc-text');
+            descEl.textContent = skill.desc[stage] || '';
+            const tabs = document.getElementById('skill-desc-' + idx).parentElement.querySelectorAll('.stage-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            const activeTab = Array.from(tabs).find(t => t.textContent.trim().startsWith(stage));
+            if (activeTab) activeTab.classList.add('active');
+        }
+
+        function switchDefStage(idx, stage) {
+            const skill = DEFENSE_SKILLS[idx];
+            const descEl = document.getElementById('def-desc-' + idx).querySelector('.skill-desc-text');
+            descEl.textContent = skill.desc[stage] || '';
+            const tabs = document.getElementById('def-desc-' + idx).parentElement.querySelectorAll('.stage-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            const activeTab = Array.from(tabs).find(t => t.textContent.trim().startsWith(stage));
+            if (activeTab) activeTab.classList.add('active');
+        }
+
+        renderSkills();
+
+        // ===== 上半部分渲染 =====
         const myData = IDENTITIES_INDEX.find(item => item.id === MY_ID);
 
         if (!myData) {
-            document.body.innerHTML = '<div style="text-align:center;color:var(--gold);padding:60px;"><h2>人格未找到</h2><p>请在索引文件中添加此人格，或检查 MY_ID 是否正确。</p><a href="../identities.html" style="color:var(--gold-dim);">← 返回人格列表</a></div>';
+            document.body.innerHTML = '<div style="text-align:center;color:var(--gold);padding:60px;"><h2>人格未找到</h2><p>请在索引文件中添加此人格，或检查 MY_ID 是否正确。</p><a href="/loomcompanywiki/data/identities.html" style="color:var(--gold-dim);">← 返回人格列表</a></div>';
             throw new Error('人格未找到：' + MY_ID);
         }
 
@@ -330,13 +540,13 @@
         document.getElementById('extractDisplay').textContent = myData.extract;
 
         const storyLink = document.getElementById('storyLink');
-        storyLink.href = '../../story/identity-story/' + MY_ID + '.html';
+        storyLink.href = '/loomcompanywiki/story/identity-story/' + MY_ID + '.html';
 
         const s = myData;
         const egoHTML = `
-            <span class="ego-resource-item"><img src="../../img/${s.skillTop.sin}.png"> ×3</span>
-            <span class="ego-resource-item"><img src="../../img/${s.skillMiddle.sin}.png"> ×2</span>
-            <span class="ego-resource-item"><img src="../../img/${s.skillBottom.sin}.png"> ×1</span>
+            <span class="ego-resource-item"><img src="/loomcompanywiki/img/${s.skillTop.sin}.png"> ×3</span>
+            <span class="ego-resource-item"><img src="/loomcompanywiki/img/${s.skillMiddle.sin}.png"> ×2</span>
+            <span class="ego-resource-item"><img src="/loomcompanywiki/img/${s.skillBottom.sin}.png"> ×1</span>
         `;
         document.getElementById('egoResources').innerHTML = egoHTML;
 
@@ -344,9 +554,9 @@
 
         const r = myData.resist;
         const resistHTML = `
-            <span class="resist-item"><img src="../../img/${r.slash.physics}.png"> ${r.slash.resistance}</span>
-            <span class="resist-item"><img src="../../img/${r.pierce.physics}.png"> ${r.pierce.resistance}</span>
-            <span class="resist-item"><img src="../../img/${r.blunt.physics}.png"> ${r.blunt.resistance}</span>
+            <span class="resist-item"><img src="/loomcompanywiki/img/${r.slash.physics}.png"> ${r.slash.resistance}</span>
+            <span class="resist-item"><img src="/loomcompanywiki/img/${r.pierce.physics}.png"> ${r.pierce.resistance}</span>
+            <span class="resist-item"><img src="/loomcompanywiki/img/${r.blunt.physics}.png"> ${r.blunt.resistance}</span>
         `;
         document.getElementById('resistDisplay').innerHTML = resistHTML;
 
@@ -369,20 +579,25 @@
 
         function updateStats() {
             const level = parseInt(document.getElementById('levelInput').value) || 1;
-
             const hp = Math.floor(HP_BASE + HP_GROWTH * level);
             document.getElementById('hpValue').textContent = hp;
-
             const def = Math.floor(DEF_BASE * level + DEF_SHIFT);
             document.getElementById('defValue').textContent = def;
-
             const staggerValues = STAGGER_RATIOS.map(r => Math.floor(hp * r));
             document.getElementById('staggerValues').textContent = staggerValues.join(' ');
         }
-
         updateStats();
     </script>
 
+    <script>
+        fetch('/loomcompanywiki/nav.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('nav-placeholder').innerHTML = html;
+                const current = document.querySelector('[data-nav="identities"]');
+                if (current) current.classList.add('active');
+            });
+    </script>
+
 </body>
-</html>
 </html>
