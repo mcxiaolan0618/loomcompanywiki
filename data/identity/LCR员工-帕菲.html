@@ -344,96 +344,80 @@
         const UPDATE_TIME = '2026/08/04';
         const HP_BASE = 99;
         const HP_GROWTH = 2.3;
-        const DEF_BASE = +1;
+        const DEF_BASE = 1;
         const DEF_SHIFT = -1;
-        const STAGGER_RATIOS = [0, 0, 0];
+        const STAGGER_RATIOS = [0.6, 0.3, 0.1];
         const SPEED = {
             I:  { min: 2, max: 3 },
             II: { min: 3, max: 3 },
             III:{ min: 3, max: 3 },
             IV: { min: 3, max: 3 }
         };
-        const SANITY_POSITIVE = ['4'];
-        const SANITY_NEGATIVE = ['4'];
+        const SANITY_POSITIVE = ['拼点胜利时，增加10'];
+        const SANITY_NEGATIVE = ['拼点失败时，减少5'];
 
-        /*
-        ╔══════════════════════════════════════════╗
-        ║  技能数据 - 在此修改                    ║
-        ║  sin 用于自动匹配 sin.css 边框          ║
-        ║  罪孽属性: 暴怒/色欲/怠惰/暴食/忧郁/傲慢/嫉妒 ║
-        ║  英文对照: wrath/lust/sloth/gluttony/gloom/pride/envy ║
-        ╚══════════════════════════════════════════╝
-        */
         const SKILLS = [
             {
-                name: '技能一名称',
+                name: '压抑',
                 sin: '暴怒',
                 count: 3,
-                coin: 0,
-                attack: 0,
-                capacity: 0,
+                coin: 3,
+                attack: 4,
+                capacity: 2,
                 stages: ['I', 'II', 'III', 'IV'],
-                skillImg: '技能-物理-罪孽.png',
+                skillImg: '技能-打击-暴怒.png',
                 desc: {
-                    'I': 'I阶段技能描述',
-                    'II': 'II阶段技能描述',
-                    'III': 'III阶段技能描述',
-                    'IV': 'IV阶段技能描述'
+                    'I': '[I阶段] 对目标造成4点打击伤害，若目标处于流血状态，伤害+2',
+                    'II': '[II阶段] 对目标造成5点打击伤害，若目标处于流血状态，伤害+3',
+                    'III': '[III阶段] 对目标造成6点打击伤害，若目标处于流血状态，伤害+4，并追加1层流血',
+                    'IV': '[IV阶段] 对目标造成8点打击伤害，若目标处于流血状态，伤害+5，并追加2层流血'
                 }
             },
             {
-                name: '技能二名称',
+                name: '斩裂',
                 sin: '色欲',
                 count: 2,
-                coin: 0,
-                attack: 0,
-                capacity: 0,
+                coin: 2,
+                attack: 6,
+                capacity: 1,
                 stages: ['I', 'II', 'III', 'IV'],
-                skillImg: '技能-物理-罪孽.png',
+                skillImg: '技能-斩击-色欲.png',
                 desc: {
-                    'I': 'I阶段技能描述',
-                    'II': 'II阶段技能描述',
-                    'III': 'III阶段技能描述',
-                    'IV': 'IV阶段技能描述'
+                    'I': '[I阶段] 对目标造成6点斩击伤害',
+                    'II': '[II阶段] 对目标造成8点斩击伤害，获得1层攻击强化',
+                    'III': '[III阶段] 对目标造成10点斩击伤害，获得2层攻击强化',
+                    'IV': '[IV阶段] 对目标造成12点斩击伤害，获得3层攻击强化'
                 }
             },
             {
-                name: '技能三名称',
+                name: '贯穿',
                 sin: '怠惰',
                 count: 1,
-                coin: 0,
-                attack: 0,
-                capacity: 0,
+                coin: 1,
+                attack: 12,
+                capacity: 3,
                 stages: ['III', 'IV'],
-                skillImg: '技能-物理-罪孽.png',
+                skillImg: '技能-突刺-怠惰.png',
                 desc: {
-                    'III': 'III阶段技能描述',
-                    'IV': 'IV阶段技能描述'
+                    'III': '[III阶段] 对目标造成12点突刺伤害，无视目标50%防御',
+                    'IV': '[IV阶段] 对目标造成16点突刺伤害，无视目标50%防御，追加2层脆弱'
                 }
             },
-            // 如果技能一有两个，复制上面的对象再粘贴一份在这里
         ];
 
-        /*
-        ╔══════════════════════════════════════════╗
-        ║  守备技能 - 在此修改                    ║
-        ║  守备技能可能有1-2个，数组长度决定数量  ║
-        ╚══════════════════════════════════════════╝
-        */
         const DEFENSE_SKILLS = [
             {
-                name: '守备技能名称',
+                name: '格挡',
                 coin: 0,
-                defense: 0,
-                capacity: 0,
+                defense: 8,
+                capacity: 1,
                 stages: ['I-III', 'IV'],
                 desc: {
-                    'I-III': 'I-III阶段技能描述',
-                    'IV': 'IV阶段技能描述'
+                    'I-III': '[I-III阶段] 获得8点护盾，持续1回合',
+                    'IV': '[IV阶段] 获得12点护盾，持续1回合，获得1层保护'
                 },
                 extraSin: '傲慢',
             },
-            // 如果有第二个守备技能，复制上面的对象再粘贴一份在这里
         ];
 
         const SIN_MAP = {
@@ -452,6 +436,7 @@
 
             SKILLS.forEach((skill, idx) => {
                 const sinEn = SIN_MAP[skill.sin] || 'wrath';
+                const defaultStage = skill.stages[skill.stages.length - 1];
                 html += `
                 <div class="info-card skill-card sin-${sinEn}">
                     <div class="skill-header">
@@ -468,16 +453,17 @@
                         </span>
                     </div>
                     <div class="stage-tabs">
-                        ${skill.stages.map(s => `<button class="stage-tab" onclick="switchStage('skill',${idx},'${s}')">${s}阶段</button>`).join('')}
+                        ${skill.stages.map(s => `<button class="stage-tab${s === defaultStage ? ' active' : ''}" onclick="switchStage('skill',${idx},'${s}')">${s}阶段</button>`).join('')}
                     </div>
                     <div class="skill-desc-row" id="skill-desc-${idx}">
                         <img src="/loomcompanywiki/img/${skill.skillImg}" onerror="this.style.display='none'">
-                        <span class="skill-desc-text">${skill.desc[skill.stages[0]] || ''}</span>
+                        <span class="skill-desc-text">${skill.desc[defaultStage] || ''}</span>
                     </div>
                 </div>`;
             });
 
             DEFENSE_SKILLS.forEach((skill, idx) => {
+                const defaultStage = skill.stages[skill.stages.length - 1];
                 html += `
                 <div class="info-card skill-card defense-card">
                     <div class="skill-header">
@@ -493,11 +479,11 @@
                         </span>
                     </div>
                     <div class="stage-tabs">
-                        ${skill.stages.map(s => `<button class="stage-tab" onclick="switchDefStage(${idx},'${s}')">${s}阶段${s === 'IV' && skill.extraSin ? ' 追加：' + skill.extraSin : ''}</button>`).join('')}
+                        ${skill.stages.map(s => `<button class="stage-tab${s === defaultStage ? ' active' : ''}" onclick="switchDefStage(${idx},'${s}')">${s}阶段${s === 'IV' && skill.extraSin ? ' 追加：' + skill.extraSin : ''}</button>`).join('')}
                     </div>
                     <div class="skill-desc-row" id="def-desc-${idx}">
                         <img src="/loomcompanywiki/img/${skill.extraSin ? skill.extraSin + '.png' : ''}" onerror="this.style.display='none'">
-                        <span class="skill-desc-text">${skill.desc[skill.stages[0]] || ''}</span>
+                        <span class="skill-desc-text">${skill.desc[defaultStage] || ''}</span>
                     </div>
                 </div>`;
             });
