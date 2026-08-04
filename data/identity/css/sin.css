@@ -1,7 +1,8 @@
-/* ========== 罪孽属性配色方案 ========== */
+/* ========== 罪孽属性配色方案 + 技能卡片样式 ========== */
 
 /* 暴怒 - 红 - 火焰 */
-.sin-wrath {
+.sin-wrath,
+.skill-card.sin-wrath {
     --sin-color: #d0423a;
     --sin-color-light: #f05a50;
     --sin-color-dark: #8b1e1a;
@@ -12,7 +13,8 @@
 }
 
 /* 色欲 - 橙 */
-.sin-lust {
+.sin-lust,
+.skill-card.sin-lust {
     --sin-color: #e8883a;
     --sin-color-light: #f5a060;
     --sin-color-dark: #9b4a1a;
@@ -23,7 +25,8 @@
 }
 
 /* 怠惰 - 黄 - 石头 */
-.sin-sloth {
+.sin-sloth,
+.skill-card.sin-sloth {
     --sin-color: #c9a62c;
     --sin-color-light: #e0c040;
     --sin-color-dark: #7a5e1a;
@@ -35,7 +38,8 @@
 }
 
 /* 暴食 - 绿 - 树叶 */
-.sin-gluttony {
+.sin-gluttony,
+.skill-card.sin-gluttony {
     --sin-color: #5a9a3a;
     --sin-color-light: #7ab85c;
     --sin-color-dark: #2e5a1a;
@@ -46,7 +50,8 @@
 }
 
 /* 忧郁 - 青 - 水 */
-.sin-gloom {
+.sin-gloom,
+.skill-card.sin-gloom {
     --sin-color: #3a8aaa;
     --sin-color-light: #5ab8d0;
     --sin-color-dark: #1a4a5a;
@@ -57,7 +62,8 @@
 }
 
 /* 傲慢 - 蓝 - 剑 */
-.sin-pride {
+.sin-pride,
+.skill-card.sin-pride {
     --sin-color: #3a5ab5;
     --sin-color-light: #5a7ad5;
     --sin-color-dark: #1a2a6b;
@@ -69,7 +75,8 @@
 }
 
 /* 嫉妒 - 紫 - 荆棘 */
-.sin-envy {
+.sin-envy,
+.skill-card.sin-envy {
     --sin-color: #7a3a9a;
     --sin-color-light: #a05ac0;
     --sin-color-dark: #3a1a5a;
@@ -79,8 +86,20 @@
     --sin-texture: repeating-linear-gradient(60deg, transparent, transparent 3px, rgba(160,90,192,0.04) 3px, rgba(160,90,192,0.04) 6px);
 }
 
-/* ========== 技能边框组件 ========== */
+/* ========== 技能卡片自动应用边框和纹理 ========== */
+.skill-card.sin-wrath,
+.skill-card.sin-lust,
+.skill-card.sin-sloth,
+.skill-card.sin-gluttony,
+.skill-card.sin-gloom,
+.skill-card.sin-pride,
+.skill-card.sin-envy {
+    border: 1px solid var(--sin-border);
+    background: var(--sin-bg) var(--sin-texture, none);
+    box-shadow: 0 0 6px var(--sin-glow);
+}
 
+/* ========== 技能边框组件（独立使用） ========== */
 .skill-frame {
     border: 1px solid var(--sin-border);
     border-radius: 8px;
@@ -92,97 +111,4 @@
 }
 .skill-frame:hover {
     box-shadow: 0 0 14px var(--sin-glow);
-}
-/* ========== 技能卡片自动应用 sin 变量 ========== */
-.skill-card.sin-wrath {
-    --sin-color: #d0423a;
-    --sin-color-light: #f05a50;
-    --sin-color-dark: #8b1e1a;
-    --sin-glow: rgba(208, 66, 58, 0.3);
-    --sin-bg: rgba(208, 66, 58, 0.06);
-    --sin-border: rgba(208, 66, 58, 0.35);
-    --sin-texture: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(240,90,80,0.04) 3px, rgba(240,90,80,0.04) 6px);
-    border: 1px solid var(--sin-border);
-    background: var(--sin-bg) var(--sin-texture, none);
-    box-shadow: 0 0 6px var(--sin-glow);
-}
-
-.skill-card.sin-lust {
-    --sin-color: #e8883a;
-    --sin-color-light: #f5a060;
-    --sin-color-dark: #9b4a1a;
-    --sin-glow: rgba(232, 136, 58, 0.3);
-    --sin-bg: rgba(232, 136, 58, 0.06);
-    --sin-border: rgba(232, 136, 58, 0.35);
-    --sin-texture: repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(245,160,96,0.04) 4px, rgba(245,160,96,0.04) 8px);
-    border: 1px solid var(--sin-border);
-    background: var(--sin-bg) var(--sin-texture, none);
-    box-shadow: 0 0 6px var(--sin-glow);
-}
-
-.skill-card.sin-sloth {
-    --sin-color: #c9a62c;
-    --sin-color-light: #e0c040;
-    --sin-color-dark: #7a5e1a;
-    --sin-glow: rgba(201, 166, 44, 0.3);
-    --sin-bg: rgba(201, 166, 44, 0.06);
-    --sin-border: rgba(201, 166, 44, 0.35);
-    --sin-texture: radial-gradient(circle at 20% 30%, rgba(224,192,64,0.06) 1px, transparent 1px), radial-gradient(circle at 70% 60%, rgba(224,192,64,0.04) 1px, transparent 1px);
-    background-size: 12px 12px, 16px 16px;
-    border: 1px solid var(--sin-border);
-    background: var(--sin-bg) var(--sin-texture, none);
-    box-shadow: 0 0 6px var(--sin-glow);
-}
-
-.skill-card.sin-gluttony {
-    --sin-color: #5a9a3a;
-    --sin-color-light: #7ab85c;
-    --sin-color-dark: #2e5a1a;
-    --sin-glow: rgba(90, 154, 58, 0.3);
-    --sin-bg: rgba(90, 154, 58, 0.06);
-    --sin-border: rgba(90, 154, 58, 0.35);
-    --sin-texture: repeating-linear-gradient(-30deg, transparent, transparent 5px, rgba(122,184,92,0.04) 5px, rgba(122,184,92,0.04) 10px);
-    border: 1px solid var(--sin-border);
-    background: var(--sin-bg) var(--sin-texture, none);
-    box-shadow: 0 0 6px var(--sin-glow);
-}
-
-.skill-card.sin-gloom {
-    --sin-color: #3a8aaa;
-    --sin-color-light: #5ab8d0;
-    --sin-color-dark: #1a4a5a;
-    --sin-glow: rgba(58, 138, 170, 0.3);
-    --sin-bg: rgba(58, 138, 170, 0.06);
-    --sin-border: rgba(58, 138, 170, 0.35);
-    --sin-texture: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(90,184,208,0.05) 2px, rgba(90,184,208,0.05) 4px);
-    border: 1px solid var(--sin-border);
-    background: var(--sin-bg) var(--sin-texture, none);
-    box-shadow: 0 0 6px var(--sin-glow);
-}
-
-.skill-card.sin-pride {
-    --sin-color: #3a5ab5;
-    --sin-color-light: #5a7ad5;
-    --sin-color-dark: #1a2a6b;
-    --sin-glow: rgba(58, 90, 181, 0.3);
-    --sin-bg: rgba(58, 90, 181, 0.06);
-    --sin-border: rgba(58, 90, 181, 0.35);
-    --sin-texture: linear-gradient(135deg, transparent 40%, rgba(90,122,213,0.05) 40%, rgba(90,122,213,0.05) 42%, transparent 42%), linear-gradient(-45deg, transparent 40%, rgba(90,122,213,0.05) 40%, rgba(90,122,213,0.05) 42%, transparent 42%);
-    background-size: 20px 20px, 20px 20px;
-    border: 1px solid var(--sin-border);
-    background: var(--sin-bg) var(--sin-texture, none);
-    box-shadow: 0 0 6px var(--sin-glow);
-}
-
-.skill-card.sin-envy {
-    --sin-color: #7a3a9a;
-    --sin-color-light: #a05ac0;
-    --sin-color-dark: #3a1a5a;
-    --sin-glow: rgba(122, 58, 154, 0.3);
-    --sin-bg: rgba(122, 58, 154, 0.06);
-    --sin-border: rgba(122, 58, 154, 0.35);
-    --sin-texture: repeating-linear-gradient(60deg, transparent, transparent 3px, rgba(160,90,192,0.04) 3px, rgba(160,90,192,0.04) 6px);
-    border: 1px solid var(--sin-border);
-    background: var(--sin-bg) var(--sin-texture, none);
-    box-shadow: 0 0 6px var(--sin-glow);
 }
