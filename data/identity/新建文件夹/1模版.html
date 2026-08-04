@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>人格详情 - Loom Company 同人维基</title>
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../人格/css/sin.css">
+    <link rel="stylesheet" href="/loomcompanywiki/css/style.css">
+    <link rel="stylesheet" href="/loomcompanywiki/data/identity/人格/css/sin.css">
     <style>
         .identity-detail {
             max-width: 800px;
@@ -172,7 +172,7 @@
     <div id="nav-placeholder"></div>
 
     <div class="identity-detail">
-        <a href="../identities.html" class="back-link">← 返回人格列表</a>
+        <a href="/loomcompanywiki/data/identities.html" class="back-link">← 返回人格列表</a>
 
         <h1 class="detail-title" id="identityName"></h1>
 
@@ -252,7 +252,7 @@
 
     <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
 
-    <script src="../identities.js"></script>
+    <script src="/loomcompanywiki/data/identities.js"></script>
     <script>
         const MY_ID = '在此填写人格id，如：LCR员工-萨尔温';
 
@@ -276,7 +276,7 @@
         const myData = IDENTITIES_INDEX.find(item => item.id === MY_ID);
 
         if (!myData) {
-            document.body.innerHTML = '<div style="text-align:center;color:var(--gold);padding:60px;"><h2>人格未找到</h2><p>请在索引文件中添加此人格，或检查 MY_ID 是否正确。</p><a href="../identities.html" style="color:var(--gold-dim);">← 返回人格列表</a></div>';
+            document.body.innerHTML = '<div style="text-align:center;color:var(--gold);padding:60px;"><h2>人格未找到</h2><p>请在索引文件中添加此人格，或检查 MY_ID 是否正确。</p><a href="/loomcompanywiki/data/identities.html" style="color:var(--gold-dim);">← 返回人格列表</a></div>';
             throw new Error('人格未找到：' + MY_ID);
         }
 
@@ -285,13 +285,13 @@
         document.getElementById('extractDisplay').textContent = myData.extract;
 
         const storyLink = document.getElementById('storyLink');
-        storyLink.href = '../../story/identity-story/' + MY_ID + '.html';
+        storyLink.href = '/loomcompanywiki/story/identity-story/' + MY_ID + '.html';
 
         const s = myData;
         const egoHTML = `
-            <span class="ego-resource-item"><img src="../../img/${s.skillTop.sin}.png"> ×3</span>
-            <span class="ego-resource-item"><img src="../../img/${s.skillMiddle.sin}.png"> ×2</span>
-            <span class="ego-resource-item"><img src="../../img/${s.skillBottom.sin}.png"> ×1</span>
+            <span class="ego-resource-item"><img src="/loomcompanywiki/img/${s.skillTop.sin}.png"> ×3</span>
+            <span class="ego-resource-item"><img src="/loomcompanywiki/img/${s.skillMiddle.sin}.png"> ×2</span>
+            <span class="ego-resource-item"><img src="/loomcompanywiki/img/${s.skillBottom.sin}.png"> ×1</span>
         `;
         document.getElementById('egoResources').innerHTML = egoHTML;
 
@@ -299,9 +299,9 @@
 
         const r = myData.resist;
         const resistHTML = `
-            <span class="resist-item"><img src="../../img/${r.slash.physics}.png"> ${r.slash.resistance}</span>
-            <span class="resist-item"><img src="../../img/${r.pierce.physics}.png"> ${r.pierce.resistance}</span>
-            <span class="resist-item"><img src="../../img/${r.blunt.physics}.png"> ${r.blunt.resistance}</span>
+            <span class="resist-item"><img src="/loomcompanywiki/img/${r.slash.physics}.png"> ${r.slash.resistance}</span>
+            <span class="resist-item"><img src="/loomcompanywiki/img/${r.pierce.physics}.png"> ${r.pierce.resistance}</span>
+            <span class="resist-item"><img src="/loomcompanywiki/img/${r.blunt.physics}.png"> ${r.blunt.resistance}</span>
         `;
         document.getElementById('resistDisplay').innerHTML = resistHTML;
 
@@ -339,7 +339,7 @@
     </script>
 
     <script>
-        fetch('/nav.html')
+        fetch('/loomcompanywiki/nav.html')
             .then(res => res.text())
             .then(html => {
                 document.getElementById('nav-placeholder').innerHTML = html;
