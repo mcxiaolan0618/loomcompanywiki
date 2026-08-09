@@ -112,7 +112,7 @@ const IDENTITIES_INDEX = [
         supportPassive: { sin: '暴怒', way: '共鸣', need: '3' }
     },
     {
-        id: 'LCR员工-贝德维尔',
+        id: 'LCR员工-加拉哈德',
         rarity: 1,
         extract: '常驻',
         keywords: ['织机公司', 'LCR'],

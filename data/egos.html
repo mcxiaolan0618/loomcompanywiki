@@ -77,53 +77,52 @@
         .ego-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 12px;
             justify-content: center;
         }
         .ego-card {
-            width: 260px;
-            aspect-ratio: 3/4;
+            width: 220px;
             background: var(--surface2);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 16px;
+            border-radius: 8px;
+            padding: 12px 14px;
             transition: all 0.3s;
             cursor: pointer;
             text-decoration: none;
             color: inherit;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            text-align: center;
+            justify-content: space-between;
             gap: 8px;
-            position: relative;
-            overflow: hidden;
         }
         .ego-card:hover {
             border-color: var(--gold);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .ego-card .ego-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
         }
         .ego-card .ego-card-name {
             color: var(--gold);
             font-weight: bold;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             letter-spacing: 1px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .ego-card .ego-card-owner {
             color: var(--text-dim);
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             letter-spacing: 1px;
         }
-        .ego-card .ego-card-level {
-            position: absolute;
-            bottom: 8px;
-            right: 8px;
-        }
         .ego-card .ego-card-level img {
-            width: 56px;
-            height: 24px;
+            width: 70px;
+            height: 26px;
             object-fit: contain;
         }
 
@@ -236,8 +235,10 @@
         function renderCard(item) {
             return `
             <a href="ego/${item.id}.html" class="ego-card">
-                <span class="ego-card-name">${item.owner}-${item.name}</span>
-                <span class="ego-card-owner">${item.obtain}</span>
+                <div class="ego-info">
+                    <span class="ego-card-name">${item.owner}-${item.name}</span>
+                    <span class="ego-card-owner">${item.obtain}</span>
+                </div>
                 <div class="ego-card-level">
                     <img src="../img/${item.level}.png" alt="${item.level}">
                 </div>
