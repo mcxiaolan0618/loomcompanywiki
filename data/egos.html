@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="../css/style.css">
     <style>
         .egos-page {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 16px 8px;
+            padding: 16px 10px;
         }
         .egos-page h2 {
             text-align: center;
@@ -82,11 +82,13 @@
             gap: 6px;
         }
         .ego-card {
-            width: 100px;
+            width: fit-content;
+            min-width: 160px;
+            flex: 1 1 auto;
             background: var(--surface2);
             border: 1px solid var(--border);
             border-radius: 4px;
-            padding: 8px 10px;
+            padding: 6px 8px;
             transition: all 0.2s;
             cursor: pointer;
             text-decoration: none;
@@ -94,6 +96,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 6px;
         }
         .ego-card:hover {
             border-color: var(--gold);
@@ -112,12 +115,11 @@
             font-size: 0.7rem;
             letter-spacing: 0.5px;
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
         .ego-card .ego-card-owner {
             color: var(--text-dim);
             font-size: 0.58rem;
+            white-space: nowrap;
         }
         .ego-card .ego-card-level img {
             width: 42px;
@@ -153,12 +155,6 @@
         }
         .pagination button:disabled { opacity: 0.3; cursor: not-allowed; }
         .no-result { text-align: center; color: var(--text-dim); padding: 30px; font-style: italic; font-size: 0.8rem; }
-
-        @media (max-width: 400px) {
-            .ego-card { width: 100%; padding: 5px 8px; }
-            .ego-card .ego-card-name { font-size: 0.72rem; }
-            .ego-card .ego-card-level img { width: 40px; height: 15px; }
-        }
     </style>
 </head>
 <body>
