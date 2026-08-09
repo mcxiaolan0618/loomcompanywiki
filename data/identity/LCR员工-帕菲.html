@@ -458,12 +458,13 @@
             {
                 name: '格挡',
                 coin: 0,
+                defenseType: '守备',
                 defense: 8,
                 capacity: 1,
                 stages: ['I-III', 'IV'],
                 desc: {
-                    'I-III': '[I-III阶段] 获得8点护盾，持续1回合',
-                    'IV': '[IV阶段] 获得12点护盾，持续1回合，获得1层保护'
+                    'I-III': `[I-III阶段] 获得8点护盾，持续1回合`,
+                    'IV': `[IV阶段] 获得12点护盾，持续1回合，获得1层保护`
                 },
                 extraSin: '傲慢',
             },
@@ -521,17 +522,16 @@
                             <img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}
                         </span>
                         <span class="skill-icons">
-                            <img src="/loomcompanywiki/img/守备.png"> ${skill.defense}
+                            <img src="/loomcompanywiki/img/${skill.defenseType}.png"> ${skill.defense}
                         </span>
                         <span class="skill-icons">
                             <img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}
                         </span>
                     </div>
                     <div class="stage-tabs">
-                        ${skill.stages.map(s => `<button class="stage-tab${s === defaultStage ? ' active' : ''}" onclick="switchDefStage(${idx},'${s}')">${s}阶段${s === 'IV' && skill.extraSin ? ' 追加：' + skill.extraSin : ''}</button>`).join('')}
+                        ${skill.stages.map(s => `<button class="stage-tab${s === defaultStage ? ' active' : ''}" onclick="switchDefStage(${idx},'${s}')">${s}阶段${s === 'IV' && skill.extraSin ? ' 追加：<img src=\\'/loomcompanywiki/img/' + skill.extraSin + '.png\\' style=\\'width:18px;height:18px;vertical-align:middle;\\'>' : ''}</button>`).join('')}
                     </div>
                     <div class="skill-desc-row" id="def-desc-${idx}">
-                        <img src="/loomcompanywiki/img/${skill.extraSin ? skill.extraSin + '.png' : ''}" onerror="this.style.display='none'">
                         <span class="skill-desc-text">${skill.desc[defaultStage] || ''}</span>
                     </div>
                 </div>`;
