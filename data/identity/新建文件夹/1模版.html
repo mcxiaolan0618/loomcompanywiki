@@ -47,6 +47,12 @@
             padding-bottom: 8px;
             border-bottom: 1px solid var(--border);
         }
+        .info-card h4 {
+            color: var(--gold-dim);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin: 12px 0 8px;
+        }
 
         .info-row {
             display: flex;
@@ -123,117 +129,46 @@
         .speed-item { color: var(--text-dim); font-size: 0.82rem; }
         .speed-item span { color: var(--text); }
 
-        .story-link {
-            color: var(--gold);
-            text-decoration: none;
-            font-size: 0.85rem;
-        }
+        .story-link { color: var(--gold); text-decoration: none; font-size: 0.85rem; }
         .story-link:hover { text-decoration: underline; }
 
         .sanity-section { margin-top: 14px; }
-        .sanity-box {
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 8px;
-            font-size: 0.85rem;
-        }
-        .sanity-box.positive {
-            border: 1px solid #3a6ab5;
-            background: rgba(58,106,181,0.08);
-        }
-        .sanity-box.positive .sanity-title {
-            color: #5a9af5;
-            font-weight: bold;
-            margin-bottom: 6px;
-        }
-        .sanity-box.negative {
-            border: 1px solid #8b3a3a;
-            background: rgba(139,58,58,0.08);
-        }
-        .sanity-box.negative .sanity-title {
-            color: #d04a4a;
-            font-weight: bold;
-            margin-bottom: 6px;
-        }
+        .sanity-box { padding: 12px; border-radius: 6px; margin-bottom: 8px; font-size: 0.85rem; }
+        .sanity-box.positive { border: 1px solid #3a6ab5; background: rgba(58,106,181,0.08); }
+        .sanity-box.positive .sanity-title { color: #5a9af5; font-weight: bold; margin-bottom: 6px; }
+        .sanity-box.negative { border: 1px solid #8b3a3a; background: rgba(139,58,58,0.08); }
+        .sanity-box.negative .sanity-title { color: #d04a4a; font-weight: bold; margin-bottom: 6px; }
         .sanity-box ul { list-style: none; padding: 0; margin: 0; }
         .sanity-box li { color: var(--text-dim); padding: 2px 0; }
         .sanity-box li::before { content: '• '; }
 
         /* ========== 技能卡片 ========== */
-        .skill-card {
-            border-radius: 8px;
-            padding: 14px;
-            margin-bottom: 12px;
+        .skill-card { border-radius: 8px; padding: 14px; margin-bottom: 12px; }
+        .skill-card .skill-header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .skill-card .skill-tag {
+            font-size: 0.65rem; padding: 2px 6px; border-radius: 3px;
+            background: var(--surface); color: var(--text-dim); letter-spacing: 1px;
+            margin-right: 2px;
         }
-        .skill-card .skill-header {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-        .skill-card .skill-name {
-            font-weight: bold;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-        .skill-card .skill-icons {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-        .skill-card .skill-icons img {
-            width: 22px;
-            height: 22px;
-        }
-        .skill-card .skill-icons .icon-label {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-        }
-        .skill-card .stage-tabs {
-            display: flex;
-            gap: 4px;
-            flex-wrap: wrap;
-            margin-bottom: 8px;
-        }
+        .skill-card .skill-name { font-weight: bold; font-size: 0.9rem; letter-spacing: 1px; }
+        .skill-card .skill-icons { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .skill-card .skill-icons img { width: 22px; height: 22px; }
+        .skill-card .stage-tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; }
         .skill-card .stage-tab {
-            padding: 4px 10px;
-            border-radius: 4px;
-            border: 1px solid var(--border);
-            background: var(--surface);
-            color: var(--text-dim);
-            cursor: pointer;
-            font-size: 0.72rem;
-            font-family: inherit;
-            transition: all 0.2s;
+            padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border);
+            background: var(--surface); color: var(--text-dim); cursor: pointer;
+            font-size: 0.72rem; font-family: inherit; transition: all 0.2s;
         }
         .skill-card .stage-tab:hover { border-color: var(--gold); color: var(--gold); }
         .skill-card .stage-tab.active {
-            border-color: var(--sin-border);
-            background: var(--sin-bg);
-            color: var(--sin-color);
-            font-weight: bold;
+            border-color: var(--sin-border); background: var(--sin-bg);
+            color: var(--sin-color); font-weight: bold;
         }
-        .skill-card .skill-desc-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-        }
-        .skill-card .skill-desc-row img {
-            width: 28px;
-            height: 28px;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-        .skill-card .skill-desc-text {
-            color: var(--text-dim);
-            font-size: 0.8rem;
-            line-height: 1.6;
-            white-space: pre-line;
-        }
+        .skill-card .skill-desc-row { display: flex; align-items: flex-start; gap: 8px; }
+        .skill-card .skill-desc-row img { width: 28px; height: 28px; flex-shrink: 0; margin-top: 2px; }
+        .skill-card .skill-desc-text { color: var(--text-dim); font-size: 0.8rem; line-height: 1.6; white-space: pre-line; }
 
-        .skill-card .skill-desc-text .sin-text { font-weight: bold; }
+        .sin-text { font-weight: bold; }
         .sin-text.sin-wrath { color: #d0423a; }
         .sin-text.sin-lust { color: #e8883a; }
         .sin-text.sin-sloth { color: #c9a62c; }
@@ -243,11 +178,33 @@
         .sin-text.sin-envy { color: #7a3a9a; }
 
         .skill-card.defense-card .stage-tab.active {
-            border-color: #8a7e6b;
-            background: rgba(138,126,107,0.12);
-            color: #b0a590;
-            font-weight: bold;
+            border-color: #8a7e6b; background: rgba(138,126,107,0.12);
+            color: #b0a590; font-weight: bold;
         }
+
+        /* ========== 被动 ========== */
+        .passive-block { margin-bottom: 14px; }
+        .passive-name { color: var(--text); font-weight: bold; font-size: 0.9rem; }
+        .passive-info { color: var(--text-dim); font-size: 0.8rem; margin-bottom: 4px; }
+        .passive-info img { width: 18px; height: 18px; vertical-align: middle; }
+        .passive-effect { color: var(--text-dim); font-size: 0.8rem; line-height: 1.5; }
+        .passive-stage-tabs { display: flex; gap: 4px; flex-wrap: wrap; margin: 6px 0; }
+        .passive-stage-tab {
+            padding: 3px 8px; border-radius: 3px; border: 1px solid var(--border);
+            background: var(--surface); color: var(--text-dim); cursor: pointer;
+            font-size: 0.7rem; font-family: inherit; transition: all 0.2s;
+        }
+        .passive-stage-tab:hover { border-color: var(--gold); color: var(--gold); }
+        .passive-stage-tab.active {
+            border-color: var(--gold-dim); background: rgba(201,166,92,0.1);
+            color: var(--gold); font-weight: bold;
+        }
+
+        /* ========== 语音台词 ========== */
+        .voice-list { list-style: none; padding: 0; margin: 0; }
+        .voice-list li { padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 0.82rem; }
+        .voice-list li .voice-label { color: var(--gold-dim); font-weight: bold; margin-right: 6px; white-space: nowrap; }
+        .voice-list li .voice-text { color: var(--text-dim); }
     </style>
 </head>
 <body>
@@ -259,64 +216,51 @@
 
         <h1 class="detail-title" id="identityName"></h1>
 
-        <!-- 人格信息 -->
         <div class="info-card">
             <h3>人格信息</h3>
-
             <div class="info-row">
                 <span class="info-item"><strong>更新时间</strong> <span id="updateTime"></span></span>
                 <span class="info-item"><strong>获取方式</strong> <span id="extractDisplay"></span></span>
             </div>
-
             <div class="info-row">
                 <span class="info-item"><strong><a id="storyLink" class="story-link">观看剧情</a></strong></span>
             </div>
-
             <div class="ego-resources" id="egoResources"></div>
-
             <div class="info-row" style="margin-top:8px;">
                 <span class="info-item"><strong>特性关键词</strong> <span id="keywordsDisplay"></span></span>
             </div>
-
             <div class="info-row">
                 <span class="info-item"><strong>物理抗性</strong></span>
                 <div class="resist-display" id="resistDisplay"></div>
             </div>
-
             <div style="margin-top:16px;">
                 <h3>能力值</h3>
-
                 <div class="level-input-row">
                     <span class="label">请输入等级</span>
                     <input type="number" id="levelInput" min="1" max="50" onchange="updateStats()">
                 </div>
-
                 <div class="stat-row">
                     <span class="stat-label">生命值：</span>
                     <span class="stat-value" id="hpValue"></span>
                     <span class="stat-base">基础值：<span id="hpBase"></span></span>
                     <span class="stat-base">成长系数：<span id="hpGrowth"></span></span>
                 </div>
-
                 <div class="stat-row">
                     <span class="stat-label">防御等级：</span>
                     <span class="stat-value" id="defValue"></span>
                     <span class="stat-base">基础值：<span id="defBase"></span></span>
                     <span class="stat-base">变动值：<span id="defShift"></span></span>
                 </div>
-
                 <div class="stat-row">
                     <span class="stat-label">混乱阈值：</span>
                     <span class="stat-value" id="staggerValues"></span>
                     <span class="stat-base">基础值：<span id="staggerBase"></span></span>
                 </div>
-
                 <div class="stat-row">
                     <span class="stat-label">速度：</span>
                     <div class="speed-row" id="speedDisplay"></div>
                 </div>
             </div>
-
             <div class="sanity-section">
                 <h3>理智值</h3>
                 <div class="sanity-box positive">
@@ -330,9 +274,20 @@
             </div>
         </div>
 
-        <!-- 技能 -->
         <div id="skillsContainer"></div>
 
+        <div class="info-card">
+            <h3>被动</h3>
+            <h4>战斗</h4>
+            <div id="combatPassive"></div>
+            <h4>支援</h4>
+            <div id="supportPassive"></div>
+        </div>
+
+        <div class="info-card">
+            <h3>语音台词</h3>
+            <ul class="voice-list" id="voiceList"></ul>
+        </div>
     </div>
 
     <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
@@ -345,7 +300,7 @@
         // ===== 默认等级 =====
         const DEFAULT_LEVEL = 30;
 
-        // ===== 更新时间（如：2026/6/18）=====
+        // ===== 更新时间 =====
         const UPDATE_TIME = '在此填写更新时间';
 
         // ===== 生命值 =====
@@ -356,10 +311,10 @@
         const DEF_BASE = 0;
         const DEF_SHIFT = 0;
 
-        // ===== 混乱阈值（数组长度=条数，数值=比例）=====
+        // ===== 混乱阈值 =====
         const STAGGER_RATIOS = [0, 0, 0];
 
-        // ===== 速度 I~IV =====
+        // ===== 速度 =====
         const SPEED = {
             I:  { min: 0, max: 0 },
             II: { min: 0, max: 0 },
@@ -367,140 +322,197 @@
             IV: { min: 0, max: 0 }
         };
 
-        // ===== 理智值条件 =====
-        const SANITY_POSITIVE = [
-            // 在此填写，如：'拼点胜利时，增加10'
-        ];
-        const SANITY_NEGATIVE = [
-            // 在此填写，如：'拼点失败时，减少5'
-        ];
+        // ===== 理智值 =====
+        const SANITY_POSITIVE = [];
+        const SANITY_NEGATIVE = [];
 
         /*
         ╔══════════════════════════════════════════╗
-        ║  技能数据 - 在此修改                    ║
-        ║  sin: 暴怒/色欲/怠惰/暴食/忧郁/傲慢/嫉妒 ║
-        ║  count: ×3/×2/×1                       ║
-        ║  coin: Coin.png 数量                    ║
-        ║  attack: Attack.png 数值                ║
-        ║  capacity: 容量.png 数量                ║
-        ║  stages: 可切换的阶段数组               ║
-        ║  skillImg: 技能图标文件名               ║
-        ║  desc: 各阶段描述（支持换行）           ║
-        ║  如需额外技能，复制对象粘贴到数组中     ║
+        ║  技能数据                               ║
+        ║  tag: 一技能/二技能/三技能              ║
+        ║  普通技能：sin和skillImg自动从索引读取 ║
+        ║  额外技能：需手动填写sin和skillImg     ║
         ╚══════════════════════════════════════════╝
         */
         const SKILLS = [
             {
-                name: '在此填写技能一名称',
-                sin: '暴怒',
-                count: 3,
-                coin: 0,
-                attack: 0,
-                capacity: 0,
+                tag: '一技能',
+                name: '在此填写技能名',
+                count: 3, coin: 0, attack: 0, capacity: 0,
                 stages: ['I', 'II', 'III', 'IV'],
-                skillImg: '在此填写技能图标文件名',
-                desc: {
-                    'I': '在此填写I阶段描述',
-                    'II': '在此填写II阶段描述',
-                    'III': '在此填写III阶段描述',
-                    'IV': '在此填写IV阶段描述'
-                }
+                desc: { 'I': '', 'II': '', 'III': '', 'IV': '' }
             },
+            /*
+            // 额外一技能示例
             {
-                name: '在此填写技能二名称',
+                tag: '一技能',
+                name: '额外技能名',
                 sin: '色欲',
-                count: 2,
-                coin: 0,
-                attack: 0,
-                capacity: 0,
+                count: 3, coin: 0, attack: 0, capacity: 0,
                 stages: ['I', 'II', 'III', 'IV'],
-                skillImg: '在此填写技能图标文件名',
-                desc: {
-                    'I': '在此填写I阶段描述',
-                    'II': '在此填写II阶段描述',
-                    'III': '在此填写III阶段描述',
-                    'IV': '在此填写IV阶段描述'
-                }
+                skillImg: '技能-突刺-色欲.png',
+                desc: { 'I': '', 'II': '', 'III': '', 'IV': '' }
+            },
+            */
+            {
+                tag: '二技能',
+                name: '在此填写技能名',
+                count: 2, coin: 0, attack: 0, capacity: 0,
+                stages: ['I', 'II', 'III', 'IV'],
+                desc: { 'I': '', 'II': '', 'III': '', 'IV': '' }
             },
             {
-                name: '在此填写技能三名称',
-                sin: '怠惰',
-                count: 1,
-                coin: 0,
-                attack: 0,
-                capacity: 0,
+                tag: '三技能',
+                name: '在此填写技能名',
+                count: 1, coin: 0, attack: 0, capacity: 0,
                 stages: ['III', 'IV'],
-                skillImg: '在此填写技能图标文件名',
-                desc: {
-                    'III': '在此填写III阶段描述',
-                    'IV': '在此填写IV阶段描述'
-                }
+                desc: { 'III': '', 'IV': '' }
             },
-            // 如果技能一有两个，复制上面的对象再粘贴一份在这里
+            /*
+            // 额外三技能示例
+            {
+                tag: '三技能',
+                name: '额外技能名',
+                sin: '嫉妒',
+                count: 1, coin: 0, attack: 0, capacity: 0,
+                stages: ['III', 'IV'],
+                skillImg: '技能-斩击-嫉妒.png',
+                desc: { 'III': '', 'IV': '' }
+            },
+            */
         ];
 
         /*
         ╔══════════════════════════════════════════╗
-        ║  守备技能 - 在此修改                    ║
-        ║  defenseType: 守备类型图标文件名        ║
-        ║  extraSin: IV阶段追加罪孽属性           ║
-        ║  守备技能可能有1-2个，数组长度决定数量  ║
+        ║  守备技能                               ║
         ╚══════════════════════════════════════════╝
         */
         const DEFENSE_SKILLS = [
             {
                 name: '在此填写守备技能名称',
-                coin: 0,
-                defenseType: '守备',
-                defense: 0,
-                capacity: 0,
+                coin: 0, defenseType: '守备', defense: 0, capacity: 0,
                 stages: ['I-III', 'IV'],
-                desc: {
-                    'I-III': '在此填写I-III阶段描述',
-                    'IV': '在此填写IV阶段描述'
-                },
-                extraSin: '在此填写IV阶段追加罪孽属性',
+                desc: { 'I-III': '', 'IV': '' },
+                extraSin: '',
             },
-            // 如果有第二个守备技能，复制上面的对象再粘贴一份在这里
+            /*
+            // 第二个守备技能示例
+            {
+                name: '额外守备名称',
+                coin: 0, defenseType: '闪避', defense: 0, capacity: 0,
+                stages: ['I-III', 'IV'],
+                desc: { 'I-III': '', 'IV': '' },
+                extraSin: '色欲',
+            },
+            */
         ];
 
-        const SIN_MAP = {
-            '暴怒': 'wrath',
-            '色欲': 'lust',
-            '怠惰': 'sloth',
-            '暴食': 'gluttony',
-            '忧郁': 'gloom',
-            '傲慢': 'pride',
-            '嫉妒': 'envy'
+        /*
+        ╔══════════════════════════════════════════╗
+        ║  战斗被动（数组）                       ║
+        ║  noCost: true = 零消耗，不显示sin行     ║
+        ║  noCost: false/不写 = 从索引读取资源    ║
+        ║  零消耗被动放前面                       ║
+        ╚══════════════════════════════════════════╝
+        */
+        const COMBAT_PASSIVES = [
+            /*
+            // 零消耗被动示例
+            {
+                name: '天生被动（无消耗）',
+                noCost: true,
+                stages: ['I', 'II', 'III', 'IV'],
+                effects: { 'I': '', 'II': '', 'III': '', 'IV': '' }
+            },
+            */
+            {
+                name: '在此填写战斗被动名',
+                stages: ['I', 'II', 'III', 'IV'],
+                effects: { 'I': '', 'II': '', 'III': '', 'IV': '' }
+            },
+        ];
+
+        /*
+        ╔══════════════════════════════════════════╗
+        ║  支援被动                               ║
+        ╚══════════════════════════════════════════╝
+        */
+        const SUPPORT_PASSIVE = {
+            name: '在此填写支援被动名',
+            stages: ['III', 'IV'],
+            effects: { 'III': '', 'IV': '' }
         };
 
+        /*
+        ╔══════════════════════════════════════════╗
+        ║  语音台词                               ║
+        ╚══════════════════════════════════════════╝
+        */
+        const VOICE_LINES = [
+            { label: '获得时', text: '' },
+            { label: '早间问候', text: '' },
+            { label: '午间问候', text: '' },
+            { label: '晚间问候', text: '' },
+            { label: '对话 1', text: '' },
+            { label: '对话 2', text: '' },
+            { label: '对话 3', text: '' },
+            { label: '对话 4', text: '' },
+            { label: '对话 5', text: '' },
+            { label: '闲置', text: '' },
+            { label: '人格出战', text: '' },
+            { label: '进入战斗', text: '' },
+            { label: '战斗中选中人格', text: '' },
+            { label: '进行攻击', text: '' },
+            { label: '敌方混乱', text: '' },
+            { label: '陷入混乱', text: '' },
+            { label: '击杀敌方', text: '' },
+            { label: '友方阵亡', text: '' },
+            { label: '判定成功', text: '' },
+            { label: '判定失败', text: '' },
+            { label: '战斗胜利', text: '' },
+            { label: 'EX CLEAR战斗胜利', text: '' },
+            { label: '战斗失败', text: '' }
+        ];
+
+        const SIN_MAP = { '暴怒': 'wrath', '色欲': 'lust', '怠惰': 'sloth', '暴食': 'gluttony', '忧郁': 'gloom', '傲慢': 'pride', '嫉妒': 'envy' };
+
+        // 渲染技能
         function renderSkills() {
             const container = document.getElementById('skillsContainer');
             let html = '';
 
+            const s = myData;
+            const defaultSkillImg = {
+                '一技能': '技能-' + s.skillTop.physics + '-' + s.skillTop.sin + '.png',
+                '二技能': '技能-' + s.skillMiddle.physics + '-' + s.skillMiddle.sin + '.png',
+                '三技能': '技能-' + s.skillBottom.physics + '-' + s.skillBottom.sin + '.png'
+            };
+            const defaultSin = {
+                '一技能': s.skillTop.sin,
+                '二技能': s.skillMiddle.sin,
+                '三技能': s.skillBottom.sin
+            };
+
             SKILLS.forEach((skill, idx) => {
-                const sinEn = SIN_MAP[skill.sin] || 'wrath';
+                const skillSin = skill.sin || defaultSin[skill.tag] || '暴怒';
+                const sinEn = SIN_MAP[skillSin] || 'wrath';
+                const skillImg = skill.skillImg || defaultSkillImg[skill.tag] || '';
                 const defaultStage = skill.stages[skill.stages.length - 1];
                 html += `
                 <div class="info-card skill-card sin-${sinEn}">
                     <div class="skill-header">
+                        <span class="skill-tag">${skill.tag}</span>
                         <span class="skill-name sin-text sin-${sinEn}">${skill.name}</span>
                         <span class="sin-text sin-${sinEn}">×${skill.count}</span>
-                        <span class="skill-icons">
-                            <img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}
-                        </span>
-                        <span class="skill-icons">
-                            <img src="/loomcompanywiki/img/Attack.png"> ${skill.attack}
-                        </span>
-                        <span class="skill-icons">
-                            <img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}
-                        </span>
+                        <span class="skill-icons"><img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}</span>
+                        <span class="skill-icons"><img src="/loomcompanywiki/img/Attack.png"> ${skill.attack}</span>
+                        <span class="skill-icons"><img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}</span>
                     </div>
                     <div class="stage-tabs">
-                        ${skill.stages.map(s => '<button class="stage-tab' + (s === defaultStage ? ' active' : '') + '" onclick="switchStage(\'skill\',' + idx + ',\'' + s + '\')">' + s + '阶段</button>').join('')}
+                        ${skill.stages.map(st => '<button class="stage-tab' + (st === defaultStage ? ' active' : '') + '" onclick="switchStage(\'skill\',' + idx + ',\'' + st + '\')">' + st + '阶段</button>').join('')}
                     </div>
                     <div class="skill-desc-row" id="skill-desc-${idx}">
-                        <img src="/loomcompanywiki/img/${skill.skillImg}" onerror="this.style.display='none'">
+                        <img src="/loomcompanywiki/img/${skillImg}" onerror="this.style.display='none'">
                         <span class="skill-desc-text">${skill.desc[defaultStage] || ''}</span>
                     </div>
                 </div>`;
@@ -509,31 +521,22 @@
             DEFENSE_SKILLS.forEach((skill, idx) => {
                 const defaultStage = skill.stages[skill.stages.length - 1];
                 let tabsHTML = '';
-                skill.stages.forEach(s => {
-                    let label = s + '阶段';
-                    if (s === 'IV' && skill.extraSin) {
+                skill.stages.forEach(st => {
+                    let label = st + '阶段';
+                    if (st === 'IV' && skill.extraSin) {
                         label += ' 追加：<img src="/loomcompanywiki/img/' + skill.extraSin + '.png" style="width:18px;height:18px;vertical-align:middle;">';
                     }
-                    const activeClass = s === defaultStage ? ' active' : '';
-                    tabsHTML += '<button class="stage-tab' + activeClass + '" onclick="switchDefStage(' + idx + ',\'' + s + '\')">' + label + '</button>';
+                    tabsHTML += '<button class="stage-tab' + (st === defaultStage ? ' active' : '') + '" onclick="switchDefStage(' + idx + ',\'' + st + '\')">' + label + '</button>';
                 });
                 html += `
                 <div class="info-card skill-card defense-card">
                     <div class="skill-header">
                         <span class="skill-name" style="color:#b0a590;">${skill.name}</span>
-                        <span class="skill-icons">
-                            <img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}
-                        </span>
-                        <span class="skill-icons">
-                            <img src="/loomcompanywiki/img/${skill.defenseType}.png"> ${skill.defense}
-                        </span>
-                        <span class="skill-icons">
-                            <img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}
-                        </span>
+                        <span class="skill-icons"><img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}</span>
+                        <span class="skill-icons"><img src="/loomcompanywiki/img/${skill.defenseType}.png"> ${skill.defense}</span>
+                        <span class="skill-icons"><img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}</span>
                     </div>
-                    <div class="stage-tabs">
-                        ${tabsHTML}
-                    </div>
+                    <div class="stage-tabs">${tabsHTML}</div>
                     <div class="skill-desc-row" id="def-desc-${idx}">
                         <span class="skill-desc-text">${skill.desc[defaultStage] || ''}</span>
                     </div>
@@ -541,6 +544,70 @@
             });
 
             container.innerHTML = html;
+        }
+
+        function renderPassives() {
+            const combatEl = document.getElementById('combatPassive');
+            const supportEl = document.getElementById('supportPassive');
+
+            let combatHTML = '';
+            COMBAT_PASSIVES.forEach((passive, i) => {
+                const defaultStage = passive.stages[passive.stages.length - 1];
+                let tabsHTML = '';
+                passive.stages.forEach(st => {
+                    tabsHTML += '<button class="passive-stage-tab' + (st === defaultStage ? ' active' : '') + '" onclick="switchCombatPassiveStage(this,\'' + st + '\',' + i + ')">' + st + '</button>';
+                });
+
+                let infoLine = '';
+                if (!passive.noCost && myData.combatPassive) {
+                    infoLine = ' —— ' + myData.combatPassive.way + '：<img src="/loomcompanywiki/img/' + myData.combatPassive.sin + '.png">×' + myData.combatPassive.need;
+                }
+
+                combatHTML += `
+                <div class="passive-block" id="combat-passive-${i}">
+                    <div class="passive-name">${passive.name}${infoLine}</div>
+                    <div class="passive-stage-tabs">${tabsHTML}</div>
+                    <div class="passive-effect" id="combat-passive-effect-${i}">${passive.effects[defaultStage] || ''}</div>
+                </div>`;
+            });
+            combatEl.innerHTML = combatHTML;
+
+            const sp = SUPPORT_PASSIVE;
+            const spData = myData.supportPassive;
+            const spDefaultStage = sp.stages[sp.stages.length - 1];
+            let spTabsHTML = '';
+            sp.stages.forEach(st => {
+                spTabsHTML += '<button class="passive-stage-tab' + (st === spDefaultStage ? ' active' : '') + '" onclick="switchSupportPassiveStage(this,\'' + st + '\')">' + st + '</button>';
+            });
+            supportEl.innerHTML = `
+            <div class="passive-block" id="support-passive">
+                <div class="passive-name">${sp.name} —— ${spData.way}：<img src="/loomcompanywiki/img/${spData.sin}.png">×${spData.need}</div>
+                <div class="passive-stage-tabs">${spTabsHTML}</div>
+                <div class="passive-effect" id="support-passive-effect">${sp.effects[spDefaultStage] || ''}</div>
+            </div>`;
+
+            window.combatPassivesData = COMBAT_PASSIVES;
+            window.supportPassiveData = SUPPORT_PASSIVE;
+        }
+
+        window.switchCombatPassiveStage = function(btn, stage, idx) {
+            const data = window.combatPassivesData[idx];
+            const parent = btn.parentElement.parentElement;
+            parent.querySelector('.passive-effect').textContent = data.effects[stage] || '';
+            parent.querySelectorAll('.passive-stage-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+        };
+
+        window.switchSupportPassiveStage = function(btn, stage) {
+            const data = window.supportPassiveData;
+            const parent = btn.parentElement.parentElement;
+            parent.querySelector('.passive-effect').textContent = data.effects[stage] || '';
+            parent.querySelectorAll('.passive-stage-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+        };
+
+        function renderVoices() {
+            document.getElementById('voiceList').innerHTML = VOICE_LINES.map(v => '<li><span class="voice-label">' + v.label + '：</span><span class="voice-text">' + v.text + '</span></li>').join('');
         }
 
         function switchStage(type, idx, stage) {
@@ -563,43 +630,35 @@
             if (activeTab) activeTab.classList.add('active');
         }
 
-        renderSkills();
-
-        // ===== 上半部分渲染 =====
         const myData = IDENTITIES_INDEX.find(item => item.id === MY_ID);
-
         if (!myData) {
             document.body.innerHTML = '<div style="text-align:center;color:var(--gold);padding:60px;"><h2>人格未找到</h2><p>请在索引文件中添加此人格，或检查 MY_ID 是否正确。</p><a href="/loomcompanywiki/data/identities.html" style="color:var(--gold-dim);">← 返回人格列表</a></div>';
             throw new Error('人格未找到：' + MY_ID);
         }
 
+        renderSkills();
+        renderPassives();
+        renderVoices();
+
         document.getElementById('identityName').textContent = MY_ID;
         document.getElementById('updateTime').textContent = UPDATE_TIME;
         document.getElementById('extractDisplay').textContent = myData.extract;
-
-        const storyLink = document.getElementById('storyLink');
-        storyLink.href = '/loomcompanywiki/story/identity-story/' + MY_ID + '.html';
+        document.getElementById('storyLink').href = '/loomcompanywiki/story/identity-story/' + MY_ID + '.html';
 
         const s = myData;
-        const egoHTML = `
+        document.getElementById('egoResources').innerHTML = `
             <span class="ego-resource-item"><img src="/loomcompanywiki/img/${s.skillTop.sin}.png"> ×3</span>
             <span class="ego-resource-item"><img src="/loomcompanywiki/img/${s.skillMiddle.sin}.png"> ×2</span>
-            <span class="ego-resource-item"><img src="/loomcompanywiki/img/${s.skillBottom.sin}.png"> ×1</span>
-        `;
-        document.getElementById('egoResources').innerHTML = egoHTML;
-
+            <span class="ego-resource-item"><img src="/loomcompanywiki/img/${s.skillBottom.sin}.png"> ×1</span>`;
         document.getElementById('keywordsDisplay').textContent = (myData.keywords || []).join(' / ');
 
         const r = myData.resist;
-        const resistHTML = `
+        document.getElementById('resistDisplay').innerHTML = `
             <span class="resist-item"><img src="/loomcompanywiki/img/${r.slash.physics}.png"> ${r.slash.resistance}</span>
             <span class="resist-item"><img src="/loomcompanywiki/img/${r.pierce.physics}.png"> ${r.pierce.resistance}</span>
-            <span class="resist-item"><img src="/loomcompanywiki/img/${r.blunt.physics}.png"> ${r.blunt.resistance}</span>
-        `;
-        document.getElementById('resistDisplay').innerHTML = resistHTML;
+            <span class="resist-item"><img src="/loomcompanywiki/img/${r.blunt.physics}.png"> ${r.blunt.resistance}</span>`;
 
         document.getElementById('levelInput').value = DEFAULT_LEVEL;
-
         document.getElementById('hpBase').textContent = HP_BASE;
         document.getElementById('hpGrowth').textContent = HP_GROWTH;
         document.getElementById('defBase').textContent = DEF_BASE;
@@ -608,25 +667,20 @@
 
         let speedHTML = '';
         for (const [key, val] of Object.entries(SPEED)) {
-            speedHTML += `<span class="speed-item">${key} <span>${val.min}-${val.max}</span></span>`;
+            speedHTML += '<span class="speed-item">' + key + ' <span>' + val.min + '-' + val.max + '</span></span>';
         }
         document.getElementById('speedDisplay').innerHTML = speedHTML || '（未设置）';
-
-        document.getElementById('sanityPositive').innerHTML = SANITY_POSITIVE.map(t => `<li>${t}</li>`).join('') || '<li>（未设置）</li>';
-        document.getElementById('sanityNegative').innerHTML = SANITY_NEGATIVE.map(t => `<li>${t}</li>`).join('') || '<li>（未设置）</li>';
+        document.getElementById('sanityPositive').innerHTML = SANITY_POSITIVE.map(t => '<li>' + t + '</li>').join('') || '<li>（未设置）</li>';
+        document.getElementById('sanityNegative').innerHTML = SANITY_NEGATIVE.map(t => '<li>' + t + '</li>').join('') || '<li>（未设置）</li>';
 
         function updateStats() {
             const level = parseInt(document.getElementById('levelInput').value) || 1;
-            const hp = Math.floor(HP_BASE + HP_GROWTH * level);
-            document.getElementById('hpValue').textContent = hp;
-            const def = Math.floor(DEF_BASE * level + DEF_SHIFT);
-            document.getElementById('defValue').textContent = def;
-            const staggerValues = STAGGER_RATIOS.map(r => Math.floor(hp * r));
-            document.getElementById('staggerValues').textContent = staggerValues.join(' ');
+            document.getElementById('hpValue').textContent = Math.floor(HP_BASE + HP_GROWTH * level);
+            document.getElementById('defValue').textContent = Math.floor(DEF_BASE * level + DEF_SHIFT);
+            document.getElementById('staggerValues').textContent = STAGGER_RATIOS.map(r => Math.floor((HP_BASE + HP_GROWTH * level) * r)).join(' ');
         }
         updateStats();
     </script>
-
     <script>
         fetch('/loomcompanywiki/nav.html')
             .then(res => res.text())
@@ -636,6 +690,5 @@
                 if (current) current.classList.add('active');
             });
     </script>
-
 </body>
 </html>

@@ -145,10 +145,14 @@
         /* ========== 技能卡片 ========== */
         .skill-card { border-radius: 8px; padding: 14px; margin-bottom: 12px; }
         .skill-card .skill-header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .skill-card .skill-tag {
+            font-size: 0.65rem; padding: 2px 6px; border-radius: 3px;
+            background: var(--surface); color: var(--text-dim); letter-spacing: 1px;
+            margin-right: 2px;
+        }
         .skill-card .skill-name { font-weight: bold; font-size: 0.9rem; letter-spacing: 1px; }
         .skill-card .skill-icons { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
         .skill-card .skill-icons img { width: 22px; height: 22px; }
-        .skill-card .skill-icons .icon-label { font-size: 0.75rem; color: var(--text-dim); }
         .skill-card .stage-tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; }
         .skill-card .stage-tab {
             padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border);
@@ -164,7 +168,7 @@
         .skill-card .skill-desc-row img { width: 28px; height: 28px; flex-shrink: 0; margin-top: 2px; }
         .skill-card .skill-desc-text { color: var(--text-dim); font-size: 0.8rem; line-height: 1.6; white-space: pre-line; }
 
-        .skill-card .skill-desc-text .sin-text { font-weight: bold; }
+        .sin-text { font-weight: bold; }
         .sin-text.sin-wrath { color: #d0423a; }
         .sin-text.sin-lust { color: #e8883a; }
         .sin-text.sin-sloth { color: #c9a62c; }
@@ -212,7 +216,6 @@
 
         <h1 class="detail-title" id="identityName"></h1>
 
-        <!-- 人格信息 -->
         <div class="info-card">
             <h3>人格信息</h3>
             <div class="info-row">
@@ -271,10 +274,8 @@
             </div>
         </div>
 
-        <!-- 技能 -->
         <div id="skillsContainer"></div>
 
-        <!-- 被动 -->
         <div class="info-card">
             <h3>被动</h3>
             <h4>战斗</h4>
@@ -283,7 +284,6 @@
             <div id="supportPassive"></div>
         </div>
 
-        <!-- 语音台词 -->
         <div class="info-card">
             <h3>语音台词</h3>
             <ul class="voice-list" id="voiceList"></ul>
@@ -308,117 +308,64 @@
 
         const SKILLS = [
             {
-                name: '压抑', sin: '暴怒', count: 3, coin: 3, attack: 4, capacity: 2,
-                stages: ['I', 'II', 'III', 'IV'], skillImg: '技能-打击-暴怒.png',
+                tag: '一技能',
+                name: '猛击',
+                count: 3, coin: 1, attack: -1, capacity: 1,
+                stages: ['I', 'II', 'III', 'IV'],
                 desc: {
-                    'I': '[I阶段] 对目标造成4点打击伤害，若目标处于流血状态，伤害+2',
-                    'II': '[II阶段] 对目标造成5点打击伤害，若目标处于流血状态，伤害+3',
-                    'III': '[III阶段] 对目标造成6点打击伤害，若目标处于流血状态，伤害+4，并追加1层流血',
-                    'IV': '[IV阶段] 对目标造成8点打击伤害，若目标处于流血状态，伤害+5，并追加2层流血'
+                    'I': '基础值：4\n变动值：+7\nI 硬币.png\n[命中时] 对目标施加1层 震颤.png 震颤',
+                    'II': '基础值：4\n变动值：+7\nI 硬币.png\n[命中时] 对目标施加1层 震颤.png 震颤',
+                    'III': '基础值：4\n变动值：+7\nI 硬币.png\n[命中时] 对目标施加1层 震颤.png 震颤',
+                    'IV': '基础值：4\n变动值：+7\nI 硬币.png\n[命中时] 对目标施加1层 震颤.png 震颤'
                 }
             },
             {
-                name: '斩裂', sin: '色欲', count: 2, coin: 2, attack: 6, capacity: 1,
-                stages: ['I', 'II', 'III', 'IV'], skillImg: '技能-斩击-色欲.png',
+                tag: '二技能',
+                name: '滑铲',
+                count: 2, coin: 1, attack: -1, capacity: 1,
+                stages: ['I', 'II', 'III', 'IV'],
                 desc: {
-                    'I': '[I阶段] 对目标造成6点斩击伤害',
-                    'II': '[II阶段] 对目标造成8点斩击伤害，获得1层攻击强化',
-                    'III': '[III阶段] 对目标造成10点斩击伤害，获得2层攻击强化',
-                    'IV': '[IV阶段] 对目标造成12点斩击伤害，获得3层攻击强化'
+                    'I': '基础值：6\n变动值：+9\n[拼点胜利] 对目标施加3层 破绽.png 破绽\nI 硬币.png\n[命中时] 对目标施加3级 震颤.png 震颤强度',
+                    'II': '基础值：6\n变动值：+9\n[拼点胜利] 对目标施加3层 破绽.png 破绽\nI 硬币.png\n[命中时] 对目标施加3级 震颤.png 震颤强度',
+                    'III': '基础值：6\n变动值：+9\n[拼点胜利] 对目标施加3层 破绽.png 破绽\nI 硬币.png\n[命中时] 对目标施加3级 震颤.png 震颤强度',
+                    'IV': '基础值：6\n变动值：+9\n[拼点胜利] 对目标施加3层 破绽.png 破绽\nI 硬币.png\n[命中时] 对目标施加3级 震颤.png 震颤强度'
                 }
             },
             {
-                name: '贯穿', sin: '怠惰', count: 1, coin: 5, attack: 5, capacity: 3,
-                stages: ['III', 'IV'], skillImg: '技能-突刺-怠惰.png',
+                tag: '三技能',
+                name: '抵御',
+                count: 1, coin: 1, attack: -1, capacity: 1,
+                stages: ['III', 'IV'],
                 desc: {
-                    'III': `基础值：5　　变动值：+3
-
-若目标现存体力不高于50%，则使本技能造成的伤害+50%
-
-攻击带有狩猎目标（我方）.png狩猎目标的目标时，使本技能的硬币威力+1
-
-[使用时] 若自身的加速弹.png加速弹数不低于1发，则使本技能的硬币威力+1
-[使用时] 目标的烧伤.png烧伤强度与震颤.png震颤强度之和每有4级，使本技能的最终威力+1(最多+5)
-[击杀敌方时] 击杀带有狩猎目标（我方）.png狩猎目标的目标时，添加1个技能「处置」到下回合将要使用的技能池中
-（该效果添加的技能「处置」不会触发该效果）
-[击杀敌方时] 使自身再次装填（句点事务所）.png再次装填(每回合最多1次)
-
-I 不可摧毁的硬币.png不可摧毁的硬币
-  [命中时] 使目标增加2级烧伤.png烧伤强度
-  [命中时] 使目标增加2级震颤.png震颤强度
-
-II 不可摧毁的硬币.png不可摧毁的硬币
-  [命中时] 使目标增加2级烧伤.png烧伤强度
-  [命中时] 使目标增加2级震颤.png震颤强度
-
-III 不可摧毁的硬币.png不可摧毁的硬币
-  [命中时] 对目标施加3层烧伤.png烧伤
-  [命中时] 对目标施加3层震颤.png震颤
-
-IV 不可摧毁的硬币.png不可摧毁的硬币
-  [命中时] 使目标振幅转换.png振幅转换为震颤-灼热.png震颤-灼热
-
-V 不可摧毁的硬币.png不可摧毁的硬币
-  消耗最多5发加速弹.png加速弹
-  本硬币每消耗1发加速弹.png加速弹，使本硬币造成的伤害+10%(最多+50%)
-  [命中时] 使目标震颤引爆.png震颤引爆，并使其震颤.png震颤层数减少1层
-  - 本硬币每消耗1发加速弹.png加速弹，使该效果额外触发1次(最多3次)`,
-                    'IV': `基础值：8　　变动值：+5
-
-若目标现存体力不高于50%，则使本技能造成的伤害+75%
-
-攻击带有狩猎目标（我方）.png狩猎目标的目标时，使本技能的硬币威力+2
-
-[使用时] 若自身的加速弹.png加速弹数不低于1发，则使本技能的硬币威力+2
-[使用时] 目标的烧伤.png烧伤强度与震颤.png震颤强度之和每有3级，使本技能的最终威力+1(最多+7)
-[击杀敌方时] 击杀带有狩猎目标（我方）.png狩猎目标的目标时，添加1个技能「处置」到下回合将要使用的技能池中
-（该效果添加的技能「处置」不会触发该效果）
-[击杀敌方时] 使自身再次装填（句点事务所）.png再次装填(每回合最多1次)
-
-I 不可摧毁的硬币.png不可摧毁的硬币
-  [命中时] 使目标增加3级烧伤.png烧伤强度
-  [命中时] 使目标增加3级震颤.png震颤强度
-
-II 不可摧毁的硬币.png不可摧毁的硬币
-  [命中时] 使目标增加3级烧伤.png烧伤强度
-  [命中时] 使目标增加3级震颤.png震颤强度
-
-III 不可摧毁的硬币.png不可摧毁的硬币
-  [命中时] 对目标施加4层烧伤.png烧伤
-  [命中时] 对目标施加4层震颤.png震颤
-
-IV 不可摧毁的硬币.png不可摧毁的硬币
-  [命中时] 使目标振幅转换.png振幅转换为震颤-灼热.png震颤-灼热
-
-V 不可摧毁的硬币.png不可摧毁的硬币
-  消耗最多8发加速弹.png加速弹
-  本硬币每消耗1发加速弹.png加速弹，使本硬币造成的伤害+12%(最多+60%)
-  [命中时] 使目标震颤引爆.png震颤引爆，并使其震颤.png震颤层数减少2层
-  - 本硬币每消耗1发加速弹.png加速弹，使该效果额外触发1次(最多5次)`
+                    'III': '基础值：8\n变动值：+12\nI 硬币.png\n[命中时] 使目标 震颤引爆.png 震颤引爆；对目标施加1层 打击易损.png 打击易损',
+                    'IV': '基础值：8\n变动值：+12\nI 硬币.png\n[命中时] 使目标 震颤引爆.png 震颤引爆；对目标施加1层 打击易损.png 打击易损'
                 }
             },
         ];
 
         const DEFENSE_SKILLS = [
             {
-                name: '格挡', coin: 0, defenseType: '守备', defense: 8, capacity: 1,
+                name: '防御',
+                coin: 1, defenseType: '守备', defense: 0, capacity: 1,
                 stages: ['I-III', 'IV'],
                 desc: {
-                    'I-III': '[I-III阶段] 获得8点护盾，持续1回合',
-                    'IV': '[IV阶段] 获得12点护盾，持续1回合，获得1层保护'
+                    'I-III': '基础值：7\n变动值：+3\n类型：单方面防御',
+                    'IV': '基础值：7\n变动值：+3\n类型：单方面防御'
                 },
-                extraSin: '傲慢',
+                extraSin: '暴怒',
             },
         ];
 
-        const COMBAT_PASSIVE = {
-            name: '最后一搏', way: '持有', sin: '暴怒', need: 3,
-            stages: ['I', 'II', 'III', 'IV'],
-            effects: { 'I': '若现存体力不高于25%，则使自身的拼点威力+1', 'II': '若现存体力不高于25%，则使自身的拼点威力+1', 'III': '若现存体力不高于25%，则使自身的拼点威力+1', 'IV': '若现存体力不高于25%，则使自身的拼点威力+1' }
-        };
+        const COMBAT_PASSIVES = [
+            {
+                name: '最后一搏',
+                stages: ['I', 'II', 'III', 'IV'],
+                effects: { 'I': '若现存体力不高于25%，则使自身的拼点威力+1', 'II': '若现存体力不高于25%，则使自身的拼点威力+1', 'III': '若现存体力不高于25%，则使自身的拼点威力+1', 'IV': '若现存体力不高于25%，则使自身的拼点威力+1' }
+            },
+        ];
 
         const SUPPORT_PASSIVE = {
-            name: '生存决意', way: '持有', sin: '暴怒', need: 6,
+            name: '生存决意',
             stages: ['III', 'IV'],
             effects: { 'III': '使现存体力最低且不高于50%的1名友方单位的拼点威力+1', 'IV': '使现存体力最低且不高于50%的1名友方单位的拼点威力+1' }
         };
@@ -454,44 +401,61 @@ V 不可摧毁的硬币.png不可摧毁的硬币
         function renderSkills() {
             const container = document.getElementById('skillsContainer');
             let html = '';
+
+            const s = myData;
+            const defaultSkillImg = {
+                '一技能': '技能-' + s.skillTop.physics + '-' + s.skillTop.sin + '.png',
+                '二技能': '技能-' + s.skillMiddle.physics + '-' + s.skillMiddle.sin + '.png',
+                '三技能': '技能-' + s.skillBottom.physics + '-' + s.skillBottom.sin + '.png'
+            };
+            const defaultSin = {
+                '一技能': s.skillTop.sin,
+                '二技能': s.skillMiddle.sin,
+                '三技能': s.skillBottom.sin
+            };
+
             SKILLS.forEach((skill, idx) => {
-                const sinEn = SIN_MAP[skill.sin] || 'wrath';
+                const skillSin = skill.sin || defaultSin[skill.tag] || '暴怒';
+                const sinEn = SIN_MAP[skillSin] || 'wrath';
+                const skillImg = skill.skillImg || defaultSkillImg[skill.tag] || '';
                 const defaultStage = skill.stages[skill.stages.length - 1];
                 html += `
                 <div class="info-card skill-card sin-${sinEn}">
                     <div class="skill-header">
+                        <span class="skill-tag">${skill.tag}</span>
                         <span class="skill-name sin-text sin-${sinEn}">${skill.name}</span>
                         <span class="sin-text sin-${sinEn}">×${skill.count}</span>
-                        <span class="skill-icons"><img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}</span>
-                        <span class="skill-icons"><img src="/loomcompanywiki/img/Attack.png"> ${skill.attack}</span>
-                        <span class="skill-icons"><img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}</span>
+                        <span class="skill-icons"><img src="/loomcompanywiki/img/硬币.png"> ×${skill.coin}</span>
+                        <span class="skill-icons"><img src="/loomcompanywiki/img/数值图标-攻击.png"> ${skill.attack}</span>
+                        <span class="skill-icons"><img src="/loomcompanywiki/img/数值图标-攻击容量.png"> ×${skill.capacity}</span>
                     </div>
                     <div class="stage-tabs">
-                        ${skill.stages.map(s => '<button class="stage-tab' + (s === defaultStage ? ' active' : '') + '" onclick="switchStage(\'skill\',' + idx + ',\'' + s + '\')">' + s + '阶段</button>').join('')}
+                        ${skill.stages.map(st => '<button class="stage-tab' + (st === defaultStage ? ' active' : '') + '" onclick="switchStage(\'skill\',' + idx + ',\'' + st + '\')">' + st + '阶</button>').join('')}
                     </div>
                     <div class="skill-desc-row" id="skill-desc-${idx}">
-                        <img src="/loomcompanywiki/img/${skill.skillImg}" onerror="this.style.display='none'">
+                        <img src="/loomcompanywiki/img/${skillImg}" onerror="this.style.display='none'">
                         <span class="skill-desc-text">${skill.desc[defaultStage] || ''}</span>
                     </div>
                 </div>`;
             });
+
             DEFENSE_SKILLS.forEach((skill, idx) => {
                 const defaultStage = skill.stages[skill.stages.length - 1];
                 let tabsHTML = '';
-                skill.stages.forEach(s => {
-                    let label = s + '阶段';
-                    if (s === 'IV' && skill.extraSin) {
-                        label += ' 追加：<img src="/loomcompanywiki/img/' + skill.extraSin + '.png" style="width:18px;height:18px;vertical-align:middle;">';
+                skill.stages.forEach(st => {
+                    let label = st + '阶';
+                    if (st === 'IV' && skill.extraSin) {
+                        label += ' 追加属性：<img src="/loomcompanywiki/img/罪孽-' + skill.extraSin + '.png" style="width:18px;height:18px;vertical-align:middle;">';
                     }
-                    tabsHTML += '<button class="stage-tab' + (s === defaultStage ? ' active' : '') + '" onclick="switchDefStage(' + idx + ',\'' + s + '\')">' + label + '</button>';
+                    tabsHTML += '<button class="stage-tab' + (st === defaultStage ? ' active' : '') + '" onclick="switchDefStage(' + idx + ',\'' + st + '\')">' + label + '</button>';
                 });
                 html += `
                 <div class="info-card skill-card defense-card">
                     <div class="skill-header">
                         <span class="skill-name" style="color:#b0a590;">${skill.name}</span>
-                        <span class="skill-icons"><img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}</span>
-                        <span class="skill-icons"><img src="/loomcompanywiki/img/${skill.defenseType}.png"> ${skill.defense}</span>
-                        <span class="skill-icons"><img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}</span>
+                        <span class="skill-icons"><img src="/loomcompanywiki/img/硬币.png"> ×${skill.coin}</span>
+                        <span class="skill-icons"><img src="/loomcompanywiki/img/数值图标-守备.png"> +${skill.defense}</span>
+                        <span class="skill-icons"><img src="/loomcompanywiki/img/数值图标-攻击容量.png"> ×${skill.capacity}</span>
                     </div>
                     <div class="stage-tabs">${tabsHTML}</div>
                     <div class="skill-desc-row" id="def-desc-${idx}">
@@ -499,32 +463,65 @@ V 不可摧毁的硬币.png不可摧毁的硬币
                     </div>
                 </div>`;
             });
+
             container.innerHTML = html;
         }
 
         function renderPassives() {
-            const combat = document.getElementById('combatPassive');
-            const support = document.getElementById('supportPassive');
-            [{ el: combat, data: COMBAT_PASSIVE }, { el: support, data: SUPPORT_PASSIVE }].forEach(({ el, data }) => {
-                const defaultStage = data.stages[data.stages.length - 1];
+            const combatEl = document.getElementById('combatPassive');
+            const supportEl = document.getElementById('supportPassive');
+
+            let combatHTML = '';
+            COMBAT_PASSIVES.forEach((passive, i) => {
+                const defaultStage = passive.stages[passive.stages.length - 1];
                 let tabsHTML = '';
-                data.stages.forEach(s => {
-                    tabsHTML += '<button class="passive-stage-tab' + (s === defaultStage ? ' active' : '') + '" onclick="switchPassiveStage(this,\'' + s + '\')" data-passive="' + data.name + '">' + s + '</button>';
+                passive.stages.forEach(st => {
+                    tabsHTML += '<button class="passive-stage-tab' + (st === defaultStage ? ' active' : '') + '" onclick="switchCombatPassiveStage(this,\'' + st + '\',' + i + ')">' + st + '</button>';
                 });
-                el.innerHTML = `
-                <div class="passive-block" id="passive-${data.name}">
-                    <div class="passive-name">${data.name} —— ${data.way}：<img src="/loomcompanywiki/img/${data.sin}.png">×${data.need}</div>
+
+                let infoLine = '';
+                if (!passive.noCost && myData.combatPassive) {
+                    infoLine = ' —— ' + myData.combatPassive.way + '：<img src="/loomcompanywiki/img/' + myData.combatPassive.sin + '.png">×' + myData.combatPassive.need;
+                }
+
+                combatHTML += `
+                <div class="passive-block" id="combat-passive-${i}">
+                    <div class="passive-name">${passive.name}${infoLine}</div>
                     <div class="passive-stage-tabs">${tabsHTML}</div>
-                    <div class="passive-effect" id="passive-effect-${data.name}">${data.effects[defaultStage] || ''}</div>
+                    <div class="passive-effect" id="combat-passive-effect-${i}">${passive.effects[defaultStage] || ''}</div>
                 </div>`;
             });
-            window.passiveData = { combat: COMBAT_PASSIVE, support: SUPPORT_PASSIVE };
+            combatEl.innerHTML = combatHTML;
+
+            const sp = SUPPORT_PASSIVE;
+            const spData = myData.supportPassive;
+            const spDefaultStage = sp.stages[sp.stages.length - 1];
+            let spTabsHTML = '';
+            sp.stages.forEach(st => {
+                spTabsHTML += '<button class="passive-stage-tab' + (st === spDefaultStage ? ' active' : '') + '" onclick="switchSupportPassiveStage(this,\'' + st + '\')">' + st + '</button>';
+            });
+            supportEl.innerHTML = `
+            <div class="passive-block" id="support-passive">
+                <div class="passive-name">${sp.name} —— ${spData.way}：<img src="/loomcompanywiki/img/${spData.sin}.png">×${spData.need}</div>
+                <div class="passive-stage-tabs">${spTabsHTML}</div>
+                <div class="passive-effect" id="support-passive-effect">${sp.effects[spDefaultStage] || ''}</div>
+            </div>`;
+
+            window.combatPassivesData = COMBAT_PASSIVES;
+            window.supportPassiveData = SUPPORT_PASSIVE;
         }
 
-        window.switchPassiveStage = function(btn, stage) {
+        window.switchCombatPassiveStage = function(btn, stage, idx) {
+            const data = window.combatPassivesData[idx];
             const parent = btn.parentElement.parentElement;
-            const name = parent.querySelector('.passive-name').textContent.split(' —— ')[0];
-            const data = window.passiveData.combat.name === name ? window.passiveData.combat : window.passiveData.support;
+            parent.querySelector('.passive-effect').textContent = data.effects[stage] || '';
+            parent.querySelectorAll('.passive-stage-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+        };
+
+        window.switchSupportPassiveStage = function(btn, stage) {
+            const data = window.supportPassiveData;
+            const parent = btn.parentElement.parentElement;
             parent.querySelector('.passive-effect').textContent = data.effects[stage] || '';
             parent.querySelectorAll('.passive-stage-tab').forEach(t => t.classList.remove('active'));
             btn.classList.add('active');
@@ -554,15 +551,15 @@ V 不可摧毁的硬币.png不可摧毁的硬币
             if (activeTab) activeTab.classList.add('active');
         }
 
-        renderSkills();
-        renderPassives();
-        renderVoices();
-
         const myData = IDENTITIES_INDEX.find(item => item.id === MY_ID);
         if (!myData) {
             document.body.innerHTML = '<div style="text-align:center;color:var(--gold);padding:60px;"><h2>人格未找到</h2><p>请在索引文件中添加此人格，或检查 MY_ID 是否正确。</p><a href="/loomcompanywiki/data/identities.html" style="color:var(--gold-dim);">← 返回人格列表</a></div>';
             throw new Error('人格未找到：' + MY_ID);
         }
+
+        renderSkills();
+        renderPassives();
+        renderVoices();
 
         document.getElementById('identityName').textContent = MY_ID;
         document.getElementById('updateTime').textContent = UPDATE_TIME;
