@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EGO - Loom Company 同人维基</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .egos-page {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+        .egos-page h2 {
+            text-align: center;
+            color: var(--gold);
+            font-size: 1.6rem;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+
+        .expandable {
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .expandable-header {
+            background: var(--surface);
+            padding: 12px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            user-select: none;
+        }
+        .expandable-header:hover { background: var(--surface2); }
+        .expandable-header .arrow {
+            transition: transform 0.3s;
+            color: var(--gold);
+            font-size: 0.8rem;
+        }
+        .expandable.open .expandable-header .arrow { transform: rotate(90deg); }
+        .expandable-body {
+            display: none;
+            padding: 16px;
+            background: var(--surface2);
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            line-height: 1.8;
+        }
+        .expandable.open .expandable-body { display: block; }
+        .expandable-body a { color: var(--gold); text-decoration: none; }
+        .expandable-body a:hover { text-decoration: underline; }
+
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+            align-items: center;
+            justify-content: center;
+        }
+        .filter-bar select {
+            padding: 8px 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            font-size: 0.8rem;
+            font-family: inherit;
+            cursor: pointer;
+        }
+        .filter-bar select:focus { border-color: var(--gold); outline: none; }
+        .filter-label { color: var(--text-dim); font-size: 0.7rem; letter-spacing: 1px; }
+
+        .ego-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+        }
+        .ego-card {
+            width: 260px;
+            aspect-ratio: 3/4;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .ego-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+        }
+        .ego-card .ego-card-name {
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+        .ego-card .ego-card-owner {
+            color: var(--text-dim);
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+        }
+        .ego-card .ego-card-level {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+        }
+        .ego-card .ego-card-level img {
+            width: 56px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
+        .pagination button {
+            padding: 6px 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .pagination button:hover { border-color: var(--gold); color: var(--gold); }
+        .pagination button.active {
+            background: rgba(201,166,92,0.2);
+            border-color: var(--gold);
+            color: var(--gold);
+            font-weight: bold;
+        }
+        .pagination button:disabled { opacity: 0.3; cursor: not-allowed; }
+        .no-result { text-align: center; color: var(--text-dim); padding: 40px; font-style: italic; }
+
+        @media (max-width: 500px) {
+            .ego-card { width: 100%; }
+            .filter-bar { flex-direction: column; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="nav-placeholder"></div>
+
+    <div class="egos-page">
+        <h2>E.G.O</h2>
+
+        <div class="expandable" id="infoExpandable">
+            <div class="expandable-header" onclick="toggleExpandable()">
+                <span class="arrow">▶</span>
+                <span style="color:var(--gold);font-weight:bold;">基本概念（点击以展开）</span>
+            </div>
+            <div class="expandable-body">
+                <p>E.G.O.是边狱公司中的基本机制，是从异想体中提取的武器与力量。</p>
+                <p>以上内容修改自 <a href="https://limbuscompany.huijiwiki.com" target="_blank">边狱巴士灰机wiki</a></p>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <span class="filter-label">筛选：</span>
+            <select id="filterEmployee"><option value="all">全部员工</option></select>
+            <select id="filterLevel"><option value="all">全部等级</option></select>
+            <select id="filterObtain"><option value="all">全部获取方式</option></select>
+        </div>
+
+        <div class="ego-grid" id="egoGrid"></div>
+        <div class="pagination" id="pagination"></div>
+        <div class="no-result" id="noResult" style="display:none;">没有匹配的E.G.O。</div>
+    </div>
+
+    <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
+
+    <script src="egos.js"></script>
+    <script>
+        const ITEMS_PER_PAGE = 15;
+        let currentPage = 1;
+
+        function toggleExpandable() {
+            document.getElementById('infoExpandable').classList.toggle('open');
+        }
+
+        function collectUnique(field) {
+            const values = new Set();
+            EGOS_INDEX.forEach(item => {
+                if (field === 'employee') values.add(item.owner);
+                else if (field === 'level') values.add(item.level);
+                else if (field === 'obtain') values.add(item.obtain);
+            });
+            return Array.from(values).sort();
+        }
+
+        function populateFilters() {
+            const emp = document.getElementById('filterEmployee');
+            collectUnique('employee').forEach(v => { emp.innerHTML += '<option value="' + v + '">' + v + '</option>'; });
+            const lvl = document.getElementById('filterLevel');
+            collectUnique('level').forEach(v => { lvl.innerHTML += '<option value="' + v + '">' + v + '</option>'; });
+            const obt = document.getElementById('filterObtain');
+            collectUnique('obtain').forEach(v => { obt.innerHTML += '<option value="' + v + '">' + v + '</option>'; });
+        }
+
+        function getFiltered() {
+            const emp = document.getElementById('filterEmployee').value;
+            const lvl = document.getElementById('filterLevel').value;
+            const obt = document.getElementById('filterObtain').value;
+            return EGOS_INDEX.filter(item => {
+                if (emp !== 'all' && item.owner !== emp) return false;
+                if (lvl !== 'all' && item.level !== lvl) return false;
+                if (obt !== 'all' && item.obtain !== obt) return false;
+                return true;
+            });
+        }
+
+        function renderCard(item) {
+            return `
+            <a href="ego/${item.id}.html" class="ego-card">
+                <span class="ego-card-name">${item.owner}-${item.name}</span>
+                <span class="ego-card-owner">${item.obtain}</span>
+                <div class="ego-card-level">
+                    <img src="../img/${item.level}.png" alt="${item.level}">
+                </div>
+            </a>`;
+        }
+
+        function renderGrid() {
+            const filtered = getFiltered();
+            const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE) || 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+            const start = (currentPage - 1) * ITEMS_PER_PAGE;
+            const pageItems = filtered.slice(start, start + ITEMS_PER_PAGE);
+
+            document.getElementById('noResult').style.display = filtered.length === 0 ? 'block' : 'none';
+            document.getElementById('egoGrid').innerHTML = filtered.length ? pageItems.map(renderCard).join('') : '';
+            renderPagination(totalPages);
+        }
+
+        function renderPagination(totalPages) {
+            const p = document.getElementById('pagination');
+            let html = '';
+            html += '<button ' + (currentPage === 1 ? 'disabled' : '') + ' onclick="goToPage(' + (currentPage - 1) + ')">← 上一页</button>';
+            for (let i = 1; i <= totalPages; i++) {
+                html += '<button class="' + (i === currentPage ? 'active' : '') + '" onclick="goToPage(' + i + ')">' + i + '</button>';
+            }
+            html += '<button ' + (currentPage === totalPages ? 'disabled' : '') + ' onclick="goToPage(' + (currentPage + 1) + ')">下一页 →</button>';
+            p.innerHTML = html;
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            renderGrid();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function onFilterChange() {
+            currentPage = 1;
+            renderGrid();
+        }
+
+        document.getElementById('filterEmployee').addEventListener('change', onFilterChange);
+        document.getElementById('filterLevel').addEventListener('change', onFilterChange);
+        document.getElementById('filterObtain').addEventListener('change', onFilterChange);
+
+        populateFilters();
+        renderGrid();
+    </script>
+
+    <script>
+        fetch('/loomcompanywiki/nav.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('nav-placeholder').innerHTML = html;
+                const current = document.querySelector('[data-nav="egos"]');
+                if (current) current.classList.add('active');
+            });
+    </script>
+
+</body>
+</html>
