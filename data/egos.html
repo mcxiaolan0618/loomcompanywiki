@@ -9,7 +9,7 @@
         .egos-page {
             max-width: 800px;
             margin: 0 auto;
-            padding: 16px 10px;
+            padding: 16px 8px;
         }
         .egos-page h2 {
             text-align: center;
@@ -79,15 +79,15 @@
         .ego-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
             justify-content: center;
         }
         .ego-card {
-            width: 180px;
+            width: 170px;
             background: var(--surface2);
             border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 8px 10px;
+            border-radius: 4px;
+            padding: 6px 8px;
             transition: all 0.2s;
             cursor: pointer;
             text-decoration: none;
@@ -95,7 +95,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 6px;
+            gap: 4px;
         }
         .ego-card:hover {
             border-color: var(--gold);
@@ -111,7 +111,7 @@
         .ego-card .ego-card-name {
             color: var(--gold);
             font-weight: bold;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             letter-spacing: 0.5px;
             white-space: nowrap;
             overflow: hidden;
@@ -119,11 +119,11 @@
         }
         .ego-card .ego-card-owner {
             color: var(--text-dim);
-            font-size: 0.6rem;
+            font-size: 0.58rem;
         }
         .ego-card .ego-card-level img {
-            width: 48px;
-            height: 18px;
+            width: 42px;
+            height: 16px;
             object-fit: contain;
             flex-shrink: 0;
         }
@@ -157,7 +157,9 @@
         .no-result { text-align: center; color: var(--text-dim); padding: 30px; font-style: italic; font-size: 0.8rem; }
 
         @media (max-width: 400px) {
-            .ego-card { width: 100%; }
+            .ego-card { width: 100%; padding: 5px 8px; }
+            .ego-card .ego-card-name { font-size: 0.72rem; }
+            .ego-card .ego-card-level img { width: 40px; height: 15px; }
         }
     </style>
 </head>
