@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <style>
         .egos-page {
-            max-width: 1000px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 24px 16px;
         }
@@ -74,55 +74,47 @@
         .filter-bar select:focus { border-color: var(--gold); outline: none; }
         .filter-label { color: var(--text-dim); font-size: 0.7rem; letter-spacing: 1px; }
 
-        .ego-grid {
+        .ego-list {
             display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
+            flex-direction: column;
+            gap: 8px;
         }
         .ego-card {
-            width: 220px;
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 12px 14px;
-            transition: all 0.3s;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 8px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px 12px;
+            transition: all 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
         }
         .ego-card:hover {
             border-color: var(--gold);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            background: rgba(201,166,92,0.04);
         }
         .ego-card .ego-info {
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 1px;
             min-width: 0;
         }
         .ego-card .ego-card-name {
             color: var(--gold);
             font-weight: bold;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             letter-spacing: 1px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
         .ego-card .ego-card-owner {
             color: var(--text-dim);
-            font-size: 0.68rem;
-            letter-spacing: 1px;
+            font-size: 0.65rem;
         }
         .ego-card .ego-card-level img {
-            width: 70px;
-            height: 26px;
+            width: 56px;
+            height: 20px;
             object-fit: contain;
         }
 
@@ -155,7 +147,6 @@
         .no-result { text-align: center; color: var(--text-dim); padding: 40px; font-style: italic; }
 
         @media (max-width: 500px) {
-            .ego-card { width: 100%; }
             .filter-bar { flex-direction: column; align-items: stretch; }
         }
     </style>
@@ -185,7 +176,7 @@
             <select id="filterObtain"><option value="all">全部获取方式</option></select>
         </div>
 
-        <div class="ego-grid" id="egoGrid"></div>
+        <div class="ego-list" id="egoGrid"></div>
         <div class="pagination" id="pagination"></div>
         <div class="no-result" id="noResult" style="display:none;">没有匹配的E.G.O。</div>
     </div>
