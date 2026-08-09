@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="../css/style.css">
     <style>
         .egos-page {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 16px 8px;
+            padding: 16px 10px;
         }
         .egos-page h2 {
             text-align: center;
@@ -77,13 +77,11 @@
         .filter-label { color: var(--text-dim); font-size: 0.65rem; letter-spacing: 1px; }
 
         .ego-grid {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 6px;
-            justify-content: center;
         }
         .ego-card {
-            width: 170px;
             background: var(--surface2);
             border: 1px solid var(--border);
             border-radius: 4px;
@@ -96,6 +94,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 4px;
+            min-width: 0;
         }
         .ego-card:hover {
             border-color: var(--gold);
@@ -155,12 +154,6 @@
         }
         .pagination button:disabled { opacity: 0.3; cursor: not-allowed; }
         .no-result { text-align: center; color: var(--text-dim); padding: 30px; font-style: italic; font-size: 0.8rem; }
-
-        @media (max-width: 400px) {
-            .ego-card { width: 100%; padding: 5px 8px; }
-            .ego-card .ego-card-name { font-size: 0.72rem; }
-            .ego-card .ego-card-level img { width: 40px; height: 15px; }
-        }
     </style>
 </head>
 <body>

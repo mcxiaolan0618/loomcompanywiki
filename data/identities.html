@@ -9,45 +9,46 @@
         .identities-page {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 24px 16px;
+            padding: 16px 10px;
         }
         .identities-page h2 {
             text-align: center;
             color: var(--gold);
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             letter-spacing: 3px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .expandable {
-            margin-bottom: 24px;
+            margin-bottom: 16px;
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
         }
         .expandable-header {
             background: var(--surface);
-            padding: 12px 16px;
+            padding: 8px 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             user-select: none;
+            font-size: 0.8rem;
         }
         .expandable-header:hover { background: var(--surface2); }
         .expandable-header .arrow {
             transition: transform 0.3s;
             color: var(--gold);
-            font-size: 0.8rem;
+            font-size: 0.7rem;
         }
         .expandable.open .expandable-header .arrow { transform: rotate(90deg); }
         .expandable-body {
             display: none;
-            padding: 16px;
+            padding: 10px 12px;
             background: var(--surface2);
             color: var(--text-dim);
-            font-size: 0.85rem;
-            line-height: 1.8;
+            font-size: 0.75rem;
+            line-height: 1.7;
         }
         .expandable.open .expandable-body { display: block; }
         .expandable-body a { color: var(--gold); text-decoration: none; }
@@ -56,134 +57,135 @@
         .filter-bar {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 24px;
+            gap: 6px;
+            margin-bottom: 14px;
             align-items: center;
             justify-content: center;
         }
         .filter-bar select {
-            padding: 8px 12px;
+            padding: 5px 8px;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 4px;
             color: var(--text);
-            font-size: 0.8rem;
+            font-size: 0.72rem;
             font-family: inherit;
             cursor: pointer;
+            max-width: 140px;
         }
         .filter-bar select:focus { border-color: var(--gold); outline: none; }
-        .filter-label { color: var(--text-dim); font-size: 0.7rem; letter-spacing: 1px; }
+        .filter-label { color: var(--text-dim); font-size: 0.65rem; letter-spacing: 1px; }
 
         .identity-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 10px;
         }
         .identity-card-full {
-            width: 280px;
             background: var(--surface2);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 16px;
-            transition: all 0.3s;
+            border-radius: 6px;
+            padding: 12px;
+            transition: all 0.2s;
             cursor: pointer;
             text-decoration: none;
             color: inherit;
             display: block;
+            min-width: 0;
         }
         .identity-card-full:hover {
             border-color: var(--gold);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .identity-card-full .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
         .identity-card-full .faction-name {
             color: var(--gold);
             font-weight: bold;
-            font-size: 0.95rem;
-            letter-spacing: 1px;
+            font-size: 0.82rem;
+            letter-spacing: 0.5px;
         }
         .identity-card-full .rarity {
             font-family: 'Times New Roman', serif;
             font-weight: bold;
             letter-spacing: 1px;
+            font-size: 0.78rem;
         }
         .rarity.r3 { color: #c9a65c; }
         .rarity.r2 { color: #b87fd4; }
         .rarity.r1 { color: #7ab87a; }
         .identity-card-full .extract-source {
-            font-size: 0.7rem;
+            font-size: 0.62rem;
             color: var(--text-dim);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         .identity-card-full .resist-row {
             display: flex;
-            gap: 10px;
-            margin-bottom: 8px;
-            font-size: 0.75rem;
+            gap: 8px;
+            margin-bottom: 6px;
+            font-size: 0.68rem;
         }
         .identity-card-full .resist-item {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             color: var(--text-dim);
         }
-        .identity-card-full .resist-item img { width: 20px; height: 20px; }
-        .identity-card-full .skill-block { margin-bottom: 6px; }
+        .identity-card-full .resist-item img { width: 16px; height: 16px; }
+        .identity-card-full .skill-block { margin-bottom: 4px; }
         .identity-card-full .skill-row {
             display: flex;
             align-items: center;
-            gap: 4px;
-            font-size: 0.72rem;
+            gap: 3px;
+            font-size: 0.65rem;
             color: var(--text-dim);
-            margin-bottom: 2px;
+            margin-bottom: 1px;
         }
-        .identity-card-full .skill-row img { width: 24px; height: 24px; }
-        .identity-card-full .passive-block { margin-bottom: 6px; font-size: 0.7rem; color: var(--text-dim); }
+        .identity-card-full .skill-row img { width: 20px; height: 20px; }
+        .identity-card-full .passive-block { margin-bottom: 4px; font-size: 0.62rem; color: var(--text-dim); }
         .identity-card-full .passive-row {
             display: flex;
             align-items: center;
-            gap: 4px;
-            margin-bottom: 2px;
+            gap: 3px;
+            margin-bottom: 1px;
         }
-        .identity-card-full .passive-row img { width: 18px; height: 18px; }
+        .identity-card-full .passive-row img { width: 14px; height: 14px; }
         .identity-card-full .keyword-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 4px;
-            margin-top: 8px;
+            gap: 3px;
+            margin-top: 6px;
         }
         .identity-card-full .keyword-tag {
-            font-size: 0.6rem;
-            padding: 2px 6px;
+            font-size: 0.55rem;
+            padding: 2px 5px;
             border-radius: 3px;
             background: rgba(201,166,92,0.15);
             color: var(--gold-dim);
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .pagination {
             display: flex;
             justify-content: center;
-            gap: 8px;
-            margin-top: 28px;
+            gap: 4px;
+            margin-top: 16px;
             flex-wrap: wrap;
         }
         .pagination button {
-            padding: 6px 12px;
+            padding: 4px 8px;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 4px;
+            border-radius: 3px;
             color: var(--text);
             cursor: pointer;
             font-family: inherit;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             transition: all 0.2s;
         }
         .pagination button:hover { border-color: var(--gold); color: var(--gold); }
@@ -194,12 +196,7 @@
             font-weight: bold;
         }
         .pagination button:disabled { opacity: 0.3; cursor: not-allowed; }
-        .no-result { text-align: center; color: var(--text-dim); padding: 40px; font-style: italic; }
-
-        @media (max-width: 500px) {
-            .identity-card-full { width: 100%; }
-            .filter-bar { flex-direction: column; align-items: stretch; }
-        }
+        .no-result { text-align: center; color: var(--text-dim); padding: 30px; font-style: italic; font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -221,8 +218,8 @@
                 <p><strong>镜之世界</strong></p>
                 <p>罪人的非初始θ人格对应着镜中世界下罪人们所属不同势力的可能性，可能性越低的人格，其θ级也就越高。人格所属势力包括但不限于各个协会、公司、帮派。</p>
                 <p>有关人格的世界观内容可参考页面：<a href="/loomcompanywiki/story/odin-notes.html">奥丁笔记</a> 都市科技一栏中有关人格的内容。</p>
-                <hr style="border-color:var(--border);margin:12px 0;">
-                <p style="font-size:0.75rem;color:var(--text-dim);">以上内容修改自 <a href="https://limbuscompany.huijiwiki.com" target="_blank" style="color:var(--gold-dim);">边狱巴士灰机wiki</a></p>
+                <hr style="border-color:var(--border);margin:8px 0;">
+                <p style="font-size:0.7rem;color:var(--text-dim);">以上内容修改自 <a href="https://limbuscompany.huijiwiki.com" target="_blank" style="color:var(--gold-dim);">边狱巴士灰机wiki</a></p>
             </div>
         </div>
 
@@ -284,11 +281,11 @@
 
         function populateFilters() {
             const emp = document.getElementById('filterEmployee');
-            collectUnique('employee').forEach(v => { emp.innerHTML += `<option value="${v}">${v}</option>`; });
+            collectUnique('employee').forEach(v => { emp.innerHTML += '<option value="' + v + '">' + v + '</option>'; });
             const ext = document.getElementById('filterExtract');
-            collectUnique('extract').forEach(v => { ext.innerHTML += `<option value="${v}">${v}</option>`; });
+            collectUnique('extract').forEach(v => { ext.innerHTML += '<option value="' + v + '">' + v + '</option>'; });
             const kw = document.getElementById('filterKeyword');
-            collectUnique('keyword').forEach(v => { kw.innerHTML += `<option value="${v}">${v}</option>`; });
+            collectUnique('keyword').forEach(v => { kw.innerHTML += '<option value="' + v + '">' + v + '</option>'; });
         }
 
         function getFiltered() {
@@ -362,7 +359,7 @@
                 ${skillHTML}
                 ${passiveHTML}
                 <div class="keyword-tags">
-                    ${(item.keywords || []).map(k => `<span class="keyword-tag">${k}</span>`).join('')}
+                    ${(item.keywords || []).map(k => '<span class="keyword-tag">' + k + '</span>').join('')}
                 </div>
             </a>`;
         }
@@ -382,11 +379,11 @@
         function renderPagination(totalPages) {
             const p = document.getElementById('pagination');
             let html = '';
-            html += `<button ${currentPage === 1 ? 'disabled' : ''} onclick="goToPage(${currentPage - 1})">← 上一页</button>`;
+            html += '<button ' + (currentPage === 1 ? 'disabled' : '') + ' onclick="goToPage(' + (currentPage - 1) + ')">←</button>';
             for (let i = 1; i <= totalPages; i++) {
-                html += `<button class="${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+                html += '<button class="' + (i === currentPage ? 'active' : '') + '" onclick="goToPage(' + i + ')">' + i + '</button>';
             }
-            html += `<button ${currentPage === totalPages ? 'disabled' : ''} onclick="goToPage(${currentPage + 1})">下一页 →</button>`;
+            html += '<button ' + (currentPage === totalPages ? 'disabled' : '') + ' onclick="goToPage(' + (currentPage + 1) + ')">→</button>';
             p.innerHTML = html;
         }
 
