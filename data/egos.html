@@ -78,22 +78,10 @@
 
         .identity-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min-content, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(0, 1fr));
             gap: 10px;
         }
         .ego-card {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 6px 8px;
-            transition: all 0.2s;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 4px;
             min-width: 0;
         }
         .ego-card:hover {
