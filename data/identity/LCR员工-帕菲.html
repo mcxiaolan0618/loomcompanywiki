@@ -47,6 +47,12 @@
             padding-bottom: 8px;
             border-bottom: 1px solid var(--border);
         }
+        .info-card h4 {
+            color: var(--gold-dim);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin: 12px 0 8px;
+        }
 
         .info-row {
             display: flex;
@@ -248,6 +254,76 @@
             color: #b0a590;
             font-weight: bold;
         }
+
+        /* ========== 被动 ========== */
+        .passive-block {
+            margin-bottom: 14px;
+        }
+        .passive-name {
+            color: var(--text);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .passive-info {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            margin-bottom: 4px;
+        }
+        .passive-info img {
+            width: 18px;
+            height: 18px;
+            vertical-align: middle;
+        }
+        .passive-effect {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+        .passive-stage-tabs {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            margin: 6px 0;
+        }
+        .passive-stage-tab {
+            padding: 3px 8px;
+            border-radius: 3px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        .passive-stage-tab:hover { border-color: var(--gold); color: var(--gold); }
+        .passive-stage-tab.active {
+            border-color: var(--gold-dim);
+            background: rgba(201,166,92,0.1);
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* ========== 语音台词 ========== */
+        .voice-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .voice-list li {
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            font-size: 0.82rem;
+        }
+        .voice-list li .voice-label {
+            color: var(--gold-dim);
+            font-weight: bold;
+            margin-right: 6px;
+            white-space: nowrap;
+        }
+        .voice-list li .voice-text {
+            color: var(--text-dim);
+        }
     </style>
 </head>
 <body>
@@ -333,6 +409,23 @@
         <!-- 技能 -->
         <div id="skillsContainer"></div>
 
+        <!-- 被动 -->
+        <div class="info-card">
+            <h3>被动</h3>
+
+            <h4>战斗</h4>
+            <div id="combatPassive"></div>
+
+            <h4>支援</h4>
+            <div id="supportPassive"></div>
+        </div>
+
+        <!-- 语音台词 -->
+        <div class="info-card">
+            <h3>语音台词</h3>
+            <ul class="voice-list" id="voiceList"></ul>
+        </div>
+
     </div>
 
     <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
@@ -400,56 +493,8 @@
                 stages: ['III', 'IV'],
                 skillImg: '技能-突刺-怠惰.png',
                 desc: {
-                    'III': `基础值：5
-变动值：+3
-若目标现存体力不高于50%，则使本技能造成的伤害+50%
-攻击带有狩猎目标（我方）.png狩猎目标的目标时，使本技能的硬币威力+1
-[使用时]若自身的加速弹.png加速弹数不低于1发，则使本技能的硬币威力+1
-[使用时]目标的烧伤.png烧伤强度与震颤.png震颤强度之和每有4级，使本技能的最终威力+1(最多+5)
-[击杀敌方时]击杀带有狩猎目标（我方）.png狩猎目标的目标时，添加1个技能"处置"到下回合将要使用的技能池中
-(该效果添加的技能【处置】不会触发该效果)
-[击杀敌方时]使自身再次装填（句点事务所）.png再次装填(每回合最多1次)
-硬币1.png不可摧毁的硬币.png不可摧毁的硬币
-[命中时]使目标增加2级烧伤.png烧伤强度
-[命中时]使目标增加2级震颤.png震颤强度
-硬币2.png不可摧毁的硬币.png不可摧毁的硬币
-[命中时]使目标增加2级烧伤.png烧伤强度
-[命中时]使目标增加2级震颤.png震颤强度
-硬币3.png不可摧毁的硬币.png不可摧毁的硬币
-[命中时]对目标施加3层烧伤.png烧伤
-[命中时]对目标施加3层震颤.png震颤
-硬币4.png不可摧毁的硬币.png不可摧毁的硬币
-[命中时]使目标振幅转换.png振幅转换为震颤-灼热.png震颤-灼热
-硬币5.png不可摧毁的硬币.png不可摧毁的硬币
-消耗最多5发加速弹.png加速弹
-本硬币每消耗1发加速弹.png加速弹，使本硬币造成的伤害+10%(最多+50%)
-[命中时]使目标震颤引爆.png震颤引爆，并使其震颤.png震颤层数减少1层
-- 本硬币每消耗1发加速弹.png加速弹，使该效果额外触发1次(最多3次)`,
-                    'IV': `基础值：8
-变动值：+5
-若目标现存体力不高于50%，则使本技能造成的伤害+75%
-攻击带有狩猎目标（我方）.png狩猎目标的目标时，使本技能的硬币威力+2
-[使用时]若自身的加速弹.png加速弹数不低于1发，则使本技能的硬币威力+2
-[使用时]目标的烧伤.png烧伤强度与震颤.png震颤强度之和每有3级，使本技能的最终威力+1(最多+7)
-[击杀敌方时]击杀带有狩猎目标（我方）.png狩猎目标的目标时，添加1个技能"处置"到下回合将要使用的技能池中
-(该效果添加的技能【处置】不会触发该效果)
-[击杀敌方时]使自身再次装填（句点事务所）.png再次装填(每回合最多1次)
-硬币1.png不可摧毁的硬币.png不可摧毁的硬币
-[命中时]使目标增加3级烧伤.png烧伤强度
-[命中时]使目标增加3级震颤.png震颤强度
-硬币2.png不可摧毁的硬币.png不可摧毁的硬币
-[命中时]使目标增加3级烧伤.png烧伤强度
-[命中时]使目标增加3级震颤.png震颤强度
-硬币3.png不可摧毁的硬币.png不可摧毁的硬币
-[命中时]对目标施加4层烧伤.png烧伤
-[命中时]对目标施加4层震颤.png震颤
-硬币4.png不可摧毁的硬币.png不可摧毁的硬币
-[命中时]使目标振幅转换.png振幅转换为震颤-灼热.png震颤-灼热
-硬币5.png不可摧毁的硬币.png不可摧毁的硬币
-消耗最多8发加速弹.png加速弹
-本硬币每消耗1发加速弹.png加速弹，使本硬币造成的伤害+12%(最多+60%)
-[命中时]使目标震颤引爆.png震颤引爆，并使其震颤.png震颤层数减少2层
-- 本硬币每消耗1发加速弹.png加速弹，使该效果额外触发1次(最多5次)`
+                    'III': '基础值：5\n变动值：+3\n若目标现存体力不高于50%，则使本技能造成的伤害+50%',
+                    'IV': '基础值：8\n变动值：+5\n若目标现存体力不高于50%，则使本技能造成的伤害+75%'
                 }
             },
         ];
@@ -463,11 +508,76 @@
                 capacity: 1,
                 stages: ['I-III', 'IV'],
                 desc: {
-                    'I-III': `[I-III阶段] 获得8点护盾，持续1回合`,
-                    'IV': `[IV阶段] 获得12点护盾，持续1回合，获得1层保护`
+                    'I-III': '[I-III阶段] 获得8点护盾，持续1回合',
+                    'IV': '[IV阶段] 获得12点护盾，持续1回合，获得1层保护'
                 },
                 extraSin: '傲慢',
             },
+        ];
+
+        /*
+        ╔══════════════════════════════════════════╗
+        ║  被动数据 - 在此修改                    ║
+        ║  way: 持有/共鸣                         ║
+        ║  stages: 可用阶段数组                   ║
+        ║  effects: { 阶段: 效果描述 }            ║
+        ╚══════════════════════════════════════════╝
+        */
+        const COMBAT_PASSIVE = {
+            name: '最后一搏',
+            way: '持有',
+            sin: '暴怒',
+            need: 3,
+            stages: ['I', 'II', 'III', 'IV'],
+            effects: {
+                'I': '若现存体力不高于25%，则使自身的拼点威力+1',
+                'II': '若现存体力不高于25%，则使自身的拼点威力+1',
+                'III': '若现存体力不高于25%，则使自身的拼点威力+1',
+                'IV': '若现存体力不高于25%，则使自身的拼点威力+1'
+            }
+        };
+
+        const SUPPORT_PASSIVE = {
+            name: '生存决意',
+            way: '持有',
+            sin: '暴怒',
+            need: 6,
+            stages: ['III', 'IV'],
+            effects: {
+                'III': '使现存体力最低且不高于50%的1名友方单位的拼点威力+1',
+                'IV': '使现存体力最低且不高于50%的1名友方单位的拼点威力+1'
+            }
+        };
+
+        /*
+        ╔══════════════════════════════════════════╗
+        ║  语音台词 - 在此修改                    ║
+        ╚══════════════════════════════════════════╝
+        */
+        const VOICE_LINES = [
+            { label: '获得时', text: '叫我以实玛利吧。' },
+            { label: '早间问候', text: '是啊，新的一天开始了。扬帆起航吧。' },
+            { label: '午间问候', text: '今天已经过半了。您有在好好利用时间吗？' },
+            { label: '晚间问候', text: '今天就这样结束吧。让我们完成余下的工作后好好休息一会。' },
+            { label: '对话 1', text: '我还是很庆幸有您在我们这边。多一个思想正常的人总归是件好事。' },
+            { label: '对话 2', text: '我可以轻松完成大部分的命令。但前提是要有合理且高效的判断。' },
+            { label: '对话 3', text: '恰当地利用水平千差万别的罪人们，也是您的职责。' },
+            { label: '对话 4', text: '先讲清楚，我跟您说过的那些话只是为了确保任务成功而已。并不是说对您有什么不满。' },
+            { label: '对话 5', text: '在我曾经所处的地方，是一个任何微小失误都会危及所有人性命的空间。我之所以偶尔会变得如此敏感，都是因为那些过往的经验所致。啊……我并不是在请求您的理解。' },
+            { label: '闲置', text: '经理？唉……那我也走了。' },
+            { label: '人格出战', text: '好的，没问题。' },
+            { label: '进入战斗', text: '我会听从您的命令。只要命令合理有效。' },
+            { label: '战斗中选中人格', text: '我现在很忙，所以请长话短说。' },
+            { label: '进行攻击', text: '计划可行，我们上。' },
+            { label: '敌方混乱', text: '敌舰已经搁浅。' },
+            { label: '陷入混乱', text: '呃……！' },
+            { label: '击杀敌方', text: '沉没吧。' },
+            { label: '友方阵亡', text: '您该受苦了，经理。' },
+            { label: '判定成功', text: '尽管如此……我还是设法做到了。' },
+            { label: '判定失败', text: '所以说您应该派别人来的。请不要怪我。' },
+            { label: '战斗胜利', text: '我一般不对这种事情大惊小怪。' },
+            { label: 'EX CLEAR战斗胜利', text: '呃……老实说，我们这次做的还算不错。对吧？' },
+            { label: '战斗失败', text: '……刚才那个无视我的话直接冲上去的是谁？' }
         ];
 
         const SIN_MAP = {
@@ -503,7 +613,7 @@
                         </span>
                     </div>
                     <div class="stage-tabs">
-                        ${skill.stages.map(s => `<button class="stage-tab${s === defaultStage ? ' active' : ''}" onclick="switchStage('skill',${idx},'${s}')">${s}阶段</button>`).join('')}
+                        ${skill.stages.map(s => '<button class="stage-tab' + (s === defaultStage ? ' active' : '') + '" onclick="switchStage(\'skill\',' + idx + ',\'' + s + '\')">' + s + '阶段</button>').join('')}
                     </div>
                     <div class="skill-desc-row" id="skill-desc-${idx}">
                         <img src="/loomcompanywiki/img/${skill.skillImg}" onerror="this.style.display='none'">
@@ -512,40 +622,77 @@
                 </div>`;
             });
 
-           DEFENSE_SKILLS.forEach((skill, idx) => {
-    const defaultStage = skill.stages[skill.stages.length - 1];
-    let tabsHTML = '';
-    skill.stages.forEach(s => {
-        let label = s + '阶段';
-        if (s === 'IV' && skill.extraSin) {
-            label += ' 追加：<img src="/loomcompanywiki/img/' + skill.extraSin + '.png" style="width:18px;height:18px;vertical-align:middle;">';
-        }
-        const activeClass = s === defaultStage ? ' active' : '';
-        tabsHTML += '<button class="stage-tab' + activeClass + '" onclick="switchDefStage(' + idx + ',\'' + s + '\')">' + label + '</button>';
-    });
-    html += `
-    <div class="info-card skill-card defense-card">
-        <div class="skill-header">
-            <span class="skill-name" style="color:#b0a590;">${skill.name}</span>
-            <span class="skill-icons">
-                <img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}
-            </span>
-            <span class="skill-icons">
-                <img src="/loomcompanywiki/img/${skill.defenseType}.png"> ${skill.defense}
-            </span>
-            <span class="skill-icons">
-                <img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}
-            </span>
-        </div>
-        <div class="stage-tabs">
-            ${tabsHTML}
-        </div>
-        <div class="skill-desc-row" id="def-desc-${idx}">
-            <span class="skill-desc-text">${skill.desc[defaultStage] || ''}</span>
-        </div>
-    </div>`;
-});
+            DEFENSE_SKILLS.forEach((skill, idx) => {
+                const defaultStage = skill.stages[skill.stages.length - 1];
+                let tabsHTML = '';
+                skill.stages.forEach(s => {
+                    let label = s + '阶段';
+                    if (s === 'IV' && skill.extraSin) {
+                        label += ' 追加：<img src="/loomcompanywiki/img/' + skill.extraSin + '.png" style="width:18px;height:18px;vertical-align:middle;">';
+                    }
+                    const activeClass = s === defaultStage ? ' active' : '';
+                    tabsHTML += '<button class="stage-tab' + activeClass + '" onclick="switchDefStage(' + idx + ',\'' + s + '\')">' + label + '</button>';
+                });
+                html += `
+                <div class="info-card skill-card defense-card">
+                    <div class="skill-header">
+                        <span class="skill-name" style="color:#b0a590;">${skill.name}</span>
+                        <span class="skill-icons">
+                            <img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}
+                        </span>
+                        <span class="skill-icons">
+                            <img src="/loomcompanywiki/img/${skill.defenseType}.png"> ${skill.defense}
+                        </span>
+                        <span class="skill-icons">
+                            <img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}
+                        </span>
+                    </div>
+                    <div class="stage-tabs">
+                        ${tabsHTML}
+                    </div>
+                    <div class="skill-desc-row" id="def-desc-${idx}">
+                        <span class="skill-desc-text">${skill.desc[defaultStage] || ''}</span>
+                    </div>
+                </div>`;
+            });
+
             container.innerHTML = html;
+        }
+
+        function renderPassives() {
+            const combat = document.getElementById('combatPassive');
+            const support = document.getElementById('supportPassive');
+
+            [ { el: combat, data: COMBAT_PASSIVE }, { el: support, data: SUPPORT_PASSIVE } ].forEach(({ el, data }) => {
+                const defaultStage = data.stages[data.stages.length - 1];
+                let tabsHTML = '';
+                data.stages.forEach(s => {
+                    const activeClass = s === defaultStage ? ' active' : '';
+                    tabsHTML += '<button class="passive-stage-tab' + activeClass + '" onclick="switchPassiveStage(this,\'' + s + '\')" data-passive="' + data.name + '">' + s + '</button>';
+                });
+                el.innerHTML = `
+                <div class="passive-block" id="passive-${data.name}">
+                    <div class="passive-name">${data.name} —— ${data.way}：<img src="/loomcompanywiki/img/${data.sin}.png">×${data.need}</div>
+                    <div class="passive-stage-tabs">${tabsHTML}</div>
+                    <div class="passive-effect" id="passive-effect-${data.name}">${data.effects[defaultStage] || ''}</div>
+                </div>`;
+            });
+
+            window.passiveData = { combat: COMBAT_PASSIVE, support: SUPPORT_PASSIVE };
+        }
+
+        window.switchPassiveStage = function(btn, stage) {
+            const parent = btn.parentElement.parentElement;
+            const name = parent.querySelector('.passive-name').textContent.split(' —— ')[0];
+            const data = window.passiveData.combat.name === name ? window.passiveData.combat : window.passiveData.support;
+            parent.querySelector('.passive-effect').textContent = data.effects[stage] || '';
+            parent.querySelectorAll('.passive-stage-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+        };
+
+        function renderVoices() {
+            const list = document.getElementById('voiceList');
+            list.innerHTML = VOICE_LINES.map(v => '<li><span class="voice-label">' + v.label + '：</span><span class="voice-text">' + v.text + '</span></li>').join('');
         }
 
         function switchStage(type, idx, stage) {
@@ -569,6 +716,8 @@
         }
 
         renderSkills();
+        renderPassives();
+        renderVoices();
 
         const myData = IDENTITIES_INDEX.find(item => item.id === MY_ID);
 
