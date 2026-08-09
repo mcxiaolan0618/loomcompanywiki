@@ -76,10 +76,10 @@
         .filter-bar select:focus { border-color: var(--gold); outline: none; }
         .filter-label { color: var(--text-dim); font-size: 0.65rem; letter-spacing: 1px; }
 
-        .ego-grid {
+        .identity-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(0, 1fr));
-            gap: 6px;
+            grid-template-columns: repeat(auto-fill, minmax(min-content, 1fr));
+            gap: 10px;
         }
         .ego-card {
             background: var(--surface2);
