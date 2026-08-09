@@ -497,7 +497,7 @@
                         </span>
                     </div>
                     <div class="stage-tabs">
-                        ${skill.stages.map(s => `<button class="stage-tab${s === defaultStage ? ' active' : ''}" onclick="switchStage('skill',${idx},'${s}')">${s}阶段</button>`).join('')}
+                        ${skill.stages.map(s => '<button class="stage-tab' + (s === defaultStage ? ' active' : '') + '" onclick="switchStage(\'skill\',' + idx + ',\'' + s + '\')">' + s + '阶段</button>').join('')}
                     </div>
                     <div class="skill-desc-row" id="skill-desc-${idx}">
                         <img src="/loomcompanywiki/img/${skill.skillImg}" onerror="this.style.display='none'">
@@ -508,6 +508,15 @@
 
             DEFENSE_SKILLS.forEach((skill, idx) => {
                 const defaultStage = skill.stages[skill.stages.length - 1];
+                let tabsHTML = '';
+                skill.stages.forEach(s => {
+                    let label = s + '阶段';
+                    if (s === 'IV' && skill.extraSin) {
+                        label += ' 追加：<img src="/loomcompanywiki/img/' + skill.extraSin + '.png" style="width:18px;height:18px;vertical-align:middle;">';
+                    }
+                    const activeClass = s === defaultStage ? ' active' : '';
+                    tabsHTML += '<button class="stage-tab' + activeClass + '" onclick="switchDefStage(' + idx + ',\'' + s + '\')">' + label + '</button>';
+                });
                 html += `
                 <div class="info-card skill-card defense-card">
                     <div class="skill-header">
@@ -523,7 +532,7 @@
                         </span>
                     </div>
                     <div class="stage-tabs">
-                        ${skill.stages.map(s => `<button class="stage-tab${s === defaultStage ? ' active' : ''}" onclick="switchDefStage(${idx},'${s}')">${s}阶段${s === 'IV' && skill.extraSin ? ' 追加：<img src=\\'/loomcompanywiki/img/' + skill.extraSin + '.png\\' style=\\'width:18px;height:18px;vertical-align:middle;\\'>' : ''}</button>`).join('')}
+                        ${tabsHTML}
                     </div>
                     <div class="skill-desc-row" id="def-desc-${idx}">
                         <span class="skill-desc-text">${skill.desc[defaultStage] || ''}</span>
