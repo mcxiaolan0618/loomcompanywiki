@@ -512,31 +512,39 @@
                 </div>`;
             });
 
-            DEFENSE_SKILLS.forEach((skill, idx) => {
-                const defaultStage = skill.stages[skill.stages.length - 1];
-                html += `
-                <div class="info-card skill-card defense-card">
-                    <div class="skill-header">
-                        <span class="skill-name" style="color:#b0a590;">${skill.name}</span>
-                        <span class="skill-icons">
-                            <img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}
-                        </span>
-                        <span class="skill-icons">
-                            <img src="/loomcompanywiki/img/${skill.defenseType}.png"> ${skill.defense}
-                        </span>
-                        <span class="skill-icons">
-                            <img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}
-                        </span>
-                    </div>
-                    <div class="stage-tabs">
-                        ${skill.stages.map(s => `<button class="stage-tab${s === defaultStage ? ' active' : ''}" onclick="switchDefStage(${idx},'${s}')">${s}阶段${s === 'IV' && skill.extraSin ? ' 追加：<img src=\\'/loomcompanywiki/img/' + skill.extraSin + '.png\\' style=\\'width:18px;height:18px;vertical-align:middle;\\'>' : ''}</button>`).join('')}
-                    </div>
-                    <div class="skill-desc-row" id="def-desc-${idx}">
-                        <span class="skill-desc-text">${skill.desc[defaultStage] || ''}</span>
-                    </div>
-                </div>`;
-            });
-
+           DEFENSE_SKILLS.forEach((skill, idx) => {
+    const defaultStage = skill.stages[skill.stages.length - 1];
+    let tabsHTML = '';
+    skill.stages.forEach(s => {
+        let label = s + '阶段';
+        if (s === 'IV' && skill.extraSin) {
+            label += ' 追加：<img src="/loomcompanywiki/img/' + skill.extraSin + '.png" style="width:18px;height:18px;vertical-align:middle;">';
+        }
+        const activeClass = s === defaultStage ? ' active' : '';
+        tabsHTML += '<button class="stage-tab' + activeClass + '" onclick="switchDefStage(' + idx + ',\'' + s + '\')">' + label + '</button>';
+    });
+    html += `
+    <div class="info-card skill-card defense-card">
+        <div class="skill-header">
+            <span class="skill-name" style="color:#b0a590;">${skill.name}</span>
+            <span class="skill-icons">
+                <img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}
+            </span>
+            <span class="skill-icons">
+                <img src="/loomcompanywiki/img/${skill.defenseType}.png"> ${skill.defense}
+            </span>
+            <span class="skill-icons">
+                <img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}
+            </span>
+        </div>
+        <div class="stage-tabs">
+            ${tabsHTML}
+        </div>
+        <div class="skill-desc-row" id="def-desc-${idx}">
+            <span class="skill-desc-text">${skill.desc[defaultStage] || ''}</span>
+        </div>
+    </div>`;
+});
             container.innerHTML = html;
         }
 
