@@ -78,7 +78,7 @@
 
         .ego-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(0, 1fr));
             gap: 6px;
         }
         .ego-card {
@@ -193,9 +193,7 @@
         const ITEMS_PER_PAGE = 15;
         let currentPage = 1;
 
-        function toggleExpandable() {
-            document.getElementById('infoExpandable').classList.toggle('open');
-        }
+        function toggleExpandable() { document.getElementById('infoExpandable').classList.toggle('open'); }
 
         function collectUnique(field) {
             const values = new Set();
@@ -229,16 +227,15 @@
         }
 
         function renderCard(item) {
-            return `
-            <a href="ego/${item.id}.html" class="ego-card">
-                <div class="ego-info">
-                    <span class="ego-card-name">${item.owner}-${item.name}</span>
-                    <span class="ego-card-owner">${item.obtain}</span>
-                </div>
-                <div class="ego-card-level">
-                    <img src="../img/${item.level}.png" alt="${item.level}">
-                </div>
-            </a>`;
+            return '<a href="ego/' + item.id + '.html" class="ego-card">' +
+                '<div class="ego-info">' +
+                    '<span class="ego-card-name">' + item.owner + '-' + item.name + '</span>' +
+                    '<span class="ego-card-owner">' + item.obtain + '</span>' +
+                '</div>' +
+                '<div class="ego-card-level">' +
+                    '<img src="../img/' + item.level + '.png" alt="' + item.level + '">' +
+                '</div>' +
+            '</a>';
         }
 
         function renderGrid() {
@@ -270,10 +267,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function onFilterChange() {
-            currentPage = 1;
-            renderGrid();
-        }
+        function onFilterChange() { currentPage = 1; renderGrid(); }
 
         document.getElementById('filterEmployee').addEventListener('change', onFilterChange);
         document.getElementById('filterLevel').addEventListener('change', onFilterChange);
@@ -282,7 +276,6 @@
         populateFilters();
         renderGrid();
     </script>
-
     <script>
         fetch('/loomcompanywiki/nav.html')
             .then(res => res.text())
@@ -292,6 +285,5 @@
                 if (current) current.classList.add('active');
             });
     </script>
-
 </body>
 </html>
