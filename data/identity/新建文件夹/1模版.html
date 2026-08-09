@@ -230,6 +230,7 @@
             color: var(--text-dim);
             font-size: 0.8rem;
             line-height: 1.6;
+            white-space: pre-line;
         }
 
         .skill-card .skill-desc-text .sin-text { font-weight: bold; }
@@ -338,86 +339,129 @@
 
     <script src="/loomcompanywiki/data/identities.js"></script>
     <script>
+        // ===== 在此填写：索引中的id =====
         const MY_ID = '在此填写人格id，如：LCR员工-萨尔温';
 
+        // ===== 默认等级 =====
         const DEFAULT_LEVEL = 30;
+
+        // ===== 更新时间（如：2026/6/18）=====
         const UPDATE_TIME = '在此填写更新时间';
+
+        // ===== 生命值 =====
         const HP_BASE = 0;
         const HP_GROWTH = 0;
+
+        // ===== 防御等级 =====
         const DEF_BASE = 0;
         const DEF_SHIFT = 0;
+
+        // ===== 混乱阈值（数组长度=条数，数值=比例）=====
         const STAGGER_RATIOS = [0, 0, 0];
+
+        // ===== 速度 I~IV =====
         const SPEED = {
             I:  { min: 0, max: 0 },
             II: { min: 0, max: 0 },
             III:{ min: 0, max: 0 },
             IV: { min: 0, max: 0 }
         };
-        const SANITY_POSITIVE = [];
-        const SANITY_NEGATIVE = [];
 
+        // ===== 理智值条件 =====
+        const SANITY_POSITIVE = [
+            // 在此填写，如：'拼点胜利时，增加10'
+        ];
+        const SANITY_NEGATIVE = [
+            // 在此填写，如：'拼点失败时，减少5'
+        ];
+
+        /*
+        ╔══════════════════════════════════════════╗
+        ║  技能数据 - 在此修改                    ║
+        ║  sin: 暴怒/色欲/怠惰/暴食/忧郁/傲慢/嫉妒 ║
+        ║  count: ×3/×2/×1                       ║
+        ║  coin: Coin.png 数量                    ║
+        ║  attack: Attack.png 数值                ║
+        ║  capacity: 容量.png 数量                ║
+        ║  stages: 可切换的阶段数组               ║
+        ║  skillImg: 技能图标文件名               ║
+        ║  desc: 各阶段描述（支持换行）           ║
+        ║  如需额外技能，复制对象粘贴到数组中     ║
+        ╚══════════════════════════════════════════╝
+        */
         const SKILLS = [
             {
-                name: '技能一名称',
+                name: '在此填写技能一名称',
                 sin: '暴怒',
                 count: 3,
                 coin: 0,
                 attack: 0,
                 capacity: 0,
                 stages: ['I', 'II', 'III', 'IV'],
-                skillImg: '技能-物理-罪孽.png',
+                skillImg: '在此填写技能图标文件名',
                 desc: {
-                    'I': 'I阶段技能描述',
-                    'II': 'II阶段技能描述',
-                    'III': 'III阶段技能描述',
-                    'IV': 'IV阶段技能描述'
+                    'I': '在此填写I阶段描述',
+                    'II': '在此填写II阶段描述',
+                    'III': '在此填写III阶段描述',
+                    'IV': '在此填写IV阶段描述'
                 }
             },
             {
-                name: '技能二名称',
+                name: '在此填写技能二名称',
                 sin: '色欲',
                 count: 2,
                 coin: 0,
                 attack: 0,
                 capacity: 0,
                 stages: ['I', 'II', 'III', 'IV'],
-                skillImg: '技能-物理-罪孽.png',
+                skillImg: '在此填写技能图标文件名',
                 desc: {
-                    'I': 'I阶段技能描述',
-                    'II': 'II阶段技能描述',
-                    'III': 'III阶段技能描述',
-                    'IV': 'IV阶段技能描述'
+                    'I': '在此填写I阶段描述',
+                    'II': '在此填写II阶段描述',
+                    'III': '在此填写III阶段描述',
+                    'IV': '在此填写IV阶段描述'
                 }
             },
             {
-                name: '技能三名称',
+                name: '在此填写技能三名称',
                 sin: '怠惰',
                 count: 1,
                 coin: 0,
                 attack: 0,
                 capacity: 0,
                 stages: ['III', 'IV'],
-                skillImg: '技能-物理-罪孽.png',
+                skillImg: '在此填写技能图标文件名',
                 desc: {
-                    'III': 'III阶段技能描述',
-                    'IV': 'IV阶段技能描述'
+                    'III': '在此填写III阶段描述',
+                    'IV': '在此填写IV阶段描述'
                 }
             },
+            // 如果技能一有两个，复制上面的对象再粘贴一份在这里
         ];
 
+        /*
+        ╔══════════════════════════════════════════╗
+        ║  守备技能 - 在此修改                    ║
+        ║  defenseType: 守备类型图标文件名        ║
+        ║  extraSin: IV阶段追加罪孽属性           ║
+        ║  守备技能可能有1-2个，数组长度决定数量  ║
+        ╚══════════════════════════════════════════╝
+        */
         const DEFENSE_SKILLS = [
             {
-                name: '守备技能名称',
+                name: '在此填写守备技能名称',
                 coin: 0,
+                defenseType: '守备',
                 defense: 0,
                 capacity: 0,
                 stages: ['I-III', 'IV'],
                 desc: {
-                    'I-III': 'I-III阶段技能描述',
-                    'IV': 'IV阶段技能描述'
+                    'I-III': '在此填写I-III阶段描述',
+                    'IV': '在此填写IV阶段描述'
                 },
-                extraSin: '傲慢',
+                extraSin: '在此填写IV阶段追加罪孽属性',
             },
+            // 如果有第二个守备技能，复制上面的对象再粘贴一份在这里
         ];
 
         const SIN_MAP = {
@@ -472,17 +516,16 @@
                             <img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}
                         </span>
                         <span class="skill-icons">
-                            <img src="/loomcompanywiki/img/守备.png"> ${skill.defense}
+                            <img src="/loomcompanywiki/img/${skill.defenseType}.png"> ${skill.defense}
                         </span>
                         <span class="skill-icons">
                             <img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}
                         </span>
                     </div>
                     <div class="stage-tabs">
-                        ${skill.stages.map(s => `<button class="stage-tab${s === defaultStage ? ' active' : ''}" onclick="switchDefStage(${idx},'${s}')">${s}阶段${s === 'IV' && skill.extraSin ? ' 追加：' + skill.extraSin : ''}</button>`).join('')}
+                        ${skill.stages.map(s => `<button class="stage-tab${s === defaultStage ? ' active' : ''}" onclick="switchDefStage(${idx},'${s}')">${s}阶段${s === 'IV' && skill.extraSin ? ' 追加：<img src=\\'/loomcompanywiki/img/' + skill.extraSin + '.png\\' style=\\'width:18px;height:18px;vertical-align:middle;\\'>' : ''}</button>`).join('')}
                     </div>
                     <div class="skill-desc-row" id="def-desc-${idx}">
-                        <img src="/loomcompanywiki/img/${skill.extraSin ? skill.extraSin + '.png' : ''}" onerror="this.style.display='none'">
                         <span class="skill-desc-text">${skill.desc[defaultStage] || ''}</span>
                     </div>
                 </div>`;
