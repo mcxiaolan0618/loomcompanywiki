@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>角色介绍 - Loom Company 同人维基</title>
+    <link rel="stylesheet" href="/loomcompanywiki/css/style.css">
+    <style>
+        .character-detail {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+        .character-detail .back-link {
+            display: inline-block;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+            padding: 4px 12px;
+            border: 1px solid var(--gold-dim);
+            border-radius: 4px;
+        }
+        .character-detail .back-link:hover { background: rgba(201,166,92,0.1); }
+
+        .detail-title {
+            text-align: center;
+            color: var(--gold);
+            font-size: 2rem;
+            letter-spacing: 3px;
+            margin-bottom: 4px;
+        }
+        .detail-title-en {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+        }
+
+        .info-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        .info-card h3 {
+            color: var(--gold);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        .info-card h4 {
+            color: var(--gold-dim);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin: 12px 0 6px;
+        }
+
+        .info-table {
+            width: 100%;
+            font-size: 0.85rem;
+        }
+        .info-table td {
+            padding: 4px 8px;
+            vertical-align: top;
+        }
+        .info-table td:first-child {
+            color: var(--gold-dim);
+            font-weight: bold;
+            white-space: nowrap;
+            width: 80px;
+        }
+        .info-table td:last-child {
+            color: var(--text-dim);
+        }
+
+        .related-chars {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .related-char-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 10px 14px;
+            text-align: center;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: inherit;
+            min-width: 100px;
+        }
+        .related-char-card:hover {
+            border-color: var(--gold);
+        }
+        .related-char-card .char-role {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+        }
+        .related-char-card .char-name {
+            font-size: 0.85rem;
+            color: var(--gold);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .spoiler-section {
+            margin-top: 12px;
+        }
+        .spoiler-locked {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s;
+        }
+        .spoiler-locked:hover {
+            border-color: #8b3a3a;
+        }
+        .spoiler-locked .warning-text {
+            color: #d04a4a;
+            font-weight: bold;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+        .spoiler-locked .hint-text {
+            color: var(--text-dim);
+            font-size: 0.7rem;
+            margin-top: 4px;
+        }
+        .spoiler-password {
+            margin-top: 8px;
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+        }
+        .spoiler-password input {
+            padding: 4px 8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--text);
+            font-size: 0.8rem;
+            width: 100px;
+            text-align: center;
+            font-family: inherit;
+        }
+        .spoiler-password button {
+            padding: 4px 10px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-family: inherit;
+        }
+        .spoiler-password button:hover { border-color: var(--gold); color: var(--gold); }
+        .spoiler-content {
+            display: none;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            line-height: 1.7;
+            padding: 12px 0;
+        }
+        .spoiler-content.unlocked {
+            display: block;
+        }
+        .spoiler-error {
+            color: #d04a4a;
+            font-size: 0.7rem;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .text-content {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="nav-placeholder"></div>
+
+    <div class="character-detail">
+        <a href="/loomcompanywiki/employee/index.html" class="back-link">← 返回员工名单</a>
+
+        <!-- 名字 -->
+        <h1 class="detail-title" id="charNameCN"></h1>
+        <div class="detail-title-en" id="charNameEN"></div>
+
+        <!-- 角色介绍 -->
+        <div class="info-card">
+            <h3>角色介绍</h3>
+            <table class="info-table">
+                <tr><td>性别</td><td id="charGender"></td></tr>
+                <tr><td>身高</td><td id="charHeight"></td></tr>
+                <tr><td>性格</td><td id="charPersonality"></td></tr>
+                <tr><td>职业</td><td id="charJob"></td></tr>
+                <tr><td>爱好</td><td id="charHobby"></td></tr>
+                <tr><td>喜欢的东西</td><td id="charLike"></td></tr>
+                <tr><td>讨厌的东西</td><td id="charDislike"></td></tr>
+            </table>
+        </div>
+
+        <!-- 相关角色 -->
+        <div class="info-card">
+            <h3>相关角色</h3>
+            <div class="related-chars" id="relatedChars"></div>
+        </div>
+
+        <!-- 相关考据 -->
+        <div class="info-card">
+            <h3>相关考据</h3>
+            <h4>大致原出处</h4>
+            <div class="text-content" id="originSource"></div>
+            <h4>主要相关点</h4>
+            <div class="text-content" id="originRelation"></div>
+        </div>
+
+        <!-- 相关经历 -->
+        <div class="info-card">
+            <h3>相关经历</h3>
+            <div class="spoiler-section" id="spoilerSection"></div>
+        </div>
+
+    </div>
+
+    <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
+
+    <script>
+        /*
+        ╔══════════════════════════════════════════╗
+        ║  变量区 - 修改以下数值即可             ║
+        ╚══════════════════════════════════════════╝
+        */
+
+        // ===== 基本信息 =====
+        const CHAR_NAME_CN = '在此填写中文名';
+        const CHAR_NAME_EN = 'English Name';
+        const CHAR_GENDER = '在此填写性别';
+        const CHAR_HEIGHT = '在此填写身高';
+        const CHAR_PERSONALITY = '在此填写性格';
+        const CHAR_JOB = '在此填写职业';
+        const CHAR_HOBBY = '在此填写爱好';
+        const CHAR_LIKE = '在此填写喜欢的东西';
+        const CHAR_DISLIKE = '在此填写讨厌的东西';
+
+        // ===== 相关角色 =====
+        const RELATED_CHARS = [
+            // { role: '职业/关系', name: '角色名', url: '../character/xxx.html' },
+        ];
+
+        // ===== 相关考据 =====
+        const ORIGIN_SOURCE = '在此填写大致原出处的内容';
+        const ORIGIN_RELATION = '在此填写主要相关点的内容';
+
+        // ===== 相关经历 =====
+        const SPOILER_LOCKED = true;
+        const SPOILER_PASSWORD = '006618';
+        const SPOILER_CONTENT = '在此填写剧透内容';
+
+        /*
+        ╔══════════════════════════════════════════╗
+        ║  渲染逻辑                               ║
+        ╚══════════════════════════════════════════╝
+        */
+
+        document.getElementById('charNameCN').textContent = CHAR_NAME_CN;
+        document.getElementById('charNameEN').textContent = CHAR_NAME_EN;
+        document.getElementById('charGender').textContent = CHAR_GENDER;
+        document.getElementById('charHeight').textContent = CHAR_HEIGHT;
+        document.getElementById('charPersonality').textContent = CHAR_PERSONALITY;
+        document.getElementById('charJob').textContent = CHAR_JOB;
+        document.getElementById('charHobby').textContent = CHAR_HOBBY;
+        document.getElementById('charLike').textContent = CHAR_LIKE;
+        document.getElementById('charDislike').textContent = CHAR_DISLIKE;
+
+        // 相关角色
+        if (RELATED_CHARS.length === 0) {
+            document.getElementById('relatedChars').innerHTML = '<span class="text-content">暂无</span>';
+        } else {
+            document.getElementById('relatedChars').innerHTML = RELATED_CHARS.map(c =>
+                '<a href="' + c.url + '" class="related-char-card">' +
+                '<div class="char-role">' + c.role + '</div>' +
+                '<div class="char-name">' + c.name + '</div>' +
+                '</a>'
+            ).join('');
+        }
+
+        // 考据
+        document.getElementById('originSource').textContent = ORIGIN_SOURCE;
+        document.getElementById('originRelation').textContent = ORIGIN_RELATION;
+
+        // 剧透
+        const spoilerSection = document.getElementById('spoilerSection');
+        if (SPOILER_LOCKED) {
+            spoilerSection.innerHTML = `
+                <div class="spoiler-locked" id="spoilerLocked">
+                    <div class="warning-text">⚠Warning⚠ 权限不足 无法访问 ⚠Warning⚠</div>
+                    <div class="hint-text">输入密码：006618 即可访问</div>
+                    <div class="spoiler-password">
+                        <input type="password" id="spoilerInput" placeholder="密码">
+                        <button onclick="unlockSpoiler()">确认</button>
+                    </div>
+                    <div class="spoiler-error" id="spoilerError">密码错误</div>
+                </div>
+                <div class="spoiler-content" id="spoilerContent">${SPOILER_CONTENT}</div>
+            `;
+
+            window.unlockSpoiler = function() {
+                const input = document.getElementById('spoilerInput').value;
+                if (input === SPOILER_PASSWORD) {
+                    document.getElementById('spoilerLocked').style.display = 'none';
+                    document.getElementById('spoilerContent').classList.add('unlocked');
+                } else {
+                    document.getElementById('spoilerError').style.display = 'block';
+                }
+            };
+        } else {
+            spoilerSection.innerHTML = '<div class="text-content">' + SPOILER_CONTENT + '</div>';
+        }
+    </script>
+
+    <script>
+        fetch('/loomcompanywiki/nav.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('nav-placeholder').innerHTML = html;
+                const current = document.querySelector('[data-nav="employee"]');
+                if (current) current.classList.add('active');
+            });
+    </script>
+
+</body>
+</html>
