@@ -171,7 +171,7 @@
         .skill-desc-text a { color: var(--gold); text-decoration: none; }
         .skill-desc-text a:hover { text-decoration: underline; }
         .skill-voice {
-            color: var(--text-dim);
+            color: #FFD700;
             font-size: 1.4rem;
             font-style: italic;
             margin-top: 4px;
@@ -271,7 +271,7 @@
         'II': '基础值:12\n变动值:+8\n攻击容量:1\n若目标现存体力低于50%，则使本技能造成的伤害+10%\nI [命中时]使目标增加2级某种随机效果的强度,该效果可能为[烧伤],[流血],[震颤],[破裂]或[沉沦]', 
         'III': '基础值:16\n变动值:+8\n攻击容量:1\n若目标现存体力低于50%，则使本技能造成的伤害+30%\nI [命中时]使目标增加4级某种随机效果的强度,该效果可能为[烧伤],[流血],[震颤],[破裂]或[沉沦]\n[正面命中时]下回合对目标施加1层[易损]', 
         'IV': '基础值:16\n变动值:+8\n攻击容量:1\n若目标现存体力低于50%，则使本技能造成的伤害+30%\nI [命中时]使目标增加4级某种随机效果的强度,该效果可能为[烧伤],[流血],[震颤],[破裂]或[沉沦]\n[命中时]下回合对目标施加1层[易损]' };
-        const AWAKE_VOICE = '纵使两手空空而归,亦是无常赠我的美景';
+        const AWAKE_VOICE = '"纵使两手空空而归,亦是无常赠我的美景"';
 
         const PASSIVE_NAME = '重绘';
         const PASSIVE_STAGES = ['II'];
@@ -283,12 +283,31 @@
 
         function parseStatusEffects(text) {
             if (!text) return '';
-            return text.replace(/\[(.+?)\]/g, (match, name) => {
+
+            const tagColors = {
+                '命中时': '#5a9a5a', '未摧毁 - 命中时': '#5a9a5a', '战斗开始': '#5a9a5a',
+                '闪避成功时': '#5a9a5a', '无法改变拼点目标': '#5a9a5a', '击杀时': '#5a9a5a',
+                '可拼点防御': '#5a9a5a', '攻击后': '#5a9a5a', '反面命中时': '#5a9a5a',
+                '使用时': '#3a6ab5',
+                '正面命中时': '#7ab85c',
+                '无差别攻击': '#d04a4a', '拼点失败': '#d04a4a', '无法拼点': '#d04a4a',
+                '拼点胜利': '#e8883a', '可拼点反击': '#e8883a',
+                '正面攻击结束后': '#c06090',
+            };
+
+            for (const [tag, color] of Object.entries(tagColors)) {
+                const escapedTag = tag.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                text = text.replace(new RegExp('\\[' + escapedTag + '\\]', 'g'), '<span style="color:' + color + ';font-weight:bold;">[' + tag + ']</span>');
+            }
+
+            text = text.replace(/\[(.+?)\]/g, (match, name) => {
                 if (STATUS_EFFECTS[name]) {
                     return '<img src="/loomcompanywiki/img/' + STATUS_EFFECTS[name].img + '" style="width:20px;height:20px;vertical-align:middle;"> <a href="/loomcompanywiki/data/status-effects.html?q=' + encodeURIComponent(name) + '">' + name + '</a>';
                 }
                 return match;
             });
+
+            return text;
         }
 
         document.getElementById('awakeCard').classList.add('sin-' + (SIN_MAP[AWAKE_SIN] || 'wrath'));
@@ -321,7 +340,7 @@
         document.getElementById('awakeVoice').textContent = AWAKE_VOICE;
         const awakeDefault = AWAKE_STAGES[AWAKE_STAGES.length - 1];
         document.getElementById('awakeTabs').innerHTML = AWAKE_STAGES.map(s =>
-            '<button class="stage-tab' + (s === awakeDefault ? ' active' : '') + '" onclick="switchAwakeStage(\'' + s + '\')">' + s + '阶段</button>').join('');
+            '<button class="stage-tab' + (s === awakeDefault ? ' active' : '') + '" onclick="switchAwakeStage(\'' + s + '\')">异想解析阶段' + s + '</button>').join('');
         document.getElementById('awakeDesc').innerHTML = parseStatusEffects(AWAKE_DESC[awakeDefault] || '');
         window.switchAwakeStage = function(stage) {
             document.getElementById('awakeDesc').innerHTML = parseStatusEffects(AWAKE_DESC[stage] || '');
@@ -335,7 +354,7 @@
         const passiveDefault = PASSIVE_STAGES[PASSIVE_STAGES.length - 1];
         let passiveTabsHTML = '';
         PASSIVE_STAGES.forEach(st => {
-            passiveTabsHTML += '<button class="stage-tab' + (st === passiveDefault ? ' active' : '') + '" onclick="switchPassiveStage(\'' + st + '\')">' + st + '</button>';
+            passiveTabsHTML += '<button class="stage-tab' + (st === passiveDefault ? ' active' : '') + '" onclick="switchPassiveStage(\'' + st + '\')">异想解析阶段' + st + '</button>';
         });
         document.getElementById('passiveEffect').innerHTML = 
         '<div class="stage-tabs">' + passiveTabsHTML + '</div>' +

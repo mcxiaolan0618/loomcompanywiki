@@ -16,7 +16,7 @@
             display: inline-block;
             color: var(--gold);
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 1rem;
             margin-bottom: 16px;
             padding: 4px 12px;
             border: 1px solid var(--gold-dim);
@@ -41,7 +41,7 @@
         }
         .info-card h3 {
             color: var(--gold);
-            font-size: 1rem;
+            font-size: 1.2rem;
             letter-spacing: 2px;
             margin-bottom: 14px;
             padding-bottom: 8px;
@@ -49,7 +49,7 @@
         }
         .info-card h4 {
             color: var(--gold-dim);
-            font-size: 0.9rem;
+            font-size: 1rem;
             letter-spacing: 1px;
             margin: 12px 0 8px;
         }
@@ -59,7 +59,7 @@
             flex-wrap: wrap;
             gap: 16px;
             margin-bottom: 10px;
-            font-size: 0.85rem;
+            font-size: 1rem;
         }
         .info-item { color: var(--text-dim); }
         .info-item strong { color: var(--text); }
@@ -76,7 +76,7 @@
             align-items: center;
             gap: 3px;
             color: var(--text-dim);
-            font-size: 0.85rem;
+            font-size: 1rem;
         }
 
         .resist-display {
@@ -89,7 +89,7 @@
             align-items: center;
             gap: 4px;
             color: var(--text-dim);
-            font-size: 0.85rem;
+            font-size: 1rem;
         }
         .resist-display img { width: 24px; height: 24px; }
 
@@ -106,12 +106,12 @@
             border: 1px solid var(--border);
             border-radius: 4px;
             color: var(--text);
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-family: inherit;
             text-align: center;
         }
         .level-input-row input:focus { border-color: var(--gold); outline: none; }
-        .level-input-row .label { color: var(--text-dim); font-size: 0.85rem; }
+        .level-input-row .label { color: var(--text-dim); font-size: 1rem; }
 
         .stat-row {
             display: flex;
@@ -119,21 +119,21 @@
             align-items: baseline;
             gap: 8px;
             margin-bottom: 8px;
-            font-size: 0.85rem;
+            font-size: 1rem;
         }
         .stat-row .stat-label { color: var(--text-dim); min-width: 70px; }
         .stat-row .stat-value { color: var(--text); font-weight: bold; }
-        .stat-row .stat-base { color: var(--text-dim); font-size: 0.78rem; }
+        .stat-row .stat-base { color: var(--text-dim); font-size: 0.85rem; }
 
         .speed-row { display: flex; gap: 12px; flex-wrap: wrap; }
-        .speed-item { color: var(--text-dim); font-size: 0.82rem; }
+        .speed-item { color: var(--text-dim); font-size: 0.9rem; }
         .speed-item span { color: var(--text); }
 
-        .story-link { color: var(--gold); text-decoration: none; font-size: 0.85rem; }
+        .story-link { color: var(--gold); text-decoration: none; font-size: 1rem; }
         .story-link:hover { text-decoration: underline; }
 
         .sanity-section { margin-top: 14px; }
-        .sanity-box { padding: 12px; border-radius: 6px; margin-bottom: 8px; font-size: 0.85rem; }
+        .sanity-box { padding: 12px; border-radius: 6px; margin-bottom: 8px; font-size: 1rem; }
         .sanity-box.positive { border: 1px solid #3a6ab5; background: rgba(58,106,181,0.08); }
         .sanity-box.positive .sanity-title { color: #5a9af5; font-weight: bold; margin-bottom: 6px; }
         .sanity-box.negative { border: 1px solid #8b3a3a; background: rgba(139,58,58,0.08); }
@@ -142,14 +142,13 @@
         .sanity-box li { color: var(--text-dim); padding: 2px 0; }
         .sanity-box li::before { content: '• '; }
 
-        /* ========== 技能卡片 ========== */
         .skill-card { border-radius: 8px; padding: 14px; margin-bottom: 12px; }
         .skill-card .skill-header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 8px; }
         .skill-card .skill-tag {
-            font-size: 0.65rem; padding: 2px 6px; border-radius: 3px;
+            font-size: 0.7rem; padding: 2px 6px; border-radius: 3px;
             background: var(--surface); color: var(--text-dim); letter-spacing: 1px; margin-right: 2px;
         }
-        .skill-card .skill-name { font-weight: bold; font-size: 0.9rem; letter-spacing: 1px; }
+        .skill-card .skill-name { font-weight: bold; font-size: 1rem; letter-spacing: 1px; }
         .skill-card .skill-icons { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
         .skill-card .skill-icons img { width: 22px; height: 22px; }
         .skill-card .stage-tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; }
@@ -166,7 +165,10 @@
         .skill-card .skill-desc-row { display: flex; align-items: flex-start; gap: 8px; }
         .skill-card .skill-desc-row img { width: 28px; height: 28px; flex-shrink: 0; margin-top: 2px; }
         .skill-card .skill-desc-text {
-            color: var(--text-dim); font-size: 0.8rem; line-height: 1.6; white-space: pre-line;
+            color: var(--text-dim);
+            font-size: 1rem;
+            line-height: 1.6;
+            white-space: pre-line;
         }
         .skill-card .skill-desc-text img { width: 20px; height: 20px; vertical-align: middle; }
         .skill-card .skill-desc-text a { color: var(--gold); text-decoration: none; }
@@ -186,12 +188,11 @@
             color: #b0a590; font-weight: bold;
         }
 
-        /* ========== 被动 ========== */
         .passive-block { margin-bottom: 14px; }
-        .passive-name { color: var(--text); font-weight: bold; font-size: 0.9rem; }
-        .passive-info { color: var(--text-dim); font-size: 0.8rem; margin-bottom: 4px; }
+        .passive-name { color: var(--text); font-weight: bold; font-size: 1rem; }
+        .passive-info { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 4px; }
         .passive-info img { width: 18px; height: 18px; vertical-align: middle; }
-        .passive-effect { color: var(--text-dim); font-size: 0.8rem; line-height: 1.5; }
+        .passive-effect { color: var(--text-dim); font-size: 1rem; line-height: 1.5; }
         .passive-effect img { width: 20px; height: 20px; vertical-align: middle; }
         .passive-effect a { color: var(--gold); text-decoration: none; }
         .passive-effect a:hover { text-decoration: underline; }
@@ -207,9 +208,8 @@
             color: var(--gold); font-weight: bold;
         }
 
-        /* ========== 语音台词 ========== */
         .voice-list { list-style: none; padding: 0; margin: 0; }
-        .voice-list li { padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 0.82rem; }
+        .voice-list li { padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 0.9rem; }
         .voice-list li .voice-label { color: var(--gold-dim); font-weight: bold; margin-right: 6px; white-space: nowrap; }
         .voice-list li .voice-text { color: var(--text-dim); }
     </style>
@@ -315,43 +315,20 @@
         const SANITY_NEGATIVE = [];
 
         const SKILLS = [
-            {
-                tag: '一技能', name: '在此填写技能名',
-                count: 3, coin: 0, attack: 0, capacity: 0,
-                stages: ['I', 'II', 'III', 'IV'],
-                desc: { 'I': '', 'II': '', 'III': '', 'IV': '' }
-            },
-            {
-                tag: '二技能', name: '在此填写技能名',
-                count: 2, coin: 0, attack: 0, capacity: 0,
-                stages: ['I', 'II', 'III', 'IV'],
-                desc: { 'I': '', 'II': '', 'III': '', 'IV': '' }
-            },
-            {
-                tag: '三技能', name: '在此填写技能名',
-                count: 1, coin: 0, attack: 0, capacity: 0,
-                stages: ['III', 'IV'],
-                desc: { 'III': '', 'IV': '' }
-            },
+            { tag: '一技能', name: '在此填写技能名', count: 3, coin: 0, attack: 0, capacity: 0, stages: ['I', 'II', 'III', 'IV'], desc: { 'I': '', 'II': '', 'III': '', 'IV': '' } },
+            { tag: '二技能', name: '在此填写技能名', count: 2, coin: 0, attack: 0, capacity: 0, stages: ['I', 'II', 'III', 'IV'], desc: { 'I': '', 'II': '', 'III': '', 'IV': '' } },
+            { tag: '三技能', name: '在此填写技能名', count: 1, coin: 0, attack: 0, capacity: 0, stages: ['III', 'IV'], desc: { 'III': '', 'IV': '' } },
         ];
 
         const DEFENSE_SKILLS = [
-            {
-                name: '在此填写守备技能名称',
-                coin: 0, defenseType: '守备', defense: 0, capacity: 0,
-                stages: ['I-III', 'IV'],
-                desc: { 'I-III': '', 'IV': '' },
-                extraSin: '',
-            },
+            { name: '在此填写守备技能名称', coin: 0, defenseType: '守备', defense: 0, capacity: 0, stages: ['I-III', 'IV'], desc: { 'I-III': '', 'IV': '' }, extraSin: '', },
         ];
 
         const COMBAT_PASSIVES = [
             { name: '在此填写战斗被动名', stages: ['I', 'II', 'III', 'IV'], effects: { 'I': '', 'II': '', 'III': '', 'IV': '' } },
         ];
 
-        const SUPPORT_PASSIVE = {
-            name: '在此填写支援被动名', stages: ['III', 'IV'], effects: { 'III': '', 'IV': '' }
-        };
+        const SUPPORT_PASSIVE = { name: '在此填写支援被动名', stages: ['III', 'IV'], effects: { 'III': '', 'IV': '' } };
 
         const VOICE_LINES = [
             { label: '获得时', text: '' }, { label: '早间问候', text: '' }, { label: '午间问候', text: '' },
@@ -368,12 +345,31 @@
 
         function parseStatusEffects(text) {
             if (!text) return '';
-            return text.replace(/\[(.+?)\]/g, (match, name) => {
+
+            const tagColors = {
+                '命中时': '#5a9a5a', '未摧毁 - 命中时': '#5a9a5a', '战斗开始': '#5a9a5a',
+                '闪避成功时': '#5a9a5a', '无法改变拼点目标': '#5a9a5a', '击杀时': '#5a9a5a',
+                '可拼点防御': '#5a9a5a', '攻击后': '#5a9a5a', '反面命中时': '#5a9a5a',
+                '使用时': '#3a6ab5',
+                '正面命中时': '#7ab85c',
+                '无差别攻击': '#d04a4a', '拼点失败': '#d04a4a', '无法拼点': '#d04a4a',
+                '拼点胜利': '#e8883a', '可拼点反击': '#e8883a',
+                '正面攻击结束后': '#c06090',
+            };
+
+            for (const [tag, color] of Object.entries(tagColors)) {
+                const escapedTag = tag.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                text = text.replace(new RegExp('\\[' + escapedTag + '\\]', 'g'), '<span style="color:' + color + ';font-weight:bold;">[' + tag + ']</span>');
+            }
+
+            text = text.replace(/\[(.+?)\]/g, (match, name) => {
                 if (STATUS_EFFECTS[name]) {
                     return '<img src="/loomcompanywiki/img/' + STATUS_EFFECTS[name].img + '" style="width:20px;height:20px;vertical-align:middle;"> <a href="/loomcompanywiki/data/status-effects.html?q=' + encodeURIComponent(name) + '">' + name + '</a>';
                 }
                 return match;
             });
+
+            return text;
         }
 
         function renderSkills() {
@@ -385,9 +381,7 @@
                 '二技能': '技能-' + s.skillMiddle.physics + '-' + s.skillMiddle.sin + '.png',
                 '三技能': '技能-' + s.skillBottom.physics + '-' + s.skillBottom.sin + '.png'
             };
-            const defaultSin = {
-                '一技能': s.skillTop.sin, '二技能': s.skillMiddle.sin, '三技能': s.skillBottom.sin
-            };
+            const defaultSin = { '一技能': s.skillTop.sin, '二技能': s.skillMiddle.sin, '三技能': s.skillBottom.sin };
 
             SKILLS.forEach((skill, idx) => {
                 const skillSin = skill.sin || defaultSin[skill.tag] || '暴怒';
