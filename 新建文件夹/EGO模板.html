@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EGO详情 - Loom Company 同人维基</title>
     <link rel="stylesheet" href="/loomcompanywiki/css/style.css">
+    <link rel="stylesheet" href="/loomcompanywiki/data/identity/css/sin.css">
     <style>
         .ego-detail {
             max-width: 800px;
@@ -48,6 +49,25 @@
             border-radius: 8px;
             padding: 20px;
             margin-bottom: 16px;
+        }
+        .info-card.sin-frame {
+            border: 1px solid var(--sin-border) !important;
+            border-left: 4px solid var(--sin-accent) !important;
+            background-color: var(--sin-bg) !important;
+            box-shadow: 0 0 10px var(--sin-glow), inset 0 0 10px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .info-card.sin-frame::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-bottom: 20px solid var(--sin-accent);
+            opacity: 0.3;
         }
         .info-card h3 {
             color: var(--gold);
@@ -119,9 +139,9 @@
         }
         .stage-tab:hover { border-color: var(--gold); color: var(--gold); }
         .stage-tab.active {
-            border-color: var(--gold-dim);
-            background: rgba(201,166,92,0.1);
-            color: var(--gold);
+            border-color: var(--sin-border);
+            background: var(--sin-bg);
+            color: var(--sin-color);
             font-weight: bold;
         }
 
@@ -147,6 +167,9 @@
             line-height: 1.6;
             white-space: pre-line;
         }
+        .skill-desc-text img { width: 20px; height: 20px; vertical-align: middle; }
+        .skill-desc-text a { color: var(--gold); text-decoration: none; }
+        .skill-desc-text a:hover { text-decoration: underline; }
         .skill-voice {
             color: var(--text-dim);
             font-size: 0.78rem;
@@ -156,12 +179,16 @@
 
         .passive-block { margin-top: 8px; }
         .passive-name { color: var(--text); font-weight: bold; font-size: 0.9rem; }
-        .passive-effect { color: var(--text-dim); font-size: 0.8rem; line-height: 1.5; }
-
-        .abno-link {
-            color: var(--gold);
-            text-decoration: none;
+        .passive-effect {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            line-height: 1.5;
         }
+        .passive-effect img { width: 20px; height: 20px; vertical-align: middle; }
+        .passive-effect a { color: var(--gold); text-decoration: none; }
+        .passive-effect a:hover { text-decoration: underline; }
+
+        .abno-link { color: var(--gold); text-decoration: none; }
         .abno-link:hover { text-decoration: underline; }
     </style>
 </head>
@@ -174,65 +201,53 @@
 
         <h1 class="detail-title" id="egoTitle"></h1>
 
-        <!-- 基础信息 -->
         <div class="info-card">
             <h3>基础</h3>
-
             <div class="info-row">
                 <span id="egoLevelImg"></span>
                 <span class="info-item"><strong id="egoFullName"></strong></span>
             </div>
-
             <div class="info-row">
                 <span class="info-item"><strong>登场时间</strong> <span id="releaseTime"></span></span>
                 <span class="info-item"><strong>获取方式</strong> <span id="obtainWay"></span></span>
             </div>
-
             <div class="resource-row" id="resources"></div>
-
             <div class="info-row" style="margin-top:6px;">
                 <span class="info-item"><strong>罪孽抗性</strong></span>
                 <div class="resist-row" id="sinResists"></div>
             </div>
         </div>
 
-        <!-- 觉醒 -->
-        <div class="info-card">
+        <div class="info-card sin-frame" id="awakeCard">
             <h3>E.G.O.觉醒</h3>
-
             <div class="skill-header-row">
                 <span class="info-item">硬币：<img src="/loomcompanywiki/img/Coin.png"> ×<span id="awakeCoin"></span></span>
                 <span class="info-item">理智消耗：<img src="/loomcompanywiki/img/sans.png"> <span id="awakeSanity"></span></span>
                 <span class="info-item"><img src="/loomcompanywiki/img/Attack.png"> <span id="awakeAttack"></span></span>
             </div>
-
             <div class="stage-tabs" id="awakeTabs"></div>
-            <div class="skill-desc-row" id="awakeDescRow">
+            <div class="skill-desc-row">
                 <img id="awakeSkillImg" src="" onerror="this.style.display='none'">
                 <span class="skill-desc-text" id="awakeDesc"></span>
             </div>
             <div class="skill-voice" id="awakeVoice"></div>
         </div>
 
-        <!-- 侵蚀 -->
-        <div class="info-card">
+        <div class="info-card sin-frame" id="corrodeCard">
             <h3>E.G.O.侵蚀</h3>
-
             <div class="skill-header-row">
                 <span class="info-item">硬币：<img src="/loomcompanywiki/img/Coin.png"> ×<span id="corrodeCoin"></span></span>
                 <span class="info-item">理智消耗：<img src="/loomcompanywiki/img/sans.png"> <span id="corrodeSanity"></span></span>
                 <span class="info-item"><img src="/loomcompanywiki/img/Attack.png"> <span id="corrodeAttack"></span></span>
             </div>
-
             <div class="stage-tabs" id="corrodeTabs"></div>
-            <div class="skill-desc-row" id="corrodeDescRow">
+            <div class="skill-desc-row">
                 <img id="corrodeSkillImg" src="" onerror="this.style.display='none'">
                 <span class="skill-desc-text" id="corrodeDesc"></span>
             </div>
             <div class="skill-voice" id="corrodeVoice"></div>
         </div>
 
-        <!-- 被动 -->
         <div class="info-card">
             <h3>被动</h3>
             <div class="passive-block">
@@ -241,96 +256,67 @@
             </div>
         </div>
 
-        <!-- 相关异想体 -->
         <div class="info-card">
             <h3>相关异想体</h3>
             <div id="abnoInfo"></div>
         </div>
-
     </div>
 
     <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
 
+    <script src="/loomcompanywiki/data/status-effects.js"></script>
     <script>
-        /*
-        ╔══════════════════════════════════════════╗
-        ║  变量区 - 修改以下数值即可             ║
-        ╚══════════════════════════════════════════╝
-        */
-
-        // ===== EGO名称与等级 =====
         const EGO_NAME = '在此填写EGO名称';
         const EGO_LEVEL = 'ZAYIN';
-
-        // ===== 持有此EGO的角色（至少一个）=====
-        const OWNERS = [
-            { name: '角色名', file: 'EGO名称-角色名' },
-            // 如果有多个角色拥有相同EGO，添加更多
-            // { name: '角色名2', file: 'EGO名称-角色名2' },
-        ];
-
-        // ===== 基础信息 =====
+        const OWNERS = [{ name: '角色名', file: 'EGO名称-角色名' }];
         const RELEASE_TIME = '在此填写登场时间';
         const OBTAIN_WAY = '在此填写获取方式';
+        const RESOURCES = [];
+        const SIN_RESISTS = [];
 
-        // ===== 资源消耗（数组，可多个）=====
-        const RESOURCES = [
-            // { sin: '嫉妒', count: 5 },
-            // { sin: '忧郁', count: 2 },
-            // { sin: '暴食', count: 2 },
-        ];
-
-        // ===== 罪孽抗性（数组，3个或7个）=====
-        const SIN_RESISTS = [
-            // { sin: '暴怒', value: '2.0' },
-            // { sin: '色欲', value: '1.0' },
-            // { sin: '怠惰', value: '0.5' },
-        ];
-
-        // ===== 觉醒 =====
+        const AWAKE_SIN = '暴怒';
         const AWAKE_COIN = 0;
         const AWAKE_SANITY = 0;
         const AWAKE_ATTACK = 0;
         const AWAKE_SKILL_IMG = '技能-物理-罪孽.png';
         const AWAKE_STAGES = ['I', 'II', 'III', 'IV'];
-        const AWAKE_DESC = {
-            'I': '在此填写I阶段效果',
-            'II': '在此填写II阶段效果',
-            'III': '在此填写III阶段效果',
-            'IV': '在此填写IV阶段效果'
-        };
-        const AWAKE_VOICE = '在此填写台词';
+        const AWAKE_DESC = { 'I': '', 'II': '', 'III': '', 'IV': '' };
+        const AWAKE_VOICE = '';
 
-        // ===== 侵蚀 =====
+        const CORRODE_SIN = '色欲';
         const CORRODE_COIN = 0;
         const CORRODE_SANITY = 0;
         const CORRODE_ATTACK = 0;
         const CORRODE_SKILL_IMG = '技能-物理-罪孽.png';
         const CORRODE_STAGES = ['I', 'II', 'III', 'IV'];
-        const CORRODE_DESC = {
-            'I': '在此填写I阶段效果',
-            'II': '在此填写II阶段效果',
-            'III': '在此填写III阶段效果',
-            'IV': '在此填写IV阶段效果'
-        };
-        const CORRODE_VOICE = '在此填写台词';
+        const CORRODE_DESC = { 'I': '', 'II': '', 'III': '', 'IV': '' };
+        const CORRODE_VOICE = '';
 
-        // ===== 被动 =====
         const PASSIVE_NAME = '在此填写被动名称';
-        const PASSIVE_EFFECT = '在此填写被动效果';
+        const PASSIVE_STAGES = ['II'];
+        const PASSIVE_EFFECTS = {
+            'II': '在此填写被动效果'
+        };
 
-        // ===== 相关异想体 =====
         const ABNO_LEVEL = 'ZAYIN';
         const ABNO_CODE = '在此填写编号';
         const ABNO_NAME = '在此填写异想体名字';
 
-        /*
-        ╔══════════════════════════════════════════╗
-        ║  渲染逻辑 - 以下无需修改               ║
-        ╚══════════════════════════════════════════╝
-        */
+        const SIN_MAP = { '暴怒': 'wrath', '色欲': 'lust', '怠惰': 'sloth', '暴食': 'gluttony', '忧郁': 'gloom', '傲慢': 'pride', '嫉妒': 'envy' };
 
-        // 标题
+        function parseStatusEffects(text) {
+            if (!text) return '';
+            return text.replace(/\[(.+?)\]/g, (match, name) => {
+                if (STATUS_EFFECTS[name]) {
+                    return '<img src="/loomcompanywiki/img/' + STATUS_EFFECTS[name].img + '" style="width:20px;height:20px;vertical-align:middle;"> <a href="/loomcompanywiki/data/status-effects.html?q=' + encodeURIComponent(name) + '">' + name + '</a>';
+                }
+                return match;
+            });
+        }
+
+        document.getElementById('awakeCard').classList.add('sin-' + (SIN_MAP[AWAKE_SIN] || 'wrath'));
+        document.getElementById('corrodeCard').classList.add('sin-' + (SIN_MAP[CORRODE_SIN] || 'lust'));
+
         const currentOwner = OWNERS[0].name;
         document.getElementById('egoTitle').textContent = EGO_NAME + '-' + currentOwner;
         if (OWNERS.length > 1) {
@@ -343,75 +329,69 @@
             document.getElementById('egoTitle').innerHTML += '<div class="owner-links">' + linksHTML + '</div>';
         }
 
-        // 基础信息
         document.getElementById('egoLevelImg').innerHTML = '<img src="/loomcompanywiki/img/' + EGO_LEVEL + '.png" style="width:56px;height:24px;object-fit:contain;">';
         document.getElementById('egoFullName').textContent = EGO_NAME + '-' + currentOwner;
         document.getElementById('releaseTime').textContent = RELEASE_TIME;
         document.getElementById('obtainWay').textContent = OBTAIN_WAY;
-
-        // 资源
         document.getElementById('resources').innerHTML = RESOURCES.map(r =>
-            '<span class="resource-item"><img src="/loomcompanywiki/img/' + r.sin + '.png"> ×' + r.count + '</span>'
-        ).join('');
-
-        // 罪孽抗性
+            '<span class="resource-item"><img src="/loomcompanywiki/img/' + r.sin + '.png"> ×' + r.count + '</span>').join('');
         document.getElementById('sinResists').innerHTML = SIN_RESISTS.map(r =>
-            '<span class="resist-item"><img src="/loomcompanywiki/img/' + r.sin + '.png"> ' + r.value + '</span>'
-        ).join('');
+            '<span class="resist-item"><img src="/loomcompanywiki/img/' + r.sin + '.png"> ' + r.value + '</span>').join('');
 
-        // 觉醒
         document.getElementById('awakeCoin').textContent = AWAKE_COIN;
         document.getElementById('awakeSanity').textContent = AWAKE_SANITY;
         document.getElementById('awakeAttack').textContent = AWAKE_ATTACK;
         document.getElementById('awakeSkillImg').src = '/loomcompanywiki/img/' + AWAKE_SKILL_IMG;
         document.getElementById('awakeVoice').textContent = AWAKE_VOICE;
-
         const awakeDefault = AWAKE_STAGES[AWAKE_STAGES.length - 1];
         document.getElementById('awakeTabs').innerHTML = AWAKE_STAGES.map(s =>
-            '<button class="stage-tab' + (s === awakeDefault ? ' active' : '') + '" onclick="switchAwakeStage(\'' + s + '\')">' + s + '阶段</button>'
-        ).join('');
-        document.getElementById('awakeDesc').textContent = AWAKE_DESC[awakeDefault] || '';
-
+            '<button class="stage-tab' + (s === awakeDefault ? ' active' : '') + '" onclick="switchAwakeStage(\'' + s + '\')">' + s + '阶段</button>').join('');
+        document.getElementById('awakeDesc').innerHTML = parseStatusEffects(AWAKE_DESC[awakeDefault] || '');
         window.switchAwakeStage = function(stage) {
-            document.getElementById('awakeDesc').textContent = AWAKE_DESC[stage] || '';
+            document.getElementById('awakeDesc').innerHTML = parseStatusEffects(AWAKE_DESC[stage] || '');
             document.querySelectorAll('#awakeTabs .stage-tab').forEach(t => t.classList.remove('active'));
             const btn = Array.from(document.querySelectorAll('#awakeTabs .stage-tab')).find(t => t.textContent.trim().startsWith(stage));
             if (btn) btn.classList.add('active');
         };
 
-        // 侵蚀
         document.getElementById('corrodeCoin').textContent = CORRODE_COIN;
         document.getElementById('corrodeSanity').textContent = CORRODE_SANITY;
         document.getElementById('corrodeAttack').textContent = CORRODE_ATTACK;
         document.getElementById('corrodeSkillImg').src = '/loomcompanywiki/img/' + CORRODE_SKILL_IMG;
         document.getElementById('corrodeVoice').textContent = CORRODE_VOICE;
-
         const corrodeDefault = CORRODE_STAGES[CORRODE_STAGES.length - 1];
         document.getElementById('corrodeTabs').innerHTML = CORRODE_STAGES.map(s =>
-            '<button class="stage-tab' + (s === corrodeDefault ? ' active' : '') + '" onclick="switchCorrodeStage(\'' + s + '\')">' + s + '阶段</button>'
-        ).join('');
-        document.getElementById('corrodeDesc').textContent = CORRODE_DESC[corrodeDefault] || '';
-
+            '<button class="stage-tab' + (s === corrodeDefault ? ' active' : '') + '" onclick="switchCorrodeStage(\'' + s + '\')">' + s + '阶段</button>').join('');
+        document.getElementById('corrodeDesc').innerHTML = parseStatusEffects(CORRODE_DESC[corrodeDefault] || '');
         window.switchCorrodeStage = function(stage) {
-            document.getElementById('corrodeDesc').textContent = CORRODE_DESC[stage] || '';
+            document.getElementById('corrodeDesc').innerHTML = parseStatusEffects(CORRODE_DESC[stage] || '');
             document.querySelectorAll('#corrodeTabs .stage-tab').forEach(t => t.classList.remove('active'));
             const btn = Array.from(document.querySelectorAll('#corrodeTabs .stage-tab')).find(t => t.textContent.trim().startsWith(stage));
             if (btn) btn.classList.add('active');
         };
 
-        // 被动
         document.getElementById('passiveName').textContent = PASSIVE_NAME;
-        document.getElementById('passiveEffect').textContent = PASSIVE_EFFECT;
 
-        // 异想体
-        const abnoLevelColors = {
-            'ZAYIN': '#5a9a5a', 'TETH': '#5a8aaa', 'HE': '#c9a62c', 'WAW': '#8b3a6b', 'ALEPH': '#8b3a3a'
+        const passiveDefault = PASSIVE_STAGES[PASSIVE_STAGES.length - 1];
+        let passiveTabsHTML = '';
+        PASSIVE_STAGES.forEach(st => {
+            passiveTabsHTML += '<button class="stage-tab' + (st === passiveDefault ? ' active' : '') + '" onclick="switchPassiveStage(\'' + st + '\')">' + st + '</button>';
+        });
+        document.getElementById('passiveEffect').innerHTML = 
+        '<div class="stage-tabs">' + passiveTabsHTML + '</div>' +
+        '<span id="passiveEffectText">' + parseStatusEffects(PASSIVE_EFFECTS[passiveDefault] || '') + '</span>';
+        
+        window.switchPassiveStage = function(stage) {
+            document.getElementById('passiveEffectText').innerHTML = parseStatusEffects(PASSIVE_EFFECTS[stage] || '');
+            document.querySelectorAll('#passiveEffect .stage-tab').forEach(t => t.classList.remove('active'));
+            const btn = Array.from(document.querySelectorAll('#passiveEffect .stage-tab')).find(t => t.textContent.trim() === stage);
+            if (btn) btn.classList.add('active');
         };
-        document.getElementById('abnoInfo').innerHTML = `
-            <span style="color:${abnoLevelColors[ABNO_LEVEL] || '#fff'};font-weight:bold;">${ABNO_LEVEL}</span>
-            <span style="color:var(--text-dim);margin:0 8px;">${ABNO_CODE}</span>
-            <a href="/loomcompanywiki/data/abnormalities/abnormality/${ABNO_NAME}.html" class="abno-link">${ABNO_NAME}</a>
-        `;
+        const abnoLevelColors = { 'ZAYIN': '#5a9a5a', 'TETH': '#5a8aaa', 'HE': '#c9a62c', 'WAW': '#8b3a6b', 'ALEPH': '#8b3a3a' };
+        document.getElementById('abnoInfo').innerHTML =
+            '<span style="color:' + (abnoLevelColors[ABNO_LEVEL] || '#fff') + ';font-weight:bold;">' + ABNO_LEVEL + '</span>' +
+            '<span style="color:var(--text-dim);margin:0 8px;">' + ABNO_CODE + '</span>' +
+            '<a href="/loomcompanywiki/data/abnormalities/abnormality/' + ABNO_NAME + '.html" class="abno-link">' + ABNO_NAME + '</a>';
     </script>
 
     <script>

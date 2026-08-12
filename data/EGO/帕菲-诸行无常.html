@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EGO详情 - Loom Company 同人维基</title>
+    <link rel="stylesheet" href="/loomcompanywiki/css/style.css">
+    <link rel="stylesheet" href="/loomcompanywiki/data/identity/css/sin.css">
+    <style>
+        .ego-detail {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+        .ego-detail .back-link {
+            display: inline-block;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+            padding: 4px 12px;
+            border: 1px solid var(--gold-dim);
+            border-radius: 4px;
+        }
+        .ego-detail .back-link:hover { background: rgba(201,166,92,0.1); }
+
+        .detail-title {
+            text-align: center;
+            color: var(--gold);
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            margin-bottom: 24px;
+        }
+        .detail-title .owner-links {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-top: 6px;
+        }
+        .detail-title .owner-links a {
+            color: var(--gold-dim);
+            text-decoration: none;
+            margin: 0 4px;
+        }
+        .detail-title .owner-links a:hover { text-decoration: underline; }
+
+        .info-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        .info-card.sin-frame {
+            border: 1px solid var(--sin-border) !important;
+            border-left: 4px solid var(--sin-accent) !important;
+            background-color: var(--sin-bg) !important;
+            box-shadow: 0 0 10px var(--sin-glow), inset 0 0 10px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .info-card.sin-frame::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-bottom: 20px solid var(--sin-accent);
+            opacity: 0.3;
+        }
+        .info-card h3 {
+            color: var(--gold);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            align-items: center;
+        }
+        .info-item { color: var(--text-dim); }
+        .info-item strong { color: var(--text); }
+
+        .resource-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .resource-row img { width: 22px; height: 22px; }
+        .resource-item {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+
+        .resist-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+        .resist-item {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+        .resist-item img { width: 22px; height: 22px; }
+
+        .stage-tabs {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+        .stage-tab {
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 0.72rem;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        .stage-tab:hover { border-color: var(--gold); color: var(--gold); }
+        .stage-tab.active {
+            border-color: var(--sin-border);
+            background: var(--sin-bg);
+            color: var(--sin-color);
+            font-weight: bold;
+        }
+
+        .skill-header-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+        .skill-header-row img { width: 22px; height: 22px; }
+        .skill-desc-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .skill-desc-row img { width: 28px; height: 28px; flex-shrink: 0; margin-top: 2px; }
+        .skill-desc-text {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+        .skill-desc-text img { width: 20px; height: 20px; vertical-align: middle; }
+        .skill-desc-text a { color: var(--gold); text-decoration: none; }
+        .skill-desc-text a:hover { text-decoration: underline; }
+        .skill-voice {
+            color: var(--text-dim);
+            font-size: 0.78rem;
+            font-style: italic;
+            margin-top: 4px;
+        }
+
+        .passive-block { margin-top: 8px; }
+        .passive-name { color: var(--text); font-weight: bold; font-size: 0.9rem; }
+        .passive-effect {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+        .passive-effect img { width: 20px; height: 20px; vertical-align: middle; }
+        .passive-effect a { color: var(--gold); text-decoration: none; }
+        .passive-effect a:hover { text-decoration: underline; }
+
+        .abno-link { color: var(--gold); text-decoration: none; }
+        .abno-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div id="nav-placeholder"></div>
+
+    <div class="ego-detail">
+        <a href="/loomcompanywiki/data/egos.html" class="back-link">← 返回EGO列表</a>
+
+        <h1 class="detail-title" id="egoTitle"></h1>
+
+        <div class="info-card">
+            <h3>基础</h3>
+            <div class="info-row">
+                <span id="egoLevelImg"></span>
+                <span class="info-item"><strong id="egoFullName"></strong></span>
+            </div>
+            <div class="info-row">
+                <span class="info-item"><strong>登场时间</strong> <span id="releaseTime"></span></span>
+                <span class="info-item"><strong>获取方式</strong> <span id="obtainWay"></span></span>
+            </div>
+            <div class="resource-row" id="resources"></div>
+            <div class="info-row" style="margin-top:6px;">
+                <span class="info-item"><strong>罪孽抗性</strong></span>
+                <div class="resist-row" id="sinResists"></div>
+            </div>
+        </div>
+
+        <div class="info-card sin-frame" id="awakeCard">
+            <h3>E.G.O.觉醒</h3>
+            <div class="skill-header-row">
+                <span class="info-item">硬币：<img src="/loomcompanywiki/img/Coin.png"> ×<span id="awakeCoin"></span></span>
+                <span class="info-item">理智消耗：<img src="/loomcompanywiki/img/sans.png"> <span id="awakeSanity"></span></span>
+                <span class="info-item"><img src="/loomcompanywiki/img/Attack.png"> <span id="awakeAttack"></span></span>
+            </div>
+            <div class="stage-tabs" id="awakeTabs"></div>
+            <div class="skill-desc-row">
+                <img id="awakeSkillImg" src="" onerror="this.style.display='none'">
+                <span class="skill-desc-text" id="awakeDesc"></span>
+            </div>
+            <div class="skill-voice" id="awakeVoice"></div>
+        </div>
+
+        <div class="info-card">
+            <h3>被动</h3>
+            <div class="passive-block">
+                <div class="passive-name" id="passiveName"></div>
+                <div class="passive-effect" id="passiveEffect"></div>
+            </div>
+        </div>
+
+    <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
+
+    <script src="/loomcompanywiki/data/status-effects.js"></script>
+    <script>
+        const EGO_NAME = '诸行无常';
+        const EGO_LEVEL = 'ZAYIN';
+        const OWNERS = [{ name: '帕菲', file: '诸行无常-帕菲' }];
+        const RELEASE_TIME = '2026-8-12';
+        const OBTAIN_WAY = '初始';
+        const RESOURCES = [
+            { sin: '忧郁', count: 2 },
+            { sin: '傲慢', count: 2 }
+        ];
+        const SIN_RESISTS = [
+            { sin: '怠惰', value: '×2.0' },
+            { sin: '傲慢', value: '×0.75' },
+            { sin: '嫉妒', value: '×2.0' },
+        ];
+
+        const AWAKE_SIN = '傲慢';
+        const AWAKE_COIN = 1;
+        const AWAKE_SANITY = 10;
+        const AWAKE_ATTACK = +2;
+        const AWAKE_SKILL_IMG = '技能-突刺-傲慢.png';
+        const AWAKE_STAGES = ['I', 'II', 'III', 'IV'];
+        const AWAKE_DESC = { 
+        'I': '基础值:12\n变动值:+8\n攻击容量:1\n若目标现存体力低于50%，则使本技能造成的伤害+10%\nI [命中时]使目标增加2级某种随机效果的强度,该效果可能为[烧伤],[流血],[震颤],[破裂]或[沉沦]', 
+        'II': '基础值:12\n变动值:+8\n攻击容量:1\n若目标现存体力低于50%，则使本技能造成的伤害+10%\nI [命中时]使目标增加2级某种随机效果的强度,该效果可能为[烧伤],[流血],[震颤],[破裂]或[沉沦]', 
+        'III': '基础值:16\n变动值:+8\n攻击容量:1\n若目标现存体力低于50%，则使本技能造成的伤害+30%\nI [命中时]使目标增加4级某种随机效果的强度,该效果可能为[烧伤],[流血],[震颤],[破裂]或[沉沦]\n[正面命中时]下回合对目标施加1层【易损】', 
+        'IV': '基础值:16\n变动值:+8\n攻击容量:1\n若目标现存体力低于50%，则使本技能造成的伤害+30%\nI [命中时]使目标增加4级某种随机效果的强度,该效果可能为[烧伤],[流血],[震颤],[破裂]或[沉沦]\n[命中时]下回合对目标施加1层【易损】' };
+        const AWAKE_VOICE = '纵使两手空空而归,亦是无常赠我的美景';
+
+        const PASSIVE_NAME = '重绘';
+        const PASSIVE_STAGES = ['II'];
+        const PASSIVE_EFFECTS = {
+            'II': '回合开始时，若自身在上回合未受到伤害，重复使用一次下回合使用的第一个技能'
+        };
+
+        const SIN_MAP = { '暴怒': 'wrath', '色欲': 'lust', '怠惰': 'sloth', '暴食': 'gluttony', '忧郁': 'gloom', '傲慢': 'pride', '嫉妒': 'envy' };
+
+        function parseStatusEffects(text) {
+            if (!text) return '';
+            return text.replace(/\[(.+?)\]/g, (match, name) => {
+                if (STATUS_EFFECTS[name]) {
+                    return '<img src="/loomcompanywiki/img/' + STATUS_EFFECTS[name].img + '" style="width:20px;height:20px;vertical-align:middle;"> <a href="/loomcompanywiki/data/status-effects.html?q=' + encodeURIComponent(name) + '">' + name + '</a>';
+                }
+                return match;
+            });
+        }
+
+        document.getElementById('awakeCard').classList.add('sin-' + (SIN_MAP[AWAKE_SIN] || 'wrath'));
+
+        const currentOwner = OWNERS[0].name;
+        document.getElementById('egoTitle').textContent = EGO_NAME + '-' + currentOwner;
+        if (OWNERS.length > 1) {
+            let linksHTML = '（';
+            OWNERS.forEach((o, i) => {
+                linksHTML += '<a href="' + o.file + '.html">' + o.name + '</a>';
+                if (i < OWNERS.length - 1) linksHTML += ' / ';
+            });
+            linksHTML += '）';
+            document.getElementById('egoTitle').innerHTML += '<div class="owner-links">' + linksHTML + '</div>';
+        }
+
+        document.getElementById('egoLevelImg').innerHTML = '<img src="/loomcompanywiki/img/' + EGO_LEVEL + '.png" style="width:56px;height:24px;object-fit:contain;">';
+        document.getElementById('egoFullName').textContent = EGO_NAME + '-' + currentOwner;
+        document.getElementById('releaseTime').textContent = RELEASE_TIME;
+        document.getElementById('obtainWay').textContent = OBTAIN_WAY;
+        document.getElementById('resources').innerHTML = RESOURCES.map(r =>
+            '<span class="resource-item"><img src="/loomcompanywiki/img/' + r.sin + '.png"> ×' + r.count + '</span>').join('');
+        document.getElementById('sinResists').innerHTML = SIN_RESISTS.map(r =>
+            '<span class="resist-item"><img src="/loomcompanywiki/img/' + r.sin + '.png"> ' + r.value + '</span>').join('');
+
+        document.getElementById('awakeCoin').textContent = AWAKE_COIN;
+        document.getElementById('awakeSanity').textContent = AWAKE_SANITY;
+        document.getElementById('awakeAttack').textContent = AWAKE_ATTACK;
+        document.getElementById('awakeSkillImg').src = '/loomcompanywiki/img/' + AWAKE_SKILL_IMG;
+        document.getElementById('awakeVoice').textContent = AWAKE_VOICE;
+        const awakeDefault = AWAKE_STAGES[AWAKE_STAGES.length - 1];
+        document.getElementById('awakeTabs').innerHTML = AWAKE_STAGES.map(s =>
+            '<button class="stage-tab' + (s === awakeDefault ? ' active' : '') + '" onclick="switchAwakeStage(\'' + s + '\')">' + s + '阶段</button>').join('');
+        document.getElementById('awakeDesc').innerHTML = parseStatusEffects(AWAKE_DESC[awakeDefault] || '');
+        window.switchAwakeStage = function(stage) {
+            document.getElementById('awakeDesc').innerHTML = parseStatusEffects(AWAKE_DESC[stage] || '');
+            document.querySelectorAll('#awakeTabs .stage-tab').forEach(t => t.classList.remove('active'));
+            const btn = Array.from(document.querySelectorAll('#awakeTabs .stage-tab')).find(t => t.textContent.trim().startsWith(stage));
+            if (btn) btn.classList.add('active');
+        };
+
+        document.getElementById('passiveName').textContent = PASSIVE_NAME;
+        
+        const passiveDefault = PASSIVE_STAGES[PASSIVE_STAGES.length - 1];
+        let passiveTabsHTML = '';
+        PASSIVE_STAGES.forEach(st => {
+            passiveTabsHTML += '<button class="stage-tab' + (st === passiveDefault ? ' active' : '') + '" onclick="switchPassiveStage(\'' + st + '\')">' + st + '</button>';
+        });
+        document.getElementById('passiveEffect').innerHTML = 
+        '<div class="stage-tabs">' + passiveTabsHTML + '</div>' +
+        '<span id="passiveEffectText">' + parseStatusEffects(PASSIVE_EFFECTS[passiveDefault] || '') + '</span>';
+        
+        window.switchPassiveStage = function(stage) {
+            document.getElementById('passiveEffectText').innerHTML = parseStatusEffects(PASSIVE_EFFECTS[stage] || '');
+            document.querySelectorAll('#passiveEffect .stage-tab').forEach(t => t.classList.remove('active'));
+            const btn = Array.from(document.querySelectorAll('#passiveEffect .stage-tab')).find(t => t.textContent.trim() === stage);
+            if (btn) btn.classList.add('active');
+        };
+
+    </script>
+
+    <script>
+        fetch('/loomcompanywiki/nav.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('nav-placeholder').innerHTML = html;
+                const current = document.querySelector('[data-nav="egos"]');
+                if (current) current.classList.add('active');
+            });
+    </script>
+
+</body>
+</html>
