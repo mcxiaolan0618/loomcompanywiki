@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>状态效果 - Loom Company 同人维基</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .status-page {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+        .status-page h2 {
+            text-align: center;
+            color: var(--gold);
+            font-size: 1.6rem;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+        .search-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .search-row input {
+            padding: 8px 14px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            font-size: 0.85rem;
+            font-family: inherit;
+            width: 250px;
+        }
+        .search-row input:focus { border-color: var(--gold); outline: none; }
+
+        .status-category {
+            margin-bottom: 20px;
+        }
+        .status-category h3 {
+            color: var(--gold);
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border);
+        }
+        .status-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .status-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px 12px;
+            transition: all 0.2s;
+            cursor: default;
+        }
+        .status-box:hover {
+            border-color: var(--gold);
+        }
+        .status-box img {
+            width: 24px;
+            height: 24px;
+        }
+        .status-box .status-name {
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+        .status-box .status-desc {
+            color: var(--text-dim);
+            font-size: 0.75rem;
+        }
+        .no-result {
+            text-align: center;
+            color: var(--text-dim);
+            padding: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="nav-placeholder"></div>
+
+    <div class="status-page">
+        <h2>状态效果</h2>
+
+        <div class="search-row">
+            <input type="text" id="searchInput" placeholder="搜索效果名称..." oninput="filterStatus()">
+        </div>
+
+        <div id="statusContainer"></div>
+        <div class="no-result" id="noResult" style="display:none;">没有匹配的状态效果。</div>
+    </div>
+
+    <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
+
+    <script src="status-effects.js"></script>
+    <script>
+        const CATEGORIES = {
+            '常用效果': ['烧伤', '流血', '震颤', '破裂', '沉沦', '呼吸法', '充能'],
+            '常用正面效果': [
+                '强壮', '忧郁伤害强化', '嫉妒伤害强化', '威力提升', '斩击守护', '突刺守护', '打击守护',
+                '暴怒守护', '色欲守护', '怠惰守护', '暴食守护', '暴击伤害强化', '傲慢守护', '忧郁守护',
+                '嫉妒守护', '守护', '打击威力提升', '嫉妒威力提升', 'E.G.O资源获取量提升', '伤害强化',
+                '加算硬币强化', '暴怒威力提升', '怠惰威力提升', '减算硬币弱化', '体力恢复提升', '基础威力提升',
+                '体力上限提升', '破裂守护', '斩击威力提升', '突刺威力提升', '忍耐', '傲慢威力提升',
+                '暴食威力提升', '色欲威力提升', '忧郁威力提升', '拼点威力提升', '迅捷', '防御等级提升',
+                '攻击等级提升', '斩击伤害强化', '突刺伤害强化', '打击伤害强化', '暴怒伤害强化', '色欲伤害强化',
+                '怠惰伤害强化', '暴食伤害强化', '傲慢伤害强化'
+            ],
+            '常用负面效果': [
+                '攻击等级降低', '斩击伤害弱化', '突刺伤害弱化', '打击伤害弱化', '暴怒伤害弱化', '色欲伤害弱化',
+                '怠惰伤害弱化', '暴食伤害弱化', '傲慢伤害弱化', '忧郁伤害弱化', '嫉妒伤害弱化', '威力降低',
+                '斩击易损', '突刺易损', '打击易损', '暴怒易损', '色欲易损', '怠惰易损', '暴食易损',
+                '傲慢易损', '忧郁易损', '嫉妒易损', '易损', '体力恢复降低', '伤害弱化', '减算硬币强化',
+                '虚弱', '加算硬币弱化', '破裂易损', '沉沦易损', '暴怒抗性弱化', '斩击抗性弱化', '打击威力降低',
+                '突刺威力降低', '斩击威力降低', '暴怒威力降低', '色欲威力降低', '怠惰威力降低', '傲慢威力降低',
+                '暴食威力降低', '忧郁威力降低', '嫉妒威力降低', '破绽', '拼点威力降低', '理智值恢复效率减少',
+                '束缚', '突刺抗性弱化', '打击抗性弱化', '防御等级降低', '忧郁抗性弱化', '嫉妒抗性弱化'
+            ],
+        };
+
+        function renderAll(filter) {
+            const container = document.getElementById('statusContainer');
+            const noResult = document.getElementById('noResult');
+            let totalCount = 0;
+            let html = '';
+
+            for (const [catName, effectNames] of Object.entries(CATEGORIES)) {
+                let boxes = '';
+                effectNames.forEach(name => {
+                    if (STATUS_EFFECTS[name]) {
+                        if (!filter || name.includes(filter)) {
+                            boxes += `
+                                <span class="status-box">
+                                    <img src="/loomcompanywiki/img/${STATUS_EFFECTS[name].img}">
+                                    <span class="status-name">${name}</span>
+                                    <span class="status-desc">${STATUS_EFFECTS[name].desc}</span>
+                                </span>`;
+                            totalCount++;
+                        }
+                    }
+                });
+                if (boxes) {
+                    html += '<div class="status-category"><h3>' + catName + '</h3><div class="status-grid">' + boxes + '</div></div>';
+                }
+            }
+
+            if (totalCount === 0) {
+                container.innerHTML = '';
+                noResult.style.display = 'block';
+            } else {
+                noResult.style.display = 'none';
+                container.innerHTML = html;
+            }
+        }
+
+        function filterStatus() {
+            renderAll(document.getElementById('searchInput').value);
+        }
+
+        renderAll();
+
+        const params = new URLSearchParams(window.location.search);
+        const q = params.get('q');
+        if (q) {
+            document.getElementById('searchInput').value = q;
+            renderAll(q);
+        }
+    </script>
+
+    <script>
+        fetch('/loomcompanywiki/nav.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('nav-placeholder').innerHTML = html;
+                const current = document.querySelector('[data-nav="status-effects"]');
+                if (current) current.classList.add('active');
+            });
+    </script>
+
+</body>
+</html>
