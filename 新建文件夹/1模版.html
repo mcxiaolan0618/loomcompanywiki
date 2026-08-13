@@ -427,7 +427,7 @@
                 let tabsHTML = '';
                 skill.stages.forEach(st => {
                     let label = st + '阶';
-                    if (st === 'IV' && skill.extraSin) label += ' 追加属性：<img src="/loomcompanywiki/img/罪孽-' + skill.extraSin + '.png" style="width:18px;height:18px;vertical-align:middle;">';
+                    if (st === 'IV' && skill.extraSin) label += ' 追加属性：<img src="/loomcompanywiki/img/' + skill.extraSin + '.png" style="width:18px;height:18px;vertical-align:middle;">';
                     tabsHTML += '<button class="stage-tab' + (st === defaultStage ? ' active' : '') + '" onclick="switchDefStage(' + idx + ',\'' + st + '\')">' + label + '</button>';
                 });
                 html += `
@@ -435,7 +435,7 @@
                     <div class="skill-header">
                         <span class="skill-name" style="color:#b0a590;">${skill.name}</span>
                         <span class="skill-icons"><img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}</span>
-                        <span class="skill-icons"><img src="/loomcompanywiki/img/数值图标-守备.png"> +${skill.defense}</span>
+                        <span class="skill-icons"><img src="/loomcompanywiki/img/守备.png"> +${skill.defense}</span>
                         <span class="skill-icons"><img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}</span>
                     </div>
                     <div class="stage-tabs">${tabsHTML}</div>
