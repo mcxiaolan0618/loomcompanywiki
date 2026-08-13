@@ -304,7 +304,7 @@
     <script>
         const MY_ID = '在此填写人格id，如：LCR员工-萨尔温';
         const DEFAULT_LEVEL = 30;
-        const UPDATE_TIME = '在此填写更新时间';
+        const UPDATE_TIME = '2026-08-';
         const HP_BASE = 0;
         const HP_GROWTH = 0;
         const DEF_BASE = 0;
@@ -315,13 +315,26 @@
         const SANITY_NEGATIVE = [];
 
         const SKILLS = [
-            { tag: '一技能', name: '在此填写技能名', count: 3, coin: 0, attack: 0, capacity: 0, stages: ['I', 'II', 'III', 'IV'], desc: { 'I': '', 'II': '', 'III': '', 'IV': '' } },
-            { tag: '二技能', name: '在此填写技能名', count: 2, coin: 0, attack: 0, capacity: 0, stages: ['I', 'II', 'III', 'IV'], desc: { 'I': '', 'II': '', 'III': '', 'IV': '' } },
-            { tag: '三技能', name: '在此填写技能名', count: 1, coin: 0, attack: 0, capacity: 0, stages: ['III', 'IV'], desc: { 'III': '', 'IV': '' } },
+            { tag: '一技能', name: '在此填写技能名', count: 3, coin: 0, attack: '', capacity: 1, stages: ['I', 'II', 'III', 'IV'], desc: { 
+                'I': '基础值:\n变动值:\n', 
+                'II': '基础值:\n变动值:\n', 
+                'III': '基础值:\n变动值:\n', 
+                'IV': '基础值:\n变动值:\n' } },
+            { tag: '二技能', name: '在此填写技能名', count: 2, coin: 0, attack: '', capacity: 1, stages: ['I', 'II', 'III', 'IV'], desc: { 
+                'I': '基础值:\n变动值:\n', 
+                'II': '基础值:\n变动值:\n', 
+                'III': '基础值:\n变动值:\n', 
+                'IV': '基础值:\n变动值:\n' } },
+            { tag: '三技能', name: '在此填写技能名', count: 1, coin: 0, attack: '', capacity: 1, stages: ['III', 'IV'], desc: { 
+                'III': '基础值:\n变动值:\n', 
+                'IV': '基础值:\n变动值:\n' } },
         ];
 
         const DEFENSE_SKILLS = [
-            { name: '在此填写守备技能名称', coin: 0, defenseType: '守备', defense: 0, capacity: 0, stages: ['I-III', 'IV'], desc: { 'I-III': '', 'IV': '' }, extraSin: '', },
+            { name: '在此填写守备技能名称', coin: 0, defenseType: '守备', defense: '', capacity: 1, stages: ['I-III', 'IV'], desc: { 
+                'I-III': '基础值:\n变动值:\n', 
+                'IV': '基础值:\n变动值:\n' }, 
+                extraSin: '', },
         ];
 
         const COMBAT_PASSIVES = [
@@ -350,6 +363,7 @@
                 '命中时': '#5a9a5a', '未摧毁 - 命中时': '#5a9a5a', '战斗开始': '#5a9a5a',
                 '闪避成功时': '#5a9a5a', '无法改变拼点目标': '#5a9a5a', '击杀时': '#5a9a5a',
                 '可拼点防御': '#5a9a5a', '攻击后': '#5a9a5a', '反面命中时': '#5a9a5a',
+                '暴击命中时': '#5a9a5a',
                 '使用时': '#3a6ab5',
                 '正面命中时': '#7ab85c',
                 '无差别攻击': '#d04a4a', '拼点失败': '#d04a4a', '无法拼点': '#d04a4a',
