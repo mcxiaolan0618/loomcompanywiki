@@ -15,7 +15,7 @@
             display: inline-block;
             color: var(--gold);
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 1rem;
             margin-bottom: 16px;
             padding: 4px 12px;
             border: 1px solid var(--gold-dim);
@@ -47,7 +47,7 @@
         }
         .info-card h3 {
             color: var(--gold);
-            font-size: 1rem;
+            font-size: 1.2rem;
             letter-spacing: 2px;
             margin-bottom: 14px;
             padding-bottom: 8px;
@@ -55,14 +55,14 @@
         }
         .info-card h4 {
             color: var(--gold-dim);
-            font-size: 0.9rem;
+            font-size: 1rem;
             letter-spacing: 1px;
             margin: 12px 0 6px;
         }
 
         .info-table {
             width: 100%;
-            font-size: 0.85rem;
+            font-size: 1rem;
         }
         .info-table td {
             padding: 4px 8px;
@@ -94,24 +94,20 @@
             color: inherit;
             min-width: 100px;
         }
-        .related-char-card:hover {
-            border-color: var(--gold);
-        }
+        .related-char-card:hover { border-color: var(--gold); }
         .related-char-card .char-role {
-            font-size: 0.65rem;
+            font-size: 0.75rem;
             color: var(--text-dim);
             letter-spacing: 1px;
         }
         .related-char-card .char-name {
-            font-size: 0.85rem;
+            font-size: 1rem;
             color: var(--gold);
             font-weight: bold;
             letter-spacing: 1px;
         }
 
-        .spoiler-section {
-            margin-top: 12px;
-        }
+        .spoiler-section { margin-top: 12px; }
         .spoiler-locked {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -122,18 +118,16 @@
             user-select: none;
             transition: all 0.3s;
         }
-        .spoiler-locked:hover {
-            border-color: #8b3a3a;
-        }
+        .spoiler-locked:hover { border-color: #8b3a3a; }
         .spoiler-locked .warning-text {
             color: #d04a4a;
             font-weight: bold;
-            font-size: 0.85rem;
+            font-size: 1rem;
             letter-spacing: 1px;
         }
         .spoiler-locked .hint-text {
             color: var(--text-dim);
-            font-size: 0.7rem;
+            font-size: 0.85rem;
             margin-top: 4px;
         }
         .spoiler-password {
@@ -148,7 +142,7 @@
             border: 1px solid var(--border);
             border-radius: 3px;
             color: var(--text);
-            font-size: 0.8rem;
+            font-size: 1rem;
             width: 100px;
             text-align: center;
             font-family: inherit;
@@ -160,31 +154,31 @@
             border-radius: 3px;
             color: var(--text-dim);
             cursor: pointer;
-            font-size: 0.75rem;
+            font-size: 0.9rem;
             font-family: inherit;
         }
         .spoiler-password button:hover { border-color: var(--gold); color: var(--gold); }
         .spoiler-content {
             display: none;
             color: var(--text-dim);
-            font-size: 0.85rem;
+            font-size: 1rem;
             line-height: 1.7;
             padding: 12px 0;
+            white-space: pre-line;
         }
-        .spoiler-content.unlocked {
-            display: block;
-        }
+        .spoiler-content.unlocked { display: block; }
         .spoiler-error {
             color: #d04a4a;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             margin-top: 4px;
             display: none;
         }
 
         .text-content {
             color: var(--text-dim);
-            font-size: 0.85rem;
+            font-size: 1rem;
             line-height: 1.7;
+            white-space: pre-line;
         }
     </style>
 </head>
@@ -195,11 +189,9 @@
     <div class="character-detail">
         <a href="/loomcompanywiki/employee/index.html" class="back-link">← 返回员工名单</a>
 
-        <!-- 名字 -->
         <h1 class="detail-title" id="charNameCN"></h1>
         <div class="detail-title-en" id="charNameEN"></div>
 
-        <!-- 角色介绍 -->
         <div class="info-card">
             <h3>角色介绍</h3>
             <table class="info-table">
@@ -207,19 +199,16 @@
                 <tr><td>身高</td><td id="charHeight"></td></tr>
                 <tr><td>性格</td><td id="charPersonality"></td></tr>
                 <tr><td>职业</td><td id="charJob"></td></tr>
-                <tr><td>爱好</td><td id="charHobby"></td></tr>
                 <tr><td>喜欢的东西</td><td id="charLike"></td></tr>
                 <tr><td>讨厌的东西</td><td id="charDislike"></td></tr>
             </table>
         </div>
 
-        <!-- 相关角色 -->
         <div class="info-card">
             <h3>相关角色</h3>
             <div class="related-chars" id="relatedChars"></div>
         </div>
 
-        <!-- 相关考据 -->
         <div class="info-card">
             <h3>相关考据</h3>
             <h4>大致原出处</h4>
@@ -228,7 +217,6 @@
             <div class="text-content" id="originRelation"></div>
         </div>
 
-        <!-- 相关经历 -->
         <div class="info-card">
             <h3>相关经历</h3>
             <div class="spoiler-section" id="spoilerSection"></div>
@@ -242,10 +230,10 @@
         /*
         ╔══════════════════════════════════════════╗
         ║  变量区 - 修改以下数值即可             ║
+        ║  换行使用 \n                           ║
         ╚══════════════════════════════════════════╝
         */
 
-        // ===== 基本信息 =====
         const CHAR_NAME_CN = '在此填写中文名';
         const CHAR_NAME_EN = 'English Name';
         const CHAR_GENDER = '在此填写性别';
@@ -255,19 +243,16 @@
         const CHAR_LIKE = '在此填写喜欢的东西';
         const CHAR_DISLIKE = '在此填写讨厌的东西';
 
-        // ===== 相关角色 =====
         const RELATED_CHARS = [
-            // { role: '职业/关系', name: '角色名', url: '../character/xxx.html' },
+            // { role: '职业/关系', name: '角色名', url: 'xxx.html' },
         ];
 
-        // ===== 相关考据 =====
-        const ORIGIN_SOURCE = '在此填写大致原出处的内容';
-        const ORIGIN_RELATION = '在此填写主要相关点的内容';
+        const ORIGIN_SOURCE = '在此填写大致原出处的内容。\n换行用 \\n。';
+        const ORIGIN_RELATION = '在此填写主要相关点的内容。\n换行用 \\n。';
 
-        // ===== 相关经历 =====
         const SPOILER_LOCKED = true;
         const SPOILER_PASSWORD = '006618';
-        const SPOILER_CONTENT = '在此填写剧透内容';
+        const SPOILER_CONTENT = '在此填写剧透内容。\n换行用 \\n。';
 
         /*
         ╔══════════════════════════════════════════╗
@@ -281,11 +266,9 @@
         document.getElementById('charHeight').textContent = CHAR_HEIGHT;
         document.getElementById('charPersonality').textContent = CHAR_PERSONALITY;
         document.getElementById('charJob').textContent = CHAR_JOB;
-        document.getElementById('charHobby').textContent = CHAR_HOBBY;
         document.getElementById('charLike').textContent = CHAR_LIKE;
         document.getElementById('charDislike').textContent = CHAR_DISLIKE;
 
-        // 相关角色
         if (RELATED_CHARS.length === 0) {
             document.getElementById('relatedChars').innerHTML = '<span class="text-content">暂无</span>';
         } else {
@@ -297,11 +280,9 @@
             ).join('');
         }
 
-        // 考据
         document.getElementById('originSource').textContent = ORIGIN_SOURCE;
         document.getElementById('originRelation').textContent = ORIGIN_RELATION;
 
-        // 剧透
         const spoilerSection = document.getElementById('spoilerSection');
         if (SPOILER_LOCKED) {
             spoilerSection.innerHTML = `
