@@ -133,7 +133,7 @@
         .story-link:hover { text-decoration: underline; }
 
         .sanity-section { margin-top: 14px; }
-        .sanity-box { padding: 12px; border-radius: 6px; margin-bottom: 8px; font-size: 1rem; }
+        .sanity-box { padding: 12px; border-radius: 6px; margin-bottom: 8px; font-size: 1rem; white-space: pre-line;}
         .sanity-box.positive { border: 1px solid #3a6ab5; background: rgba(58,106,181,0.08); }
         .sanity-box.positive .sanity-title { color: #5a9af5; font-weight: bold; margin-bottom: 6px; }
         .sanity-box.negative { border: 1px solid #8b3a3a; background: rgba(139,58,58,0.08); }
@@ -570,8 +570,9 @@
             speedHTML += '<span class="speed-item">' + key + ' <span>' + val.min + '-' + val.max + '</span></span>';
         }
         document.getElementById('speedDisplay').innerHTML = speedHTML || '（未设置）';
-        document.getElementById('sanityPositive').innerHTML = SANITY_POSITIVE.map(t => '<li>' + t + '</li>').join('') || '<li>（未设置）</li>';
-        document.getElementById('sanityNegative').innerHTML = SANITY_NEGATIVE.map(t => '<li>' + t + '</li>').join('') || '<li>（未设置）</li>';
+        document.getElementById('sanityPositive').innerHTML = SANITY_POSITIVE.map(t => '<div style="padding:2px 0;">' + t + '</div>').join('') || '<div>（未设置）</div>';
+        document.getElementById('sanityNegative').innerHTML = SANITY_NEGATIVE.map(t => '<div style="padding:2px 0;">' + t + '</div>').join('') || '<div>（未设置）</div>';
+
 
         function updateStats() {
             const level = parseInt(document.getElementById('levelInput').value) || 1;
