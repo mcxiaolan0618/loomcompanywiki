@@ -78,6 +78,13 @@
             color: var(--text-dim);
         }
 
+        .char-description {
+            color: var(--text-dim);
+            font-size: 1rem;
+            line-height: 1.7;
+            white-space: pre-line;
+        }
+
         .related-chars {
             display: flex;
             flex-wrap: wrap;
@@ -205,6 +212,11 @@
         </div>
 
         <div class="info-card">
+            <h3>角色介绍</h3>
+            <div class="char-description" id="charDescription"></div>
+        </div>
+
+        <div class="info-card">
             <h3>相关角色</h3>
             <div class="related-chars" id="relatedChars"></div>
         </div>
@@ -243,6 +255,8 @@
         const CHAR_LIKE = '在此填写喜欢的东西';
         const CHAR_DISLIKE = '在此填写讨厌的东西';
 
+        const CHAR_DESCRIPTION = '在此填写角色介绍描述文字。\n换行用 \\n。';
+
         const RELATED_CHARS = [
             // { role: '职业/关系', name: '角色名', url: 'xxx.html' },
         ];
@@ -268,6 +282,7 @@
         document.getElementById('charJob').textContent = CHAR_JOB;
         document.getElementById('charLike').textContent = CHAR_LIKE;
         document.getElementById('charDislike').textContent = CHAR_DISLIKE;
+        document.getElementById('charDescription').textContent = CHAR_DESCRIPTION;
 
         if (RELATED_CHARS.length === 0) {
             document.getElementById('relatedChars').innerHTML = '<span class="text-content">暂无</span>';

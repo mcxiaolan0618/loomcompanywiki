@@ -78,6 +78,13 @@
             color: var(--text-dim);
         }
 
+        .char-description {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            line-height: 1.7;
+            white-space: pre-line;
+        }
+
         .related-chars {
             display: flex;
             flex-wrap: wrap;
@@ -94,9 +101,7 @@
             color: inherit;
             min-width: 100px;
         }
-        .related-char-card:hover {
-            border-color: var(--gold);
-        }
+        .related-char-card:hover { border-color: var(--gold); }
         .related-char-card .char-role {
             font-size: 0.65rem;
             color: var(--text-dim);
@@ -109,9 +114,7 @@
             letter-spacing: 1px;
         }
 
-        .spoiler-section {
-            margin-top: 12px;
-        }
+        .spoiler-section { margin-top: 12px; }
         .spoiler-locked {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -122,9 +125,7 @@
             user-select: none;
             transition: all 0.3s;
         }
-        .spoiler-locked:hover {
-            border-color: #8b3a3a;
-        }
+        .spoiler-locked:hover { border-color: #8b3a3a; }
         .spoiler-locked .warning-text {
             color: #d04a4a;
             font-weight: bold;
@@ -172,9 +173,7 @@
             padding: 12px 0;
             white-space: pre-line;
         }
-        .spoiler-content.unlocked {
-            display: block;
-        }
+        .spoiler-content.unlocked { display: block; }
         .spoiler-error {
             color: #d04a4a;
             font-size: 0.7rem;
@@ -186,7 +185,7 @@
             color: var(--text-dim);
             font-size: 0.85rem;
             line-height: 1.7;
-            white-space: pre-line
+            white-space: pre-line;
         }
     </style>
 </head>
@@ -197,11 +196,9 @@
     <div class="character-detail">
         <a href="/loomcompanywiki/employee/index.html" class="back-link">← 返回员工名单</a>
 
-        <!-- 名字 -->
         <h1 class="detail-title" id="charNameCN"></h1>
         <div class="detail-title-en" id="charNameEN"></div>
 
-        <!-- 角色介绍 -->
         <div class="info-card">
             <h3>角色介绍</h3>
             <table class="info-table">
@@ -214,13 +211,16 @@
             </table>
         </div>
 
-        <!-- 相关角色 -->
+        <div class="info-card">
+            <h3>角色介绍</h3>
+            <div class="char-description" id="charDescription"></div>
+        </div>
+
         <div class="info-card">
             <h3>相关角色</h3>
             <div class="related-chars" id="relatedChars"></div>
         </div>
 
-        <!-- 相关考据 -->
         <div class="info-card">
             <h3>相关考据</h3>
             <h4>大致原出处</h4>
@@ -229,7 +229,6 @@
             <div class="text-content" id="originRelation"></div>
         </div>
 
-        <!-- 相关经历 -->
         <div class="info-card">
             <h3>相关经历</h3>
             <div class="spoiler-section" id="spoilerSection"></div>
@@ -240,82 +239,27 @@
     <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
 
     <script>
-        /*
-        ╔══════════════════════════════════════════╗
-        ║  变量区 - 修改以下数值即可             ║
-        ╚══════════════════════════════════════════╝
-        */
-
-        // ===== 基本信息 =====
         const CHAR_NAME_CN = '加拉哈德';
         const CHAR_NAME_EN = 'Galahad';
         const CHAR_GENDER = '男';
         const CHAR_HEIGHT = '173cm';
         const CHAR_PERSONALITY = '沉默寡言、虚无主义';
-        const CHAR_JOB = '织机公司回收部门8号员工'
+        const CHAR_JOB = '织机公司回收部门8号员工';
         const CHAR_LIKE = '阅读、观察人类、清淡的食物';
         const CHAR_DISLIKE = '残忍行为、无意义的杀戮、吵闹';
 
-        // ===== 相关角色 =====
+        const CHAR_DESCRIPTION = '姓名：加拉哈德 08\n职位：侍从、使者/员工\n出身地：郊区\n性别：男\n某人的留言：他很擅长外交工作，需要注意的是，不要反复强调一件事，这会让他感到厌烦，不要强迫他去做他认定无意义的事，这对你很危险。\n主管记录：他是一个十分珍惜朋友的人，当然前提是你得被认为是他的朋友。\n平时比较沉默寡言，战斗风格精准而冷酷。周身隐约散发着一种生人勿近的压抑暴躁感。\n我真没有什么可说的，他说的话太少了...';
+
         const RELATED_CHARS = [
             // { role: '职业/关系', name: '角色名', url: '../character/xxx.html' },
         ];
 
-        // ===== 相关考据 =====
         const ORIGIN_SOURCE = '加拉哈德出自中世纪欧洲的亚瑟王传奇，最完整的记载见于托马斯·马洛礼爵士1485年出版的《亚瑟王之死》，是圆桌骑士中最圣洁的一位。\n\n该作讲述加拉哈德作为兰斯洛特之子，自幼被修道院抚养，因纯洁无瑕而独获觐见圣杯的资格。他抵达卡美洛特后，在圆桌旁留出"危险之座"无人敢坐，唯他安然落座，被预言为圣杯骑士。随后他率柏西法尔、鲍斯踏上寻杯之旅，历经灵性与肉体的多重考验，最终在神秘城堡中亲手捧起圣杯，以天使般的光芒治愈了残疾国王。完成使命后他祈求离世，圣杯随灵魂升入天堂，加拉哈德以童贞之身成为尘世中唯一触摸神恩的凡人骑士。';
         const ORIGIN_RELATION = '马洛礼整理编纂《亚瑟王之死》的初衷是整理汇总当时流传于欧洲各地的亚瑟王与圆桌骑士传说，使之成为一部完整统一的英格兰民族史诗，而此前的亚瑟王传说散见于威尔士民间故事、法国骑士诗和拉丁编年史中，彼此矛盾、不成体系，其存在本身反映了中世纪贵族阶层对理想化骑士精神的集体追慕。而根据记载，马洛礼在玫瑰战争期间于狱中完成此书，其创作带有强烈的现实关怀——以圆桌骑士因骄傲、情欲与背叛而分崩离析的悲剧，警示当时陷入内战的英格兰贵族。但马洛礼在书中所传达的并不仅仅是对骑士荣耀的赞美，这点在圆桌骑士们追寻圣杯时的不同结局便能看出——只有最纯洁的加拉哈德得以觐见圣杯，而兰斯洛特、高文等最负盛名的骑士却因自身的罪孽无缘圣杯。这也同时深深揭示了骑士精神的内在矛盾：世俗荣誉与灵魂救赎之间的永恒冲突。马洛礼是十五世纪英格兰的骑士阶层出身者，他通过这本书反映了中世纪晚期骑士精神在现实中的全面衰落。中世纪晚期的欧洲是一个旧秩序日渐崩解的时代，骑士制度逐渐被火器与雇佣兵取代，封建道德在金钱与权力面前节节败退，贵族阶层在享乐与野心之中迷失了信仰的方向，而原著中的圆桌骑士们便是这种道德困境的集中体现——他们在战场上是无匹的英雄，在情欲与权力面前却与凡人无异。当然，放到都市里骑士精神的救赎是不可能存在的，更有可能是在功利主义与生存至上盛行。而原著中亚瑟王代表的是对失落的黄金时代的追怀与对永恒秩序的渴望——他建立的圆桌王国是一个理想化的政治神话，其文化内质既有凯尔特英雄史诗的悲壮宿命，又融入了基督教对罪与救赎的深刻思辨，最终在卡姆兰战场上，亚瑟以凡人之躯承载了超越时代的理想，用毁灭本身完成了对不朽精神的最终确认\n\n云墨的初始武器是一套剑盾组合，暗红长剑与圆盾相伴而生——二者皆以凝固的血液铸成，剑身修长而锋锐，更接近于早期的骑士佩剑，与后期那种专为马战设计的重型阔剑相比，剑身偏窄而轻便，适合步战中的刺击与削砍；圆盾则通体光滑如镜，边缘泛着暗红色泽，在光线下隐约可见血液凝固时特有的流动纹路。剑格与盾面内侧皆刻有同一行花体字，译为「荣耀即吾之枷锁」，出自托马斯·马洛礼《亚瑟王之死》中加拉哈德觐见圣杯时的自白——当其他骑士为世俗荣誉而战时，唯有加拉哈德将荣耀本身视为一种必须背负的约束与责任，这行铭文恰到好处地体现了云墨的某种内在底色，或者说，是铸造此剑与盾之人对他的期许。当然，这套武器的来历已如他本人的记忆一般层层叠叠、难以追溯，每一次重铸都覆盖着上一次的印记，唯有那句铭文始终清晰如初。\n\n「湖中圣域」对应《亚瑟王之死》中湖中仙女赐剑的神秘水域与加拉哈德觐见圣杯的至纯领域——前者是恩典与庇护的象征，后者以“唯有最纯洁者方可踏入”定义不可侵犯的神性，二者融合为此EGO的核心意象：以湖水隔绝外界侵扰，以牺牲换取短暂净土，正如加拉哈德以死亡完成对圣杯的最后觐见。\n';
 
-        // ===== 相关经历 =====
         const SPOILER_LOCKED = true;
         const SPOILER_PASSWORD = '006618';
         const SPOILER_CONTENT = '第一世，血魔战争时期，云墨和薪血派和荣血派的一些2/3代血魔是朋友，兰斯洛特，亚瑟王与堂吉诃德决定帮助人类取得胜利，在此期间亚瑟王研发出了可以让血魔变成人类的药剂。\n亚瑟王找到小贝，小莫，加拉哈德和云墨想要分享自己的喜悦，小贝是支持亚瑟王的想法，小莫只想做血魔，所以只有小莫反对，因为看那个药剂的效果正在生效，同时血魔战争要结束了，而亚瑟王身体变得虚弱，于是小莫背刺了亚瑟王。\n小莫把这个信息交给了血魔那边的人，导致她们的所在地被袭击了，因为小贝战斗力不强，所以只有加拉哈德在防御，云墨半死不活，加拉哈德重伤，亚瑟王把剩下的药剂给了小贝，把她的武器给小贝，然后小莫抢走了剑鞘/剑中的其中一个。\n小莫抢走了剑，他要帮助父亲，因为他认为其他人给了父亲不切实际的梦想，他说服自己想要去复兴血魔，他认为血魔就该像血魔一样。\n但由于剑和剑鞘所以导致亚瑟王处于半死不活的状态，自己是人类的身体，同时因为失去了血魔的特性无法喝血来回血，而他的不死拖着这条命。\n小贝和小莫都想把剑/剑鞘拿回来，想要救父亲，然后都不相信对方导致一直僵持，因为僵持不下，所以他们选择跑路\n（剑可以不死，剑鞘是能清debuff和回血）\n加拉哈德带着云墨逃跑，加拉哈德和云墨都重伤了，但加拉哈德因为是血魔还可以撑一会，所以加拉哈德只能扛着云墨跑。\n到兰斯洛特领地之后，加拉哈德想要让他的父亲救云墨，但兰斯洛特不想让加拉哈德吃掉云墨活下去，最后加拉哈德选择放弃自己的生命去救云墨，而兰斯洛特选择尊重自己孩子，用加拉哈德的尸体，为云墨制作了一个盾；然后用自己的一部分命制作了一把剑。\n兰斯洛特用自己的荣血的能力将云墨变成了半人半血魔的状态，然后那把剑是可以让云墨不停转世，而且还不会失去记忆。\n但在之后，因为和主管扯上了关系，被流向所绑定，每次主管重开世界线他都会跟着重开，导致云墨根本转世不了，虽然有试过脱离主管，但他还是会跟着重开，他意识到了自己已经被困在这个循环里了，所以每次循环他都会选择加入织机公司。\n久而久之，这已经是固定会发生的事情了，而因为记忆太多，导致尝试回忆会变得痛苦。他逐渐变得怠惰了起来';
-
-/*
-兰斯洛特 荣血派 1代眷属
-是一个非常喜欢打架的，战斗爽！所以不管什么战争都会上场，算是一个中立的血魔，与堂吉诃德和兰斯洛特是朋友
-
-加拉哈德
-理解亚瑟王的想法，与云墨和贝德维尔是好友，
-
-亚瑟王 薪血王 1代眷属
-她在血魔战争中帮助人类，因为想要成为人，与堂吉诃德和兰斯洛特是朋友
-
-贝德维尔
-与云墨和加拉哈德是好友，
-
-莫德雷德
-是崇拜力量的血魔，把血魔的身份认为很高贵，不把人类当人，只当食物，与云墨关系不好';
-
-云墨
-LCR-8号员工
-外交官/员工
-对应罪种：怠惰
-故事本身对应着卡巴拉之树的（直面恐惧，斩断循环+卡巴拉之树的这个质点本来的含义）
-只是整个剧情关联着这个质点（不要在剧情内提到这个质点/也不要提及获得ego的方式）
-4.该角色背景：■公司员工/男
-在■公司工作的人，为了测试一个东西，经历一次又一次的循环。所以很容易觉得一件事没有意义。
-自己在外有2个血魔友人，某个血魔给他留了个信物
-他和奥丁一样陷入了循环，唯一的不同便是云墨还保留了记忆
-
-前篇是描述他与血魔的故事
-后篇是他会跟着轮回的原因，在主线剧情中代表着 赫尔莫德，会向 基拉 求情，去救莉莉娅
-
-前篇 第十一章
-撒提尔 - Satariel
-质点： 傲慢
-· 含义： “隐藏者”或“遮蔽者”。它扭曲了理解与沉思，变成了隐瞒、遗忘和愚昧。代表对真理的拒绝、精神的盲目和隐藏在黑暗中的秘密。
-· 关键词： 隐瞒、遗忘、愚昧、盲目、孤立、虚无主义
-
-后篇 第十五章 （不一定是这一章）
-质点：理解-直面恐惧，斩断循环
-
-
-
-        /*
-        ╔══════════════════════════════════════════╗
-        ║  渲染逻辑                               ║
-        ╚══════════════════════════════════════════╝
-        */
 
         document.getElementById('charNameCN').textContent = CHAR_NAME_CN;
         document.getElementById('charNameEN').textContent = CHAR_NAME_EN;
@@ -325,8 +269,8 @@ LCR-8号员工
         document.getElementById('charJob').textContent = CHAR_JOB;
         document.getElementById('charLike').textContent = CHAR_LIKE;
         document.getElementById('charDislike').textContent = CHAR_DISLIKE;
+        document.getElementById('charDescription').textContent = CHAR_DESCRIPTION;
 
-        // 相关角色
         if (RELATED_CHARS.length === 0) {
             document.getElementById('relatedChars').innerHTML = '<span class="text-content">暂无</span>';
         } else {
@@ -338,11 +282,9 @@ LCR-8号员工
             ).join('');
         }
 
-        // 考据
         document.getElementById('originSource').textContent = ORIGIN_SOURCE;
         document.getElementById('originRelation').textContent = ORIGIN_RELATION;
 
-        // 剧透
         const spoilerSection = document.getElementById('spoilerSection');
         if (SPOILER_LOCKED) {
             spoilerSection.innerHTML = `
