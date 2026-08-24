@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>角色介绍 - Loom Company 同人维基</title>
+    <link rel="stylesheet" href="/loomcompanywiki/css/style.css">
+    <style>
+        .character-detail {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+        .character-detail .back-link {
+            display: inline-block;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            padding: 4px 12px;
+            border: 1px solid var(--gold-dim);
+            border-radius: 4px;
+        }
+        .character-detail .back-link:hover { background: rgba(201,166,92,0.1); }
+
+        .detail-title {
+            text-align: center;
+            color: var(--gold);
+            font-size: 2rem;
+            letter-spacing: 3px;
+            margin-bottom: 4px;
+        }
+        .detail-title-en {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+        }
+
+        .info-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        .info-card h3 {
+            color: var(--gold);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        .info-card h4 {
+            color: var(--gold-dim);
+            font-size: 1rem;
+            letter-spacing: 1px;
+            margin: 12px 0 6px;
+        }
+
+        .info-table {
+            width: 100%;
+            font-size: 1rem;
+        }
+        .info-table td {
+            padding: 4px 8px;
+            vertical-align: top;
+        }
+        .info-table td:first-child {
+            color: var(--gold-dim);
+            font-weight: bold;
+            white-space: nowrap;
+            width: 80px;
+        }
+        .info-table td:last-child {
+            color: var(--text-dim);
+        }
+
+        .char-description {
+            color: var(--text-dim);
+            font-size: 1rem;
+            line-height: 1.7;
+            white-space: pre-line;
+        }
+
+        .related-chars {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .related-char-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 10px 14px;
+            text-align: center;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: inherit;
+            min-width: 100px;
+        }
+        .related-char-card:hover { border-color: var(--gold); }
+        .related-char-card .char-role {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+        }
+        .related-char-card .char-name {
+            font-size: 1rem;
+            color: var(--gold);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .spoiler-section { margin-top: 12px; }
+        .spoiler-locked {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s;
+        }
+        .spoiler-locked:hover { border-color: #8b3a3a; }
+        .spoiler-locked .warning-text {
+            color: #d04a4a;
+            font-weight: bold;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+        .spoiler-locked .hint-text {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+        .spoiler-password {
+            margin-top: 8px;
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+        }
+        .spoiler-password input {
+            padding: 4px 8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--text);
+            font-size: 1rem;
+            width: 100px;
+            text-align: center;
+            font-family: inherit;
+        }
+        .spoiler-password button {
+            padding: 4px 10px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+        .spoiler-password button:hover { border-color: var(--gold); color: var(--gold); }
+        .spoiler-content {
+            display: none;
+            color: var(--text-dim);
+            font-size: 1rem;
+            line-height: 1.7;
+            padding: 12px 0;
+            white-space: pre-line;
+        }
+        .spoiler-content.unlocked { display: block; }
+        .spoiler-error {
+            color: #d04a4a;
+            font-size: 0.8rem;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .text-content {
+            color: var(--text-dim);
+            font-size: 1rem;
+            line-height: 1.7;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="nav-placeholder"></div>
+
+    <div class="character-detail">
+        <a href="/loomcompanywiki/employee/index.html" class="back-link">← 返回员工名单</a>
+
+        <h1 class="detail-title" id="charNameCN"></h1>
+        <div class="detail-title-en" id="charNameEN"></div>
+
+        <div class="info-card">
+            <h3>角色介绍</h3>
+            <table class="info-table">
+                <tr><td>性别</td><td id="charGender"></td></tr>
+                <tr><td>身高</td><td id="charHeight"></td></tr>
+                <tr><td>性格</td><td id="charPersonality"></td></tr>
+                <tr><td>职业</td><td id="charJob"></td></tr>
+                <tr><td>喜欢的东西</td><td id="charLike"></td></tr>
+                <tr><td>讨厌的东西</td><td id="charDislike"></td></tr>
+            </table>
+        </div>
+
+        <div class="info-card">
+            <h3>角色介绍</h3>
+            <div class="char-description" id="charDescription"></div>
+        </div>
+
+        <div class="info-card">
+            <h3>相关角色</h3>
+            <div class="related-chars" id="relatedChars"></div>
+        </div>
+
+        <div class="info-card">
+            <h3>相关考据</h3>
+            <h4>大致原出处</h4>
+            <div class="text-content" id="originSource"></div>
+            <h4>主要相关点</h4>
+            <div class="text-content" id="originRelation"></div>
+        </div>
+
+        <div class="info-card">
+            <h3>相关经历</h3>
+            <div class="spoiler-section" id="spoilerSection"></div>
+        </div>
+
+    </div>
+
+    <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
+
+    <script>
+        /*
+        ╔══════════════════════════════════════════╗
+        ║  变量区 - 修改以下数值即可             ║
+        ║  换行使用 \n                           ║
+        ╚══════════════════════════════════════════╝
+        */
+
+        const CHAR_NAME_CN = '墨严卿';
+        const CHAR_NAME_EN = 'E. Yanqing Mo';
+        const CHAR_GENDER = '男';
+        const CHAR_HEIGHT = '165cm';
+        const CHAR_PERSONALITY = '温文儒雅、克制隐忍、谨慎';
+        const CHAR_JOB = '织机公司回收部门7号员工';
+        const CHAR_LIKE = '早睡早起、制作美食、Moba游戏';
+        const CHAR_DISLIKE = '被人打扰、黑暗料理、贪婪';
+
+        const CHAR_DESCRIPTION = '姓名：墨云卿 07\n职位：队长/员工\n出身地：24区\n性别：男\n武器是镰刀，如果攻击方式妥当，可以造成灼烧之类的伤害，如果是有记忆的我应该能猜的到他的过去。\n他对贪婪这一词有所忌惮，虽然现在的我可能会为了利益而抛弃员工吧...但是未来失忆的我不会这样，对吧？\n他在某种意义上可以成为某些员工的“大哥”也说不定。他很会照顾人，同时战斗能力杰出，这些都是原因之一吧。';
+
+        const RELATED_CHARS = [
+            // { role: '职业/关系', name: '角色名', url: 'xxx.html' },
+        ];
+
+        const ORIGIN_SOURCE = '《化身博士》是英国作家史蒂文森1886年发表的中篇小说，主人公是杰基尔博士。\n该作讲述德高望重的杰基尔博士为探索人性善恶两面，研制出药剂将自身邪恶面分离为矮丑凶残的海德先生，以此纵欲作恶而不损名誉。然而海德逐渐失控，自行现身并犯下谋杀罪，杰基尔在善恶拉锯中丧失主导权，终因药剂失效无法变回原身，在绝望自白后服毒自尽。他的一生以理性始、以分裂终，是人性的善与恶被物理切割后无可挽回的悲剧寓言。';
+        const ORIGIN_RELATION = '海德之镰对应《化身博士》中海德先生这一人格本身——他是一切被压抑欲望、暴力冲动与不受道德约束的本能的总和。原作中的海德先生无需任何理由便可施暴，其行凶既不为谋财也不为复仇，仅仅因为“想要”而已。此EGO以“镰”为名，指向的正是这种纯粹的、不受任何外部动机驱动的杀戮欲——如同镰刀收割庄稼，不分善恶、不问对错。\n初始人格的武器是一根手杖，形制与维多利亚时代绅士日常携带的款式无异，杖身以深色硬木制成，握柄处略微弯曲，表面经过长期使用而变得光滑温润。这根手杖既能支撑行走时的身体重量，也能在必要时作为防身工具使用——正如原作中杰基尔博士携带的那根手杖。而在变身之后，同一根手杖在海德先生手中便不再是支撑或点缀，而是纯粹的施暴器具。';
+
+        const SPOILER_LOCKED = true;
+        const SPOILER_PASSWORD = '006618';
+        const SPOILER_CONTENT = '英国维多利亚时代，伦敦有一位德高望重的医生，名亨利·杰基尔。或是出于声望或是出于善行，周遭的市民与同行相当尊敬杰基尔博士，甚至以与他结识为荣。杰基尔博士一直对人性中善恶并存的现象深感困扰，他相信每个人体内都同时住着天使与魔鬼，而社会的体面与道德只是强行压制了后者。为了将这两者彻底分离，他研制出一种药剂，服用后能够将自身邪恶面剥离出来，化作另一个独立的存在——矮小、凶残、面目可憎的爱德华·海德先生。从此杰基尔便能以海德的身份纵欲作恶而不损及自己的名誉，自如地在两种身份之间切换。\n如果只是这样，那这也只是一个关于双重人格的猎奇故事罢了。然而海德先生逐渐失控，他开始不需要药剂也能自行现身，并且越来越频繁地占据主导。海德以手杖残忍地击毙了国会议员丹弗斯·卡鲁爵士，杰基尔的朋友兼律师厄特森在调查中步步紧逼，并将海德与杰基尔之间的异常联系逐步揭露。杰基尔试图停止变身，将药剂永久封存，但海德的抗拒力越来越强——他甚至在杰基尔清醒时强行夺取身体的控制权，使杰基尔在“善”的意识下承受着“恶”的行动所带来的全部罪疚感。同时杰基尔开始发现药剂的副作用：每次变身后变回原身所需的时间越来越长，药效也越来越不稳定，且用于制作药剂的原始盐品已耗尽，他所配制的新盐品再也无法产生相同的效果。\n就在杰基尔被逼近真相的厄特森与兰尼昂医生逼入绝境之时，药剂彻底失效。他无法再变回杰基尔，只能永远困在海德的躯体中。在留下两份自白书（一份给厄特森，一份给兰尼昂）之后，杰基尔意识到自己已无路可退，在实验室中服毒自尽。待厄特森破门而入时，只见到海德模样的尸体抽搐着倒在地板上。杰基尔以理性始、以分裂终，至死未能解答“人究竟能否将善恶彻底分离”这一命题。而海德先生虽已消亡，杰基尔博士也早已无人记得，只剩两封自白书替他说完未尽的话';
+        
+        /*墨严卿
+LCR-7号员工
+副官/员工
+对应罪种：暴食
+3.故事本身对应着卡巴拉之树的（值得托付的信任+卡巴拉之树的这个质点本来的含义）
+备注：只是整个剧情关联着这个质点（不要在剧情内提到这个质点/也不要提及获得ego的方式）
+4.该角色背景：六协会收尾人/男
+因为之前他经历的事，他总结出了人不能太过贪婪。
+但实则之前经历的事
+协会收尾人-？？？：反正也没有什么工作...
+协会收尾人-？？？：陪我们去一趟废墟吧，可以乘此机会拿点东西。
+协会收尾人-墨严卿：但是...
+协会收尾人-？？？：没关系的，之后请你去下个馆子。
+因为并没有接到什么委托，所以我决定跟着他们去废墟探索一番。
+
+我们一行人来到了，某个公司倒塌后留下的废墟。
+为了获取更多的脑啡肽，我们持续深入，最终我们看见了奇怪的生物。
+但我们并不知道的是，这里存在着没有出现后的怪物。
+协会收尾人-？？？：该死，怎么会有这个怪物...！
+协会收尾人-？？？：出现这种非人知性体，首脑不应该派调律者过来...！
+于是，为了活下去，我拔出了武器。
+我拼尽自身所有的技巧，想要在那个怪物的手中存活下去...
+
+...一段激烈的拼点声
+
+协会收尾人-？？？：成...成功了...
+我的身体感到灼烧般的疼痛，在与那个怪物战斗的途中被击中的原因吗？
+我感到一阵脱力感。随后，我倒在了地上...而地上流着一大摊的血液...
+来不及思考，我就昏了过去...
+
+实际上劝人去废墟的才是他，也是他拿到了一个异想体，一把镰刀。
+导致他失控，杀了所有人...
+“人们总是会去美化一些事物，让自己可以接受。”
+
+前篇是描述他的过去的真相，以及相关的故事
+后篇是他想要牺牲自己去保护其他人
+同时，在主线中
+
+前篇 第十章
+卡普-哈-齐维尔 - Gha’agsheblah
+质点： 贪婪
+· 含义： “冒渎者”或“粉碎者”。它扭曲了慈悲与扩张的力量，使其变成无情的毁灭和过度的浪费。代表为了破坏而破坏的冲动，以及一切形式的挥霍和亵渎。
+· 关键词： 毁灭、浪费、亵渎、粉碎、无情的扩张
+
+后篇 第十五章 （不一定是这一章）
+质点： 贪婪-值得托付的信任
+在主线中，他是尼德霍格会因贪婪而吃掉世界树（光之种）
+可以说是唯一一个，要么使其走出好结局，或是阵亡才可使剧情继续下去的角色，不然就直接BE了，悲
+
+        /*
+        ╔══════════════════════════════════════════╗
+        ║  渲染逻辑                               ║
+        ╚══════════════════════════════════════════╝
+        */
+
+        document.getElementById('charNameCN').textContent = CHAR_NAME_CN;
+        document.getElementById('charNameEN').textContent = CHAR_NAME_EN;
+        document.getElementById('charGender').textContent = CHAR_GENDER;
+        document.getElementById('charHeight').textContent = CHAR_HEIGHT;
+        document.getElementById('charPersonality').textContent = CHAR_PERSONALITY;
+        document.getElementById('charJob').textContent = CHAR_JOB;
+        document.getElementById('charLike').textContent = CHAR_LIKE;
+        document.getElementById('charDislike').textContent = CHAR_DISLIKE;
+        document.getElementById('charDescription').textContent = CHAR_DESCRIPTION;
+
+        if (RELATED_CHARS.length === 0) {
+            document.getElementById('relatedChars').innerHTML = '<span class="text-content">暂无</span>';
+        } else {
+            document.getElementById('relatedChars').innerHTML = RELATED_CHARS.map(c =>
+                '<a href="' + c.url + '" class="related-char-card">' +
+                '<div class="char-role">' + c.role + '</div>' +
+                '<div class="char-name">' + c.name + '</div>' +
+                '</a>'
+            ).join('');
+        }
+
+        document.getElementById('originSource').textContent = ORIGIN_SOURCE;
+        document.getElementById('originRelation').textContent = ORIGIN_RELATION;
+
+        const spoilerSection = document.getElementById('spoilerSection');
+        if (SPOILER_LOCKED) {
+            spoilerSection.innerHTML = `
+                <div class="spoiler-locked" id="spoilerLocked">
+                    <div class="warning-text">⚠Warning⚠ 权限不足 无法访问 ⚠Warning⚠</div>
+                    <div class="hint-text">输入密码：006618 即可访问</div>
+                    <div class="spoiler-password">
+                        <input type="password" id="spoilerInput" placeholder="密码">
+                        <button onclick="unlockSpoiler()">确认</button>
+                    </div>
+                    <div class="spoiler-error" id="spoilerError">密码错误</div>
+                </div>
+                <div class="spoiler-content" id="spoilerContent">${SPOILER_CONTENT}</div>
+            `;
+
+            window.unlockSpoiler = function() {
+                const input = document.getElementById('spoilerInput').value;
+                if (input === SPOILER_PASSWORD) {
+                    document.getElementById('spoilerLocked').style.display = 'none';
+                    document.getElementById('spoilerContent').classList.add('unlocked');
+                } else {
+                    document.getElementById('spoilerError').style.display = 'block';
+                }
+            };
+        } else {
+            spoilerSection.innerHTML = '<div class="text-content">' + SPOILER_CONTENT + '</div>';
+        }
+    </script>
+
+    <script>
+        fetch('/loomcompanywiki/nav.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('nav-placeholder').innerHTML = html;
+                const current = document.querySelector('[data-nav="employee"]');
+                if (current) current.classList.add('active');
+            });
+    </script>
+
+</body>
+</html>
