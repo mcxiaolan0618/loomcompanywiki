@@ -171,7 +171,7 @@
         .skill-desc-text a { color: var(--gold); text-decoration: none; }
         .skill-desc-text a:hover { text-decoration: underline; }
         .skill-voice {
-            color: #87CEEB;
+            color: #2C4F3B;
             font-size: 1.4rem;
             font-style: italic;
             margin-top: 4px;
@@ -245,38 +245,38 @@
 
     <script src="/loomcompanywiki/data/status-effects.js"></script>
     <script>
-        const EGO_NAME = '万念俱灰';
+        const EGO_NAME = '海德之镰';
         const EGO_LEVEL = 'ZAYIN';
-        const OWNERS = [{ name: '阿里', file: '万念俱灰-阿里' }];
-        const RELEASE_TIME = '2026-8-22';
+        const OWNERS = [{ name: '墨严卿', file: '海德之镰-墨严卿' }];
+        const RELEASE_TIME = '2026-8-28';
         const OBTAIN_WAY = '初始';
         const RESOURCES = [
-            { sin: '怠惰', count: 1 },
-            { sin: '忧郁', count: 3 }
+            { sin: '色欲', count: 2 },
+            { sin: '暴食', count: 2 }
         ];
         const SIN_RESISTS = [
-            { sin: '暴怒', value: '×2.0' },
-            { sin: '色欲', value: '×2.0' },
-            { sin: '忧郁', value: '×0.75' },
+            { sin: '色欲', value: '×0.75' },
+            { sin: '忧郁', value: '×2.0' },
+            { sin: '傲慢', value: '×2.0' },
         ];
 
         const AWAKE_SIN = '忧郁';
         const AWAKE_COIN = 1;
         const AWAKE_SANITY = 10;
         const AWAKE_ATTACK = '+0';
-        const AWAKE_SKILL_IMG = '技能-斩击-忧郁.png';
+        const AWAKE_SKILL_IMG = '技能-斩击-色欲.png';
         const AWAKE_STAGES = ['I', 'II', 'III', 'IV'];
         const AWAKE_DESC = { 
-        'I': '基础值:12\n变动值:+11\n攻击容量:1\n指定站位最靠后的单位（仅限常规遭遇战）\nI [命中时]下回合对目标施加4层[束缚]\n[正面命中时]使目标增加1级[沉沦]强度', 
-        'II': '基础值:12\n变动值:+11\n攻击容量:1\n指定站位最靠后的单位（仅限常规遭遇战）\nI [命中时]下回合对目标施加4层[束缚]\n[正面命中时]使目标增加1级[沉沦]强度', 
-        'III': '基础值:12\n变动值:+15\n攻击容量:1\n指定站位最靠后的单位（仅限常规遭遇战）\nI [命中时]下回合对目标施加4层[束缚]\n[正面命中时]使目标增加3级[沉沦]强度', 
-        'IV': '基础值:12\n变动值:+15\n攻击容量:1\n指定站位最靠后的单位（仅限常规遭遇战）\nI I [命中时]下回合对目标施加4层[束缚]\n[正面命中时]使目标增加3级[沉沦]强度\n[命中时]下回合对目标施加2层[虚弱]' };
-        const AWAKE_VOICE = '"我已经什么都没有了..."';
+        'I': '基础值:8\n变动值:+14\n攻击容量:1\nI [正面命中时]使自身获得1层[强壮]\n使自身失去10点理智值', 
+        'II': '基础值:8\n变动值:+14\n攻击容量:1\nI [正面命中时]使自身获得1层[强壮]\n使自身失去10点理智值', 
+        'III': '基础值:12\n变动值:+14\n攻击容量:1\nI [正面命中时]使自身获得2层[强壮]\n[正面命中时]使自身失去10点理智值\n[反面命中时]使自身恢复10点理智值', 
+        'IV': '基础值:12\n变动值:+14\n攻击容量:1\n指定站位最靠后的单位（仅限常规遭遇战）\nI [正面命中时]使自身获得2层[强壮]\n[正面命中时]使自身失去10点理智值\n[反面命中时]使自身恢复10点理智值\n[正面命中时]使目标增加3级[沉沦]强度\n[命中时]下回合对目标施加2层[束缚]\n[命中时]下回合对目标施加2层[虚弱]' };
+        const AWAKE_VOICE = '"那阵低语已经快完全盖过我自己的声音了..."';
 
-        const PASSIVE_NAME = '小金鱼';
+        const PASSIVE_NAME = '分裂';
         const PASSIVE_STAGES = ['II'];
         const PASSIVE_EFFECTS = {
-            'II': '收到攻击时，使自身受到的负面效果的强度额外+1\n若自身的速度值高于目标，则使自身造成的伤害+20%（每回合最多一次）'
+            'II': '自身击杀一个单位（包括友方单位），使自身拼点威力+1，并使自身获得1层[伤害强化]（最多3层）'
         };
 
         const SIN_MAP = { '暴怒': 'wrath', '色欲': 'lust', '怠惰': 'sloth', '暴食': 'gluttony', '忧郁': 'gloom', '傲慢': 'pride', '嫉妒': 'envy' };
