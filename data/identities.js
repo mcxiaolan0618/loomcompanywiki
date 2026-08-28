@@ -109,7 +109,7 @@ const IDENTITIES_INDEX = [
         skillMiddle: { physics: '打击', sin: '暴食' },
         skillBottom: { physics: '打击', sin: '暴怒' },
         combatPassive:  { sin: '色欲', way: '共鸣', need: '2' },
-        supportPassive: { sin: '暴怒', way: '持有', need: '3' }
+        supportPassive: { sin: '色欲', way: '持有', need: '3' }
     },
     {
         id: 'LCR员工-加拉哈德',
