@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>角色介绍 - Loom Company 同人维基</title>
+    <link rel="stylesheet" href="/loomcompanywiki/css/style.css">
+    <style>
+        .character-detail {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+        .character-detail .back-link {
+            display: inline-block;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            padding: 4px 12px;
+            border: 1px solid var(--gold-dim);
+            border-radius: 4px;
+        }
+        .character-detail .back-link:hover { background: rgba(201,166,92,0.1); }
+
+        .detail-title {
+            text-align: center;
+            color: var(--gold);
+            font-size: 2rem;
+            letter-spacing: 3px;
+            margin-bottom: 4px;
+        }
+        .detail-title-en {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+        }
+
+        .info-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        .info-card h3 {
+            color: var(--gold);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        .info-card h4 {
+            color: var(--gold-dim);
+            font-size: 1rem;
+            letter-spacing: 1px;
+            margin: 12px 0 6px;
+        }
+
+        .info-table {
+            width: 100%;
+            font-size: 1rem;
+        }
+        .info-table td {
+            padding: 4px 8px;
+            vertical-align: top;
+        }
+        .info-table td:first-child {
+            color: var(--gold-dim);
+            font-weight: bold;
+            white-space: nowrap;
+            width: 80px;
+        }
+        .info-table td:last-child {
+            color: var(--text-dim);
+        }
+
+        .char-description {
+            color: var(--text-dim);
+            font-size: 1rem;
+            line-height: 1.7;
+            white-space: pre-line;
+        }
+
+        .related-chars {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .related-char-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 10px 14px;
+            text-align: center;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: inherit;
+            min-width: 100px;
+        }
+        .related-char-card:hover { border-color: var(--gold); }
+        .related-char-card .char-role {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+        }
+        .related-char-card .char-name {
+            font-size: 1rem;
+            color: var(--gold);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .spoiler-section { margin-top: 12px; }
+        .spoiler-locked {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s;
+        }
+        .spoiler-locked:hover { border-color: #8b3a3a; }
+        .spoiler-locked .warning-text {
+            color: #d04a4a;
+            font-weight: bold;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+        .spoiler-locked .hint-text {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+        .spoiler-password {
+            margin-top: 8px;
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+        }
+        .spoiler-password input {
+            padding: 4px 8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--text);
+            font-size: 1rem;
+            width: 100px;
+            text-align: center;
+            font-family: inherit;
+        }
+        .spoiler-password button {
+            padding: 4px 10px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+        .spoiler-password button:hover { border-color: var(--gold); color: var(--gold); }
+        .spoiler-content {
+            display: none;
+            color: var(--text-dim);
+            font-size: 1rem;
+            line-height: 1.7;
+            padding: 12px 0;
+            white-space: pre-line;
+        }
+        .spoiler-content.unlocked { display: block; }
+        .spoiler-error {
+            color: #d04a4a;
+            font-size: 0.8rem;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .text-content {
+            color: var(--text-dim);
+            font-size: 1rem;
+            line-height: 1.7;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="nav-placeholder"></div>
+
+    <div class="character-detail">
+        <a href="/loomcompanywiki/employee/index.html" class="back-link">← 返回员工名单</a>
+
+        <h1 class="detail-title" id="charNameCN"></h1>
+        <div class="detail-title-en" id="charNameEN"></div>
+
+        <div class="info-card">
+            <h3>角色介绍</h3>
+            <table class="info-table">
+                <tr><td>性别</td><td id="charGender"></td></tr>
+                <tr><td>身高</td><td id="charHeight"></td></tr>
+                <tr><td>性格</td><td id="charPersonality"></td></tr>
+                <tr><td>职业</td><td id="charJob"></td></tr>
+                <tr><td>喜欢的东西</td><td id="charLike"></td></tr>
+                <tr><td>讨厌的东西</td><td id="charDislike"></td></tr>
+            </table>
+        </div>
+
+        <div class="info-card">
+            <h3>角色介绍</h3>
+            <div class="char-description" id="charDescription"></div>
+        </div>
+
+        <div class="info-card">
+            <h3>相关角色</h3>
+            <div class="related-chars" id="relatedChars"></div>
+        </div>
+
+        <div class="info-card">
+            <h3>相关考据</h3>
+            <h4>大致原出处</h4>
+            <div class="text-content" id="originSource"></div>
+            <h4>主要相关点</h4>
+            <div class="text-content" id="originRelation"></div>
+        </div>
+
+        <div class="info-card">
+            <h3>相关经历</h3>
+            <div class="spoiler-section" id="spoilerSection"></div>
+        </div>
+
+    </div>
+
+    <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
+
+    <script>
+        /*
+        ╔══════════════════════════════════════════╗
+        ║  变量区 - 修改以下数值即可             ║
+        ║  换行使用 \n                           ║
+        ╚══════════════════════════════════════════╝
+        */
+
+        const CHAR_NAME_CN = '于连·索雷尔';
+        const CHAR_NAME_EN = 'Julien Sorel';
+        const CHAR_GENDER = '女';
+        const CHAR_HEIGHT = '175cm';
+        const CHAR_PERSONALITY = '捉摸不透、自由奔放、为乐至上';
+        const CHAR_JOB = '织机公司回收部门2号员工';
+        const CHAR_LIKE = '糖，熬夜，阅读，出人头地';
+        const CHAR_DISLIKE = '茄子，早起，歧视，傲慢与虚伪';
+
+        const CHAR_DESCRIPTION = '在此填写角色介绍描述文字。\n换行用 \\n。';
+
+        const RELATED_CHARS = [
+            // { role: '职业/关系', name: '角色名', url: 'xxx.html' },
+        ];
+
+        const ORIGIN_SOURCE = '《红与黑》出自法国作家司汤达1830年发表的长篇小说，被公认为欧洲批判现实主义文学的奠基之作。\n该作讲述法国外省小城维里埃的木匠之子于连·索雷尔，自幼受父亲虐待，凭借超常的记忆力与对拿破仑的崇拜，渴望打破阶级壁垒、跻身上流社会。他被市长德·雷纳尔先生聘为家庭教师，却与市长夫人德·雷纳尔夫人发展出私情——这段关系既始于他对“征服贵族女性”的野心，又确实掺杂着真诚的爱意。事情败露后，于连被迫离开，前往贝桑松神学院深造，在伪善与权力斗争中进一步磨砺意志。随后他被举荐至巴黎，成为侯爵德·拉莫尔的秘书，凭借出色的能力赢得赏识，并与侯爵之女玛蒂尔德展开一段充满博弈与狂热的爱情——玛蒂尔德被他身上那种“平民的骄傲”所吸引，而于连则将她视为通向最高阶层的阶梯。正当他即将与玛蒂尔德成婚、真正实现阶级跨越之际，德·雷纳尔夫人在神父的逼迫下写了一封告发信，揭露于连是“一个利用女人往上爬的伪君子”。于连震怒之下回到维里埃，在教堂中向德·雷纳尔夫人开枪——后者虽未丧命，但于连因杀人未遂被捕入狱。在狱中，于连拒绝上诉，拒绝向法庭求情，也拒绝玛蒂尔德和德·雷纳尔夫人的营救。';
+        const ORIGIN_RELATION = '于连的武器为刺剑中的小剑（Small Sword），小剑盛行于18世纪的欧洲，其剑身细长、截面呈三角形或菱形，专为刺击而设计。作为武器而言，小剑的结构决定了它几乎不具备劈砍能力——它的全部效能都集中在“刺”这一个动作上，剑刃锋利但极薄，一旦承受侧面冲击便可能断裂。从这个层面上讲，小剑并不适合战场上的混战，它的使用场景几乎被限定在决斗场与贵族庭院中，对使用者的步伐、时机与精准度要求极高。\n';
+
+        const SPOILER_LOCKED = true;
+        const SPOILER_PASSWORD = '006618';
+        const SPOILER_CONTENT = '于连·索雷尔是13区后巷的一个木匠的女儿。她身材瘦弱、相貌清秀，不擅长体力活，经常被父亲和兄长殴打。但她拥有超凡的记忆力——能够整段背诵拉丁文的《圣经》和教皇的著作。他崇拜拿破仑，梦想着像他一样靠才华跨越阶级、出人头地。然而在复辟王朝时期，平民出身的人想要向上攀升，唯一的途径就是投身教会。\n\n于连进入贝桑松神学院后，发现这里并不比外面的世界更纯洁——学生之间充满尔虞我诈，教授们只关心权力和利益。于连凭借出色的才华迅速被神学院的院长彼拉尔神父赏识，但也因此招致了其他学生的嫉妒。\n\n彼拉尔神父后来被排挤离职，离职前将于连推荐给？巢的贵族——德·拉莫尔侯爵，作为侯爵的私人秘书。\n\n于连来到T巢，进入德·拉莫尔侯爵府邸工作。她的才华和气质很快赢得了侯爵的信任。然而府邸中另一位主角很快就进入了她的视野——侯爵的儿子玛蒂尔德。\n\n玛蒂尔德是一个高傲、聪慧、叛逆的贵族青年。他厌恶上流社会的虚伪和沉闷，被于连身上那种“平民的骄傲”“不卑不亢的气度”所吸引。于连最初对他冷漠，这反而激起了他的征服欲——两人陷入了一场充满试探、博弈和情感拉锯的狂热爱情。\n\n玛蒂尔德最终发现自己真的爱上了于连。他秘密与于连确认了关系，并向父亲坦白，坚决要与她共度一生。侯爵在震惊和愤怒后，勉强同意了婚事——他给了于连一笔财富、一份军衔和一个贵族姓氏，让她真正成为“于连·德·拉·韦尔奈”骑士。';
+
+        /*姓名：于连·索雷尔 02
+职位：法人/员工
+出身地：13区
+性别：女
+鉴于其在对于法律与合同方面有所成就，因此她成为了为我司处理合同的法人。
+她经常摆出一副愉悦的表情，特别是在战斗当中，无需在意。至少可以使战斗胜利几率大幅提升...不要尝试触碰她内心深处的情感，除非需要完成主管的职责。
+[注意]不要以先入为主的方式看待该员工，她在某种程度上，有着与5号与7号员工的能力。不如说她是一个十分理性的人。
+
+乔瓦尼·布兰度
+LCR-2号员工
+一位乐观的研究员/工程师
+对应罪种：色欲
+故事本身对应着卡巴拉之树的Yesod（卓尔不凡的理性+卡巴拉之树的这个质点本来的含义）
+备注：只是整个剧情关联着这个质点（不要在剧情内提到这个质点/也不要提及获-
+该角色背景：拥有乔瓦尼的记忆，但首脑不允许有两个一模一样的人存在一周，所以乔瓦尼本人改了外貌，换了基拉这个名字
+注：乔瓦尼是本体的名字，基拉是分身的名字...本体把自己的名字、记忆和外貌给了分身，自己换上了分身的名字
+性别：女
+可能因为一些事，她决定抛却自身的情感，随波逐流，不打算展现自身的独一无二，和所有普通人一样，用假笑掩盖内心的情感。
+虽然表面上性格类似花火，但是个为了理性，抛弃了感性的人
+
+前篇：
+在此 以 乔瓦尼称呼 分身，以 基拉 称呼本体，因为是“乔瓦尼”的前篇
+虽然基拉把记忆给了乔瓦尼，但删除了一些部分，比如说关于 那个人 与 食指 的记忆，所以她现在算是没有遇到那个人 与 食指的故事
+在这一章，我们要直面她的过去...她因为一些原因 抛却了情感，跟随大众（挺适合当食指不是吗？），在她的一段回忆，她看着自己“创造”的另外一个自己“基拉”，她也许是想找回感情的，但在都市里，把感情抛弃，这才是摆脱苦难的办法。
+而发觉自己只能跟随大众，她走在后巷中，这时，那个人...不对，这里应该是她谁也没有遇到吧...
+
+后篇：
+在主线故事之中，她是 海姆达尔
+在北欧神话中，她是阿斯加德的守护神，拥有超常感官，日夜守护彩虹桥，吹响战争号角警示诸神黄昏。
+作为倒数第三个章节的主角，在中篇得知自己是冒牌货的“乔瓦尼”（分身），我所想的是，她如果可以摆脱 基拉（本体）所给予的东西，获得自我，就好了。那样就可以到达属于她的好结局了吧，但如果她选择成为“乔瓦尼”，也是个结局吧
+在她的章节里，所有世界的主管应该会正式和LCR战斗吧...（其他篇章的选择会影响 蓝队的成员）
+
+就在于连即将实现他一生追求的阶级跨越时，一场风暴从后方袭来。
+
+德·雷纳尔夫人在当地教会的逼迫下写了一封告发信，信中将于连描述为一个“靠引诱女性向上攀爬的伪君子”，并指控他利用感情实现野心。这封信被送到侯爵手中，侯爵震怒——他不仅撤销了婚约，也将于连扫地出门。
+
+于连得知后暴怒，回到维里埃，在教堂中向正在做礼拜的德·雷纳尔夫人开枪。她中枪倒地，但并未当场死亡。
+
+六、审判与结局
+
+于连被逮捕入狱。在狱中，他拒绝上诉，拒绝向法官求情，也拒绝玛蒂尔德和德·雷纳尔夫人为他进行的营救。他在法庭上坦然地面对审判官们，说出了整部小说中最著名的一段话：
+
+“我没有荣幸属于你们那个阶级……你们想要惩罚的，是我这样一个出身卑微、胆敢跻身于你们中间的平民。”
+
+他被判处死刑。
+
+临刑前，德·雷纳尔夫人来到狱中与他见面——她原谅了他，两人和解。于连在最后时刻意识到，他一生追求的“阶级跨越”和“贵族身份”其实都是幻影，他真正珍视的、从未真正失去过的，是那段与德·雷纳尔夫人之间早已逝去的真挚感情。
+
+他最终走上断头台。玛蒂尔德亲手埋葬了他的头颅——以她所崇拜的“皇后款待情人的方式”完成了这场狂热的爱情仪式。
+
+
+
+        /*
+        ╔══════════════════════════════════════════╗
+        ║  渲染逻辑                               ║
+        ╚══════════════════════════════════════════╝
+        */
+
+        document.getElementById('charNameCN').textContent = CHAR_NAME_CN;
+        document.getElementById('charNameEN').textContent = CHAR_NAME_EN;
+        document.getElementById('charGender').textContent = CHAR_GENDER;
+        document.getElementById('charHeight').textContent = CHAR_HEIGHT;
+        document.getElementById('charPersonality').textContent = CHAR_PERSONALITY;
+        document.getElementById('charJob').textContent = CHAR_JOB;
+        document.getElementById('charLike').textContent = CHAR_LIKE;
+        document.getElementById('charDislike').textContent = CHAR_DISLIKE;
+        document.getElementById('charDescription').textContent = CHAR_DESCRIPTION;
+
+        if (RELATED_CHARS.length === 0) {
+            document.getElementById('relatedChars').innerHTML = '<span class="text-content">暂无</span>';
+        } else {
+            document.getElementById('relatedChars').innerHTML = RELATED_CHARS.map(c =>
+                '<a href="' + c.url + '" class="related-char-card">' +
+                '<div class="char-role">' + c.role + '</div>' +
+                '<div class="char-name">' + c.name + '</div>' +
+                '</a>'
+            ).join('');
+        }
+
+        document.getElementById('originSource').textContent = ORIGIN_SOURCE;
+        document.getElementById('originRelation').textContent = ORIGIN_RELATION;
+
+        const spoilerSection = document.getElementById('spoilerSection');
+        if (SPOILER_LOCKED) {
+            spoilerSection.innerHTML = `
+                <div class="spoiler-locked" id="spoilerLocked">
+                    <div class="warning-text">⚠Warning⚠ 权限不足 无法访问 ⚠Warning⚠</div>
+                    <div class="hint-text">请输入代码以获得权限</div>
+                    <div class="spoiler-password">
+                        <input type="password" id="spoilerInput" placeholder="密码">
+                        <button onclick="unlockSpoiler()">确认</button>
+                    </div>
+                    <div class="spoiler-error" id="spoilerError">密码错误</div>
+                </div>
+                <div class="spoiler-content" id="spoilerContent">${SPOILER_CONTENT}</div>
+            `;
+
+            window.unlockSpoiler = function() {
+                const input = document.getElementById('spoilerInput').value;
+                if (input === SPOILER_PASSWORD) {
+                    document.getElementById('spoilerLocked').style.display = 'none';
+                    document.getElementById('spoilerContent').classList.add('unlocked');
+                } else {
+                    document.getElementById('spoilerError').style.display = 'block';
+                }
+            };
+        } else {
+            spoilerSection.innerHTML = '<div class="text-content">' + SPOILER_CONTENT + '</div>';
+        }
+    </script>
+
+    <script>
+        fetch('/loomcompanywiki/nav.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('nav-placeholder').innerHTML = html;
+                const current = document.querySelector('[data-nav="employee"]');
+                if (current) current.classList.add('active');
+            });
+    </script>
+
+</body>
+</html>

@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>人格详情 - Loom Company 同人维基</title>
+    <title>EGO详情 - Loom Company 同人维基</title>
     <link rel="stylesheet" href="/loomcompanywiki/css/style.css">
     <link rel="stylesheet" href="/loomcompanywiki/data/identity/css/sin.css">
     <style>
-        .identity-detail {
+        .ego-detail {
             max-width: 800px;
             margin: 0 auto;
             padding: 24px 16px;
         }
-        .identity-detail .back-link {
+        .ego-detail .back-link {
             display: inline-block;
             color: var(--gold);
             text-decoration: none;
@@ -22,7 +22,7 @@
             border: 1px solid var(--gold-dim);
             border-radius: 4px;
         }
-        .identity-detail .back-link:hover { background: rgba(201,166,92,0.1); }
+        .ego-detail .back-link:hover { background: rgba(201,166,92,0.1); }
 
         .detail-title {
             text-align: center;
@@ -31,6 +31,17 @@
             letter-spacing: 3px;
             margin-bottom: 24px;
         }
+        .detail-title .owner-links {
+            font-size: 1rem;
+            color: var(--text-dim);
+            margin-top: 6px;
+        }
+        .detail-title .owner-links a {
+            color: var(--gold-dim);
+            text-decoration: none;
+            margin: 0 4px;
+        }
+        .detail-title .owner-links a:hover { text-decoration: underline; }
 
         .info-card {
             background: var(--surface2);
@@ -38,6 +49,25 @@
             border-radius: 8px;
             padding: 20px;
             margin-bottom: 16px;
+        }
+        .info-card.sin-frame {
+            border: 1px solid var(--sin-border) !important;
+            border-left: 4px solid var(--sin-accent) !important;
+            background-color: var(--sin-bg) !important;
+            box-shadow: 0 0 10px var(--sin-glow), inset 0 0 10px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .info-card.sin-frame::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-bottom: 20px solid var(--sin-accent);
+            opacity: 0.3;
         }
         .info-card h3 {
             color: var(--gold);
@@ -47,12 +77,6 @@
             padding-bottom: 8px;
             border-bottom: 1px solid var(--border);
         }
-        .info-card h4 {
-            color: var(--gold-dim);
-            font-size: 1rem;
-            letter-spacing: 1px;
-            margin: 12px 0 8px;
-        }
 
         .info-row {
             display: flex;
@@ -60,304 +84,222 @@
             gap: 16px;
             margin-bottom: 10px;
             font-size: 1rem;
+            align-items: center;
         }
         .info-item { color: var(--text-dim); }
         .info-item strong { color: var(--text); }
 
-        .ego-resources {
+        .resource-row {
             display: flex;
-            gap: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
             align-items: center;
             margin-bottom: 6px;
         }
-        .ego-resources img { width: 28px; height: 28px; }
-        .ego-resource-item {
+        .resource-row img { width: 22px; height: 22px; }
+        .resource-item {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            color: var(--text-dim);
+            font-size: 1rem;
+        }
+
+        .resist-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+        .resist-item {
             display: flex;
             align-items: center;
             gap: 3px;
             color: var(--text-dim);
             font-size: 1rem;
         }
+        .resist-item img { width: 22px; height: 22px; }
 
-        .resist-display {
+        .stage-tabs {
             display: flex;
-            gap: 14px;
-            align-items: center;
-        }
-        .resist-display .resist-item {
-            display: flex;
-            align-items: center;
             gap: 4px;
-            color: var(--text-dim);
-            font-size: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
         }
-        .resist-display img { width: 24px; height: 24px; }
-
-        .level-input-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-        .level-input-row input {
-            width: 80px;
-            padding: 6px 10px;
-            background: var(--surface);
-            border: 1px solid var(--border);
+        .stage-tab {
+            padding: 4px 10px;
             border-radius: 4px;
-            color: var(--text);
-            font-size: 1rem;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 0.72rem;
             font-family: inherit;
-            text-align: center;
+            transition: all 0.2s;
         }
-        .level-input-row input:focus { border-color: var(--gold); outline: none; }
-        .level-input-row .label { color: var(--text-dim); font-size: 1rem; }
+        .stage-tab:hover { border-color: var(--gold); color: var(--gold); }
+        .stage-tab.active {
+            border-color: var(--sin-border);
+            background: var(--sin-bg);
+            color: var(--sin-color);
+            font-weight: bold;
+        }
 
-        .stat-row {
+        .skill-header-row {
             display: flex;
             flex-wrap: wrap;
-            align-items: baseline;
-            gap: 8px;
+            align-items: center;
+            gap: 10px;
             margin-bottom: 8px;
             font-size: 1rem;
         }
-        .stat-row .stat-label { color: var(--text-dim); min-width: 70px; }
-        .stat-row .stat-value { color: var(--text); font-weight: bold; }
-        .stat-row .stat-base { color: var(--text-dim); font-size: 0.85rem; }
-
-        .speed-row { display: flex; gap: 12px; flex-wrap: wrap; }
-        .speed-item { color: var(--text-dim); font-size: 0.9rem; }
-        .speed-item span { color: var(--text); }
-
-        .story-link { color: var(--gold); text-decoration: none; font-size: 1rem; }
-        .story-link:hover { text-decoration: underline; }
-
-        .sanity-section { margin-top: 14px; }
-        .sanity-box { padding: 12px; border-radius: 6px; margin-bottom: 8px; font-size: 1rem; white-space: pre-line;}
-        .sanity-box.positive { border: 1px solid #3a6ab5; background: rgba(58,106,181,0.08); }
-        .sanity-box.positive .sanity-title { color: #5a9af5; font-weight: bold; margin-bottom: 6px; }
-        .sanity-box.negative { border: 1px solid #8b3a3a; background: rgba(139,58,58,0.08); }
-        .sanity-box.negative .sanity-title { color: #d04a4a; font-weight: bold; margin-bottom: 6px; }
-        .sanity-box ul { list-style: none; padding: 0; margin: 0; }
-        .sanity-box li { color: var(--text-dim); padding: 2px 0; }
-        .sanity-box li::before { content: '• '; }
-
-        .skill-card { border-radius: 8px; padding: 14px; margin-bottom: 12px; }
-        .skill-card .skill-header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 8px; }
-        .skill-card .skill-tag {
-            font-size: 0.7rem; padding: 2px 6px; border-radius: 3px;
-            background: var(--surface); color: var(--text-dim); letter-spacing: 1px; margin-right: 2px;
+        .skill-header-row img { width: 22px; height: 22px; }
+        .skill-desc-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 6px;
         }
-        .skill-card .skill-name { font-weight: bold; font-size: 1rem; letter-spacing: 1px; }
-        .skill-card .skill-icons { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-        .skill-card .skill-icons img { width: 22px; height: 22px; }
-        .skill-card .stage-tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; }
-        .skill-card .stage-tab {
-            padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border);
-            background: var(--surface); color: var(--text-dim); cursor: pointer;
-            font-size: 0.72rem; font-family: inherit; transition: all 0.2s;
-        }
-        .skill-card .stage-tab:hover { border-color: var(--gold); color: var(--gold); }
-        .skill-card .stage-tab.active {
-            border-color: var(--sin-border); background: var(--sin-bg);
-            color: var(--sin-color); font-weight: bold;
-        }
-        .skill-card .skill-desc-row { display: flex; align-items: flex-start; gap: 8px; }
-        .skill-card .skill-desc-row img { width: 28px; height: 28px; flex-shrink: 0; margin-top: 2px; }
-        .skill-card .skill-desc-text {
+        .skill-desc-row img { width: 28px; height: 28px; flex-shrink: 0; margin-top: 2px; }
+        .skill-desc-text {
             color: var(--text-dim);
             font-size: 1rem;
             line-height: 1.6;
             white-space: pre-line;
         }
-        .skill-card .skill-desc-text img { width: 20px; height: 20px; vertical-align: middle; }
-        .skill-card .skill-desc-text a { color: var(--gold); text-decoration: none; }
-        .skill-card .skill-desc-text a:hover { text-decoration: underline; }
-
-        .sin-text { font-weight: bold; }
-        .sin-text.sin-wrath { color: #d0423a; }
-        .sin-text.sin-lust { color: #e8883a; }
-        .sin-text.sin-sloth { color: #c9a62c; }
-        .sin-text.sin-gluttony { color: #5a9a3a; }
-        .sin-text.sin-gloom { color: #3a8aaa; }
-        .sin-text.sin-pride { color: #3a5ab5; }
-        .sin-text.sin-envy { color: #7a3a9a; }
-
-        .skill-card.defense-card .stage-tab.active {
-            border-color: #8a7e6b; background: rgba(138,126,107,0.12);
-            color: #b0a590; font-weight: bold;
+        .skill-desc-text img { width: 20px; height: 20px; vertical-align: middle; }
+        .skill-desc-text a { color: var(--gold); text-decoration: none; }
+        .skill-desc-text a:hover { text-decoration: underline; }
+        .skill-voice {
+            color: #c9a65c;
+            font-size: 1.4rem;
+            font-style: italic;
+            margin-top: 4px;
         }
 
-        .passive-block { margin-bottom: 14px; }
+        .passive-block { margin-top: 8px; }
         .passive-name { color: var(--text); font-weight: bold; font-size: 1rem; }
-        .passive-info { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 4px; }
-        .passive-info img { width: 18px; height: 18px; vertical-align: middle; }
-        .passive-effect { color: var(--text-dim); font-size: 1rem; line-height: 1.5; }
+        .passive-effect {
+            color: var(--text-dim);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
         .passive-effect img { width: 20px; height: 20px; vertical-align: middle; }
         .passive-effect a { color: var(--gold); text-decoration: none; }
         .passive-effect a:hover { text-decoration: underline; }
-        .passive-stage-tabs { display: flex; gap: 4px; flex-wrap: wrap; margin: 6px 0; }
-        .passive-stage-tab {
-            padding: 3px 8px; border-radius: 3px; border: 1px solid var(--border);
-            background: var(--surface); color: var(--text-dim); cursor: pointer;
-            font-size: 0.7rem; font-family: inherit; transition: all 0.2s;
-        }
-        .passive-stage-tab:hover { border-color: var(--gold); color: var(--gold); }
-        .passive-stage-tab.active {
-            border-color: var(--gold-dim); background: rgba(201,166,92,0.1);
-            color: var(--gold); font-weight: bold;
-        }
 
-        .voice-list { list-style: none; padding: 0; margin: 0; }
-        .voice-list li { padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 0.9rem; }
-        .voice-list li .voice-label { color: var(--gold-dim); font-weight: bold; margin-right: 6px; white-space: nowrap; }
-        .voice-list li .voice-text { color: var(--text-dim); }
+        .abno-link { color: var(--gold); text-decoration: none; }
+        .abno-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
     <div id="nav-placeholder"></div>
 
-    <div class="identity-detail">
-        <a href="/loomcompanywiki/data/identities.html" class="back-link">← 返回人格列表</a>
+    <div class="ego-detail">
+        <a href="/loomcompanywiki/data/egos.html" class="back-link">← 返回EGO列表</a>
 
-        <h1 class="detail-title" id="identityName"></h1>
+        <h1 class="detail-title" id="egoTitle"></h1>
 
         <div class="info-card">
-            <h3>人格信息</h3>
+            <h3>基础</h3>
             <div class="info-row">
-                <span class="info-item"><strong>更新时间</strong> <span id="updateTime"></span></span>
-                <span class="info-item"><strong>获取方式</strong> <span id="extractDisplay"></span></span>
-            </div>
-            <div class="info-row">
-                <span class="info-item"><strong><a id="storyLink" class="story-link">观看剧情</a></strong></span>
-            </div>
-            <div class="ego-resources" id="egoResources"></div>
-            <div class="info-row" style="margin-top:8px;">
-                <span class="info-item"><strong>特性关键词</strong> <span id="keywordsDisplay"></span></span>
+                <span id="egoLevelImg"></span>
+                <span class="info-item"><strong id="egoFullName"></strong></span>
             </div>
             <div class="info-row">
-                <span class="info-item"><strong>物理抗性</strong></span>
-                <div class="resist-display" id="resistDisplay"></div>
+                <span class="info-item"><strong>登场时间</strong> <span id="releaseTime"></span></span>
+                <span class="info-item"><strong>获取方式</strong> <span id="obtainWay"></span></span>
             </div>
-            <div style="margin-top:16px;">
-                <h3>能力值</h3>
-                <div class="level-input-row">
-                    <span class="label">请输入等级</span>
-                    <input type="number" id="levelInput" min="1" max="50" onchange="updateStats()">
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">生命值：</span>
-                    <span class="stat-value" id="hpValue"></span>
-                    <span class="stat-base">基础值：<span id="hpBase"></span></span>
-                    <span class="stat-base">成长系数：<span id="hpGrowth"></span></span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">防御等级：</span>
-                    <span class="stat-value" id="defValue"></span>
-                    <span class="stat-base">基础值：<span id="defBase"></span></span>
-                    <span class="stat-base">变动值：<span id="defShift"></span></span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">混乱阈值：</span>
-                    <span class="stat-value" id="staggerValues"></span>
-                    <span class="stat-base">基础值：<span id="staggerBase"></span></span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">速度：</span>
-                    <div class="speed-row" id="speedDisplay"></div>
-                </div>
-            </div>
-            <div class="sanity-section">
-                <h3>理智值</h3>
-                <div class="sanity-box positive">
-                    <div class="sanity-title">基础理智值增加条件</div>
-                    <ul id="sanityPositive"></ul>
-                </div>
-                <div class="sanity-box negative">
-                    <div class="sanity-title">基础理智值减少条件</div>
-                    <ul id="sanityNegative"></ul>
-                </div>
+            <div class="resource-row" id="resources"></div>
+            <div class="info-row" style="margin-top:6px;">
+                <span class="info-item"><strong>罪孽抗性</strong></span>
+                <div class="resist-row" id="sinResists"></div>
             </div>
         </div>
 
-        <div id="skillsContainer"></div>
+        <div class="info-card sin-frame" id="awakeCard">
+            <h3>E.G.O.觉醒</h3>
+            <div class="skill-header-row">
+                <span class="info-item">硬币：<img src="/loomcompanywiki/img/Coin.png"> ×<span id="awakeCoin"></span></span>
+                <span class="info-item">理智消耗：<img src="/loomcompanywiki/img/sans.png"> <span id="awakeSanity"></span></span>
+                <span class="info-item"><img src="/loomcompanywiki/img/Attack.png"> <span id="awakeAttack"></span></span>
+            </div>
+            <div class="stage-tabs" id="awakeTabs"></div>
+            <div class="skill-desc-row">
+                <img id="awakeSkillImg" src="">
+                <span class="skill-desc-text" id="awakeDesc"></span>
+            </div>
+            <div class="skill-voice" id="awakeVoice"></div>
+        </div>
+
+        <div class="info-card sin-frame" id="corrodeCard">
+            <h3>E.G.O.侵蚀</h3>
+            <div class="skill-header-row">
+                <span class="info-item">硬币：<img src="/loomcompanywiki/img/Coin.png"> ×<span id="corrodeCoin"></span></span>
+                <span class="info-item">理智消耗：<img src="/loomcompanywiki/img/sans.png"> <span id="corrodeSanity"></span></span>
+                <span class="info-item"><img src="/loomcompanywiki/img/Attack.png"> <span id="corrodeAttack"></span></span>
+            </div>
+            <div class="stage-tabs" id="corrodeTabs"></div>
+            <div class="skill-desc-row">
+                <img id="corrodeSkillImg" src="">
+                <span class="skill-desc-text" id="corrodeDesc"></span>
+            </div>
+            <div class="skill-voice" id="corrodeVoice"></div>
+        </div>
 
         <div class="info-card">
             <h3>被动</h3>
-            <h4>战斗</h4>
-            <div id="combatPassive"></div>
-            <h4>支援</h4>
-            <div id="supportPassive"></div>
+            <div class="passive-block">
+                <div class="passive-name" id="passiveName"></div>
+                <div class="passive-effect" id="passiveEffect"></div>
+            </div>
         </div>
 
         <div class="info-card">
-            <h3>语音台词</h3>
-            <ul class="voice-list" id="voiceList"></ul>
+            <h3>相关异想体</h3>
+            <div id="abnoInfo"></div>
         </div>
+
     </div>
 
     <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
 
-    <script src="/loomcompanywiki/data/identities.js"></script>
     <script src="/loomcompanywiki/data/status-effects.js"></script>
     <script>
-        //{ tag: '一技能', name: '额外一技能名称', sin: '色欲', skillImg: '技能-突刺-色欲.png', count: 3, coin: 0, attack: '', capacity: 1, stages: ['I', 'II', 'III', 'IV'], desc: 
-        // { 'I': '...',
-        //  'II': '...',
-        //  'III': '...',
-        //  'IV': '...' } },
-        const MY_ID = '在此填写人格id，如：LCR员工-萨尔温';
-        const DEFAULT_LEVEL = 30;
-        const UPDATE_TIME = '2026-08-';
-        const HP_BASE = 0;
-        const HP_GROWTH = 0;
-        const DEF_BASE = 0;
-        const DEF_SHIFT = 0;
-        const STAGGER_RATIOS = [0, 0, 0];
-        const SPEED = { I: { min: 0, max: 0 }, II: { min: 0, max: 0 }, III: { min: 0, max: 0 }, IV: { min: 0, max: 0 } };
-        const SANITY_POSITIVE = [];
-        const SANITY_NEGATIVE = [];
+        const EGO_NAME = '在此填写EGO名称';
+        const EGO_LEVEL = 'ZAYIN';
+        const OWNERS = [{ name: '角色名', file: 'EGO名称-角色名' }];
+        const RELEASE_TIME = '在此填写登场时间';
+        const OBTAIN_WAY = '在此填写获取方式';
+        const RESOURCES = [];
+        const SIN_RESISTS = [];
 
-        const SKILLS = [
-            { tag: '一技能', name: '在此填写技能名', count: 3, coin: 0, attack: '', capacity: 1, stages: ['I', 'II', 'III', 'IV'], desc: { 
-                'I': '基础值:\n变动值:\n', 
-                'II': '基础值:\n变动值:\n', 
-                'III': '基础值:\n变动值:\n', 
-                'IV': '基础值:\n变动值:\n' } },
-            { tag: '二技能', name: '在此填写技能名', count: 2, coin: 0, attack: '', capacity: 1, stages: ['I', 'II', 'III', 'IV'], desc: { 
-                'I': '基础值:\n变动值:\n', 
-                'II': '基础值:\n变动值:\n', 
-                'III': '基础值:\n变动值:\n', 
-                'IV': '基础值:\n变动值:\n' } },
-            { tag: '三技能', name: '在此填写技能名', count: 1, coin: 0, attack: '', capacity: 1, stages: ['III', 'IV'], desc: { 
-                'III': '基础值:\n变动值:\n', 
-                'IV': '基础值:\n变动值:\n' } },
-        ];
+        const AWAKE_SIN = '暴怒';
+        const AWAKE_COIN = 0;
+        const AWAKE_SANITY = 0;
+        const AWAKE_ATTACK = 0;
+        const AWAKE_SKILL_IMG = '技能-物理-罪孽.png';
+        const AWAKE_STAGES = ['I', 'II', 'III', 'IV'];
+        const AWAKE_DESC = { 'I': '', 'II': '', 'III': '', 'IV': '' };
+        const AWAKE_VOICE = '“”';
 
-        const DEFENSE_SKILLS = [
-            { name: '在此填写守备技能名称', coin: 0, defenseType: '守备', defense: '', capacity: 1, stages: ['I-III', 'IV'], desc: { 
-                'I-III': '基础值:\n变动值:\n', 
-                'IV': '基础值:\n变动值:\n' }, 
-                extraSin: '', },
-        ];
+        const CORRODE_SIN = '色欲';
+        const CORRODE_COIN = 0;
+        const CORRODE_SANITY = 0;
+        const CORRODE_ATTACK = 0;
+        const CORRODE_SKILL_IMG = '技能-物理-罪孽.png';
+        const CORRODE_STAGES = ['I', 'II', 'III', 'IV'];
+        const CORRODE_DESC = { 'I': '', 'II': '', 'III': '', 'IV': '' };
+        const CORRODE_VOICE = '“”';
 
-        const COMBAT_PASSIVES = [
-            { name: '在此填写战斗被动名', stages: ['I', 'II', 'III', 'IV'], effects: { 'I': '', 'II': '', 'III': '', 'IV': '' } },
-        ];
+        const PASSIVE_NAME = '在此填写被动名称';
+        const PASSIVE_STAGES = ['II'];
+        const PASSIVE_EFFECTS = { 'II': '在此填写被动效果' };
 
-        const SUPPORT_PASSIVE = { name: '在此填写支援被动名', stages: ['III', 'IV'], effects: { 'III': '', 'IV': '' } };
-
-        const VOICE_LINES = [
-            { label: '获得时', text: '' }, { label: '早间问候', text: '' }, { label: '午间问候', text: '' },
-            { label: '晚间问候', text: '' }, { label: '对话 1', text: '' }, { label: '对话 2', text: '' },
-            { label: '对话 3', text: '' }, { label: '对话 4', text: '' }, { label: '对话 5', text: '' },
-            { label: '闲置', text: '' }, { label: '人格出战', text: '' }, { label: '进入战斗', text: '' },
-            { label: '战斗中选中人格', text: '' }, { label: '进行攻击', text: '' }, { label: '敌方混乱', text: '' },
-            { label: '陷入混乱', text: '' }, { label: '击杀敌方', text: '' }, { label: '友方阵亡', text: '' },
-            { label: '判定成功', text: '' }, { label: '判定失败', text: '' }, { label: '战斗胜利', text: '' },
-            { label: 'EX CLEAR战斗胜利', text: '' }, { label: '战斗失败', text: '' }
-        ];
+        const ABNO_LEVEL = 'ZAYIN';
+        const ABNO_CODE = '在此填写编号';
+        const ABNO_NAME = '在此填写异想体名字';
 
         const SIN_MAP = { '暴怒': 'wrath', '色欲': 'lust', '怠惰': 'sloth', '暴食': 'gluttony', '忧郁': 'gloom', '傲慢': 'pride', '嫉妒': 'envy' };
 
@@ -368,7 +310,6 @@
                 '命中时': '#5a9a5a', '未摧毁 - 命中时': '#5a9a5a', '战斗开始': '#5a9a5a',
                 '闪避成功时': '#5a9a5a', '无法改变拼点目标': '#5a9a5a', '击杀时': '#5a9a5a',
                 '可拼点防御': '#5a9a5a', '攻击后': '#5a9a5a', '反面命中时': '#5a9a5a',
-                '暴击命中时': '#5a9a5a',
                 '使用时': '#3a6ab5',
                 '正面命中时': '#7ab85c',
                 '无差别攻击': '#d04a4a', '拼点失败': '#d04a4a', '无法拼点': '#d04a4a',
@@ -391,205 +332,96 @@
             return text;
         }
 
-        function renderSkills() {
-            const container = document.getElementById('skillsContainer');
-            let html = '';
-            const s = myData;
-            const defaultSkillImg = {
-                '一技能': '技能-' + s.skillTop.physics + '-' + s.skillTop.sin + '.png',
-                '二技能': '技能-' + s.skillMiddle.physics + '-' + s.skillMiddle.sin + '.png',
-                '三技能': '技能-' + s.skillBottom.physics + '-' + s.skillBottom.sin + '.png'
-            };
-            const defaultSin = { '一技能': s.skillTop.sin, '二技能': s.skillMiddle.sin, '三技能': s.skillBottom.sin };
+        document.getElementById('awakeCard').classList.add('sin-' + (SIN_MAP[AWAKE_SIN] || 'wrath'));
+        document.getElementById('corrodeCard').classList.add('sin-' + (SIN_MAP[CORRODE_SIN] || 'lust'));
 
-            SKILLS.forEach((skill, idx) => {
-                const skillSin = skill.sin || defaultSin[skill.tag] || '暴怒';
-                const sinEn = SIN_MAP[skillSin] || 'wrath';
-                const skillImg = skill.skillImg || defaultSkillImg[skill.tag] || '';
-                const defaultStage = skill.stages[skill.stages.length - 1];
-                html += `
-                <div class="info-card skill-card sin-${sinEn}">
-                    <div class="skill-header">
-                        <span class="skill-tag">${skill.tag}</span>
-                        <span class="skill-name sin-text sin-${sinEn}">${skill.name}</span>
-                        <span class="sin-text sin-${sinEn}">×${skill.count}</span>
-                        <span class="skill-icons"><img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}</span>
-                        <span class="skill-icons"><img src="/loomcompanywiki/img/Attack.png"> ${skill.attack}</span>
-                        <span class="skill-icons"><img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}</span>
-                    </div>
-                    <div class="stage-tabs">
-                        ${skill.stages.map(st => '<button class="stage-tab' + (st === defaultStage ? ' active' : '') + '" onclick="switchStage(\'skill\',' + idx + ',\'' + st + '\')">' + st + '阶</button>').join('')}
-                    </div>
-                    <div class="skill-desc-row" id="skill-desc-${idx}">
-                        <img src="/loomcompanywiki/img/${skillImg}" onerror="this.style.display='none'">
-                        <span class="skill-desc-text">${parseStatusEffects(skill.desc[defaultStage] || '')}</span>
-                    </div>
-                </div>`;
+        const currentOwner = OWNERS[0].name;
+        document.getElementById('egoTitle').textContent = EGO_NAME + '-' + currentOwner;
+        if (OWNERS.length > 1) {
+            let linksHTML = '（';
+            OWNERS.forEach((o, i) => {
+                linksHTML += '<a href="' + o.file + '.html">' + o.name + '</a>';
+                if (i < OWNERS.length - 1) linksHTML += ' / ';
             });
-
-            DEFENSE_SKILLS.forEach((skill, idx) => {
-                const defaultStage = skill.stages[skill.stages.length - 1];
-                let tabsHTML = '';
-                skill.stages.forEach(st => {
-                    let label = st + '阶';
-                    if (st === 'IV' && skill.extraSin) label += ' 追加属性：<img src="/loomcompanywiki/img/' + skill.extraSin + '.png" style="width:18px;height:18px;vertical-align:middle;">';
-                    tabsHTML += '<button class="stage-tab' + (st === defaultStage ? ' active' : '') + '" onclick="switchDefStage(' + idx + ',\'' + st + '\')">' + label + '</button>';
-                });
-                html += `
-                <div class="info-card skill-card defense-card">
-                    <div class="skill-header">
-                        <span class="skill-name" style="color:#b0a590;">${skill.name}</span>
-                        <span class="skill-icons"><img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}</span>
-                        <span class="skill-icons"><img src="/loomcompanywiki/img/守备.png"> +${skill.defense}</span>
-                        <span class="skill-icons"><img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}</span>
-                    </div>
-                    <div class="stage-tabs">${tabsHTML}</div>
-                    <div class="skill-desc-row" id="def-desc-${idx}">
-                        <span class="skill-desc-text">${parseStatusEffects(skill.desc[defaultStage] || '')}</span>
-                    </div>
-                </div>`;
-            });
-
-            container.innerHTML = html;
+            linksHTML += '）';
+            document.getElementById('egoTitle').innerHTML += '<div class="owner-links">' + linksHTML + '</div>';
         }
 
-        function renderPassives() {
-            const combatEl = document.getElementById('combatPassive');
-            const supportEl = document.getElementById('supportPassive');
-            let combatHTML = '';
-            COMBAT_PASSIVES.forEach((passive, i) => {
-                const defaultStage = passive.stages[passive.stages.length - 1];
-                let tabsHTML = '';
-                passive.stages.forEach(st => {
-                    tabsHTML += '<button class="passive-stage-tab' + (st === defaultStage ? ' active' : '') + '" onclick="switchCombatPassiveStage(this,\'' + st + '\',' + i + ')">' + st + '</button>';
-                });
-                let infoLine = '';
-                if (!passive.noCost && myData.combatPassive) {
-                    infoLine = ' —— ' + myData.combatPassive.way + '：<img src="/loomcompanywiki/img/' + myData.combatPassive.sin + '.png">×' + myData.combatPassive.need;
-                }
-                combatHTML += `
-                <div class="passive-block" id="combat-passive-${i}">
-                    <div class="passive-name">${passive.name}${infoLine}</div>
-                    <div class="passive-stage-tabs">${tabsHTML}</div>
-                    <div class="passive-effect" id="combat-passive-effect-${i}">${parseStatusEffects(passive.effects[defaultStage] || '')}</div>
-                </div>`;
-            });
-            combatEl.innerHTML = combatHTML;
+        document.getElementById('egoLevelImg').innerHTML = '<img src="/loomcompanywiki/img/' + EGO_LEVEL + '.png" style="width:56px;height:24px;object-fit:contain;">';
+        document.getElementById('egoFullName').textContent = EGO_NAME + '-' + currentOwner;
+        document.getElementById('releaseTime').textContent = RELEASE_TIME;
+        document.getElementById('obtainWay').textContent = OBTAIN_WAY;
+        document.getElementById('resources').innerHTML = RESOURCES.map(r =>
+            '<span class="resource-item"><img src="/loomcompanywiki/img/' + r.sin + '.png"> ×' + r.count + '</span>').join('');
+        document.getElementById('sinResists').innerHTML = SIN_RESISTS.map(r =>
+            '<span class="resist-item"><img src="/loomcompanywiki/img/' + r.sin + '.png"> ' + r.value + '</span>').join('');
 
-            const sp = SUPPORT_PASSIVE;
-            const spData = myData.supportPassive;
-            const spDefaultStage = sp.stages[sp.stages.length - 1];
-            let spTabsHTML = '';
-            sp.stages.forEach(st => {
-                spTabsHTML += '<button class="passive-stage-tab' + (st === spDefaultStage ? ' active' : '') + '" onclick="switchSupportPassiveStage(this,\'' + st + '\')">' + st + '</button>';
-            });
-            supportEl.innerHTML = `
-            <div class="passive-block" id="support-passive">
-                <div class="passive-name">${sp.name} —— ${spData.way}：<img src="/loomcompanywiki/img/${spData.sin}.png">×${spData.need}</div>
-                <div class="passive-stage-tabs">${spTabsHTML}</div>
-                <div class="passive-effect" id="support-passive-effect">${parseStatusEffects(sp.effects[spDefaultStage] || '')}</div>
-            </div>`;
-            window.combatPassivesData = COMBAT_PASSIVES;
-            window.supportPassiveData = SUPPORT_PASSIVE;
-        }
-
-        window.switchCombatPassiveStage = function(btn, stage, idx) {
-            const data = window.combatPassivesData[idx];
-            const parent = btn.parentElement.parentElement;
-            parent.querySelector('.passive-effect').innerHTML = parseStatusEffects(data.effects[stage] || '');
-            parent.querySelectorAll('.passive-stage-tab').forEach(t => t.classList.remove('active'));
-            btn.classList.add('active');
-        };
-        window.switchSupportPassiveStage = function(btn, stage) {
-            const data = window.supportPassiveData;
-            const parent = btn.parentElement.parentElement;
-            parent.querySelector('.passive-effect').innerHTML = parseStatusEffects(data.effects[stage] || '');
-            parent.querySelectorAll('.passive-stage-tab').forEach(t => t.classList.remove('active'));
-            btn.classList.add('active');
+        document.getElementById('awakeCoin').textContent = AWAKE_COIN;
+        document.getElementById('awakeSanity').textContent = AWAKE_SANITY;
+        document.getElementById('awakeAttack').textContent = AWAKE_ATTACK;
+        document.getElementById('awakeSkillImg').src = '/loomcompanywiki/img/' + AWAKE_SKILL_IMG;
+        document.getElementById('awakeVoice').textContent = AWAKE_VOICE;
+        const awakeDefault = AWAKE_STAGES[AWAKE_STAGES.length - 1];
+        document.getElementById('awakeTabs').innerHTML = AWAKE_STAGES.map(s =>
+            '<button class="stage-tab' + (s === awakeDefault ? ' active' : '') + '" onclick="switchAwakeStage(\'' + s + '\')">异想解析阶段' + s + '</button>').join('');
+        document.getElementById('awakeDesc').innerHTML = parseStatusEffects(AWAKE_DESC[awakeDefault] || '');
+        window.switchAwakeStage = function(stage) {
+            document.getElementById('awakeDesc').innerHTML = parseStatusEffects(AWAKE_DESC[stage] || '');
+            document.querySelectorAll('#awakeTabs .stage-tab').forEach(t => t.classList.remove('active'));
+            const btn = Array.from(document.querySelectorAll('#awakeTabs .stage-tab')).find(t => t.textContent.trim().startsWith(stage));
+            if (btn) btn.classList.add('active');
         };
 
-        function renderVoices() {
-            document.getElementById('voiceList').innerHTML = VOICE_LINES.map(v => '<li><span class="voice-label">' + v.label + '：</span><span class="voice-text">' + v.text + '</span></li>').join('');
-        }
+        document.getElementById('corrodeCoin').textContent = CORRODE_COIN;
+        document.getElementById('corrodeSanity').textContent = CORRODE_SANITY;
+        document.getElementById('corrodeAttack').textContent = CORRODE_ATTACK;
+        document.getElementById('corrodeSkillImg').src = '/loomcompanywiki/img/' + CORRODE_SKILL_IMG;
+        document.getElementById('corrodeVoice').textContent = CORRODE_VOICE;
+        const corrodeDefault = CORRODE_STAGES[CORRODE_STAGES.length - 1];
+        document.getElementById('corrodeTabs').innerHTML = CORRODE_STAGES.map(s =>
+            '<button class="stage-tab' + (s === corrodeDefault ? ' active' : '') + '" onclick="switchCorrodeStage(\'' + s + '\')">异想解析阶段' + s + '</button>').join('');
+        document.getElementById('corrodeDesc').innerHTML = parseStatusEffects(CORRODE_DESC[corrodeDefault] || '');
+        window.switchCorrodeStage = function(stage) {
+            document.getElementById('corrodeDesc').innerHTML = parseStatusEffects(CORRODE_DESC[stage] || '');
+            document.querySelectorAll('#corrodeTabs .stage-tab').forEach(t => t.classList.remove('active'));
+            const btn = Array.from(document.querySelectorAll('#corrodeTabs .stage-tab')).find(t => t.textContent.trim().startsWith(stage));
+            if (btn) btn.classList.add('active');
+        };
 
-        function switchStage(type, idx, stage) {
-            const skill = SKILLS[idx];
-            document.getElementById('skill-desc-' + idx).querySelector('.skill-desc-text').innerHTML = parseStatusEffects(skill.desc[stage] || '');
-            const tabs = document.getElementById('skill-desc-' + idx).parentElement.querySelectorAll('.stage-tab');
-            tabs.forEach(t => t.classList.remove('active'));
-            const activeTab = Array.from(tabs).find(t => t.textContent.trim().startsWith(stage));
-            if (activeTab) activeTab.classList.add('active');
-        }
+        document.getElementById('passiveName').textContent = PASSIVE_NAME;
 
-        function switchDefStage(idx, stage) {
-            const skill = DEFENSE_SKILLS[idx];
-            document.getElementById('def-desc-' + idx).querySelector('.skill-desc-text').innerHTML = parseStatusEffects(skill.desc[stage] || '');
-            const tabs = document.getElementById('def-desc-' + idx).parentElement.querySelectorAll('.stage-tab');
-            tabs.forEach(t => t.classList.remove('active'));
-            const activeTab = Array.from(tabs).find(t => t.textContent.trim().startsWith(stage));
-            if (activeTab) activeTab.classList.add('active');
-        }
+        const passiveDefault = PASSIVE_STAGES[PASSIVE_STAGES.length - 1];
+        let passiveTabsHTML = '';
+        PASSIVE_STAGES.forEach(st => {
+            passiveTabsHTML += '<button class="stage-tab' + (st === passiveDefault ? ' active' : '') + '" onclick="switchPassiveStage(\'' + st + '\')">异想解析阶段' + st + '</button>';
+        });
+        document.getElementById('passiveEffect').innerHTML =
+            '<div class="stage-tabs">' + passiveTabsHTML + '</div>' +
+            '<span id="passiveEffectText">' + parseStatusEffects(PASSIVE_EFFECTS[passiveDefault] || '') + '</span>';
 
-        const myData = IDENTITIES_INDEX.find(item => item.id === MY_ID);
-        if (!myData) {
-            document.body.innerHTML = '<div style="text-align:center;color:var(--gold);padding:60px;"><h2>人格未找到</h2><a href="/loomcompanywiki/data/identities.html" style="color:var(--gold-dim);">← 返回人格列表</a></div>';
-            throw new Error('人格未找到：' + MY_ID);
-        }
+        window.switchPassiveStage = function(stage) {
+            document.getElementById('passiveEffectText').innerHTML = parseStatusEffects(PASSIVE_EFFECTS[stage] || '');
+            document.querySelectorAll('#passiveEffect .stage-tab').forEach(t => t.classList.remove('active'));
+            const btn = Array.from(document.querySelectorAll('#passiveEffect .stage-tab')).find(t => t.textContent.trim() === stage);
+            if (btn) btn.classList.add('active');
+        };
 
-        renderSkills();
-        renderPassives();
-        renderVoices();
-
-        document.getElementById('identityName').textContent = MY_ID;
-        document.getElementById('updateTime').textContent = UPDATE_TIME;
-        document.getElementById('extractDisplay').textContent = myData.extract;
-        document.getElementById('storyLink').href = '/loomcompanywiki/story/identity-story/' + MY_ID + '.html';
-
-        const s = myData;
-        document.getElementById('egoResources').innerHTML = `
-            <span class="ego-resource-item"><img src="/loomcompanywiki/img/${s.skillTop.sin}.png"> ×3</span>
-            <span class="ego-resource-item"><img src="/loomcompanywiki/img/${s.skillMiddle.sin}.png"> ×2</span>
-            <span class="ego-resource-item"><img src="/loomcompanywiki/img/${s.skillBottom.sin}.png"> ×1</span>`;
-        document.getElementById('keywordsDisplay').textContent = (myData.keywords || []).join(' / ');
-
-        const r = myData.resist;
-        document.getElementById('resistDisplay').innerHTML = `
-            <span class="resist-item"><img src="/loomcompanywiki/img/${r.slash.physics}.png"> ${r.slash.resistance}</span>
-            <span class="resist-item"><img src="/loomcompanywiki/img/${r.pierce.physics}.png"> ${r.pierce.resistance}</span>
-            <span class="resist-item"><img src="/loomcompanywiki/img/${r.blunt.physics}.png"> ${r.blunt.resistance}</span>`;
-
-        document.getElementById('levelInput').value = DEFAULT_LEVEL;
-        document.getElementById('hpBase').textContent = HP_BASE;
-        document.getElementById('hpGrowth').textContent = HP_GROWTH;
-        document.getElementById('defBase').textContent = DEF_BASE;
-        document.getElementById('defShift').textContent = (DEF_SHIFT >= 0 ? '+' : '') + DEF_SHIFT;
-        document.getElementById('staggerBase').textContent = STAGGER_RATIOS.join(' ');
-
-        let speedHTML = '';
-        for (const [key, val] of Object.entries(SPEED)) {
-            speedHTML += '<span class="speed-item">' + key + ' <span>' + val.min + '-' + val.max + '</span></span>';
-        }
-        document.getElementById('speedDisplay').innerHTML = speedHTML || '（未设置）';
-        document.getElementById('sanityPositive').innerHTML = SANITY_POSITIVE.map(t => '<div style="padding:2px 0;">' + t + '</div>').join('') || '<div>（未设置）</div>';
-        document.getElementById('sanityNegative').innerHTML = SANITY_NEGATIVE.map(t => '<div style="padding:2px 0;">' + t + '</div>').join('') || '<div>（未设置）</div>';
-
-
-        function updateStats() {
-            const level = parseInt(document.getElementById('levelInput').value) || 1;
-            document.getElementById('hpValue').textContent = Math.floor(HP_BASE + HP_GROWTH * level);
-            document.getElementById('defValue').textContent = Math.floor(DEF_BASE * level + DEF_SHIFT);
-            document.getElementById('staggerValues').textContent = STAGGER_RATIOS.map(r => Math.floor((HP_BASE + HP_GROWTH * level) * r)).join(' ');
-        }
-        updateStats();
+        const abnoLevelColors = { 'ZAYIN': '#5a9a5a', 'TETH': '#5a8aaa', 'HE': '#c9a62c', 'WAW': '#8b3a6b', 'ALEPH': '#8b3a3a' };
+        document.getElementById('abnoInfo').innerHTML =
+            '<span style="color:' + (abnoLevelColors[ABNO_LEVEL] || '#fff') + ';font-weight:bold;">' + ABNO_LEVEL + '</span>' +
+            '<span style="color:var(--text-dim);margin:0 8px;">' + ABNO_CODE + '</span>' +
+            '<a href="/loomcompanywiki/data/abnormalities/abnormality/' + ABNO_NAME + '.html" class="abno-link">' + ABNO_NAME + '</a>';
     </script>
+
     <script>
         fetch('/loomcompanywiki/nav.html')
             .then(res => res.text())
             .then(html => {
                 document.getElementById('nav-placeholder').innerHTML = html;
-                const current = document.querySelector('[data-nav="identities"]');
+                const current = document.querySelector('[data-nav="egos"]');
                 if (current) current.classList.add('active');
             });
     </script>
+
 </body>
 </html>
