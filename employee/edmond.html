@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>角色介绍 - Loom Company 同人维基</title>
+    <link rel="stylesheet" href="/loomcompanywiki/css/style.css">
+    <style>
+        .character-detail {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+        .character-detail .back-link {
+            display: inline-block;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            padding: 4px 12px;
+            border: 1px solid var(--gold-dim);
+            border-radius: 4px;
+        }
+        .character-detail .back-link:hover { background: rgba(201,166,92,0.1); }
+
+        .detail-title {
+            text-align: center;
+            color: var(--gold);
+            font-size: 2rem;
+            letter-spacing: 3px;
+            margin-bottom: 4px;
+        }
+        .detail-title-en {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+        }
+
+        .info-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        .info-card h3 {
+            color: var(--gold);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        .info-card h4 {
+            color: var(--gold-dim);
+            font-size: 1rem;
+            letter-spacing: 1px;
+            margin: 12px 0 6px;
+        }
+
+        .info-table {
+            width: 100%;
+            font-size: 1rem;
+        }
+        .info-table td {
+            padding: 4px 8px;
+            vertical-align: top;
+        }
+        .info-table td:first-child {
+            color: var(--gold-dim);
+            font-weight: bold;
+            white-space: nowrap;
+            width: 80px;
+        }
+        .info-table td:last-child {
+            color: var(--text-dim);
+        }
+
+        .char-description {
+            color: var(--text-dim);
+            font-size: 1rem;
+            line-height: 1.7;
+            white-space: pre-line;
+        }
+
+        .related-chars {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .related-char-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 10px 14px;
+            text-align: center;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: inherit;
+            min-width: 100px;
+        }
+        .related-char-card:hover { border-color: var(--gold); }
+        .related-char-card .char-role {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+        }
+        .related-char-card .char-name {
+            font-size: 1rem;
+            color: var(--gold);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .spoiler-section { margin-top: 12px; }
+        .spoiler-locked {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s;
+        }
+        .spoiler-locked:hover { border-color: #8b3a3a; }
+        .spoiler-locked .warning-text {
+            color: #d04a4a;
+            font-weight: bold;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+        .spoiler-locked .hint-text {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+        .spoiler-password {
+            margin-top: 8px;
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+        }
+        .spoiler-password input {
+            padding: 4px 8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--text);
+            font-size: 1rem;
+            width: 100px;
+            text-align: center;
+            font-family: inherit;
+        }
+        .spoiler-password button {
+            padding: 4px 10px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+        .spoiler-password button:hover { border-color: var(--gold); color: var(--gold); }
+        .spoiler-content {
+            display: none;
+            color: var(--text-dim);
+            font-size: 1rem;
+            line-height: 1.7;
+            padding: 12px 0;
+            white-space: pre-line;
+        }
+        .spoiler-content.unlocked { display: block; }
+        .spoiler-error {
+            color: #d04a4a;
+            font-size: 0.8rem;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .text-content {
+            color: var(--text-dim);
+            font-size: 1rem;
+            line-height: 1.7;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="nav-placeholder"></div>
+
+    <div class="character-detail">
+        <a href="/loomcompanywiki/employee/index.html" class="back-link">← 返回员工名单</a>
+
+        <h1 class="detail-title" id="charNameCN"></h1>
+        <div class="detail-title-en" id="charNameEN"></div>
+
+        <div class="info-card">
+            <h3>角色介绍</h3>
+            <table class="info-table">
+                <tr><td>性别</td><td id="charGender"></td></tr>
+                <tr><td>身高</td><td id="charHeight"></td></tr>
+                <tr><td>性格</td><td id="charPersonality"></td></tr>
+                <tr><td>职业</td><td id="charJob"></td></tr>
+                <tr><td>喜欢的东西</td><td id="charLike"></td></tr>
+                <tr><td>讨厌的东西</td><td id="charDislike"></td></tr>
+            </table>
+        </div>
+
+        <div class="info-card">
+            <h3>角色介绍</h3>
+            <div class="char-description" id="charDescription"></div>
+        </div>
+
+        <div class="info-card">
+            <h3>相关角色</h3>
+            <div class="related-chars" id="relatedChars"></div>
+        </div>
+
+        <div class="info-card">
+            <h3>相关考据</h3>
+            <h4>大致原出处</h4>
+            <div class="text-content" id="originSource"></div>
+            <h4>主要相关点</h4>
+            <div class="text-content" id="originRelation"></div>
+        </div>
+
+        <div class="info-card">
+            <h3>相关经历</h3>
+            <div class="spoiler-section" id="spoilerSection"></div>
+        </div>
+
+    </div>
+
+    <div class="footer">Loom Company 同人维基 · 此为一个镜世界中的故事</div>
+
+    <script>
+        /*
+        ╔══════════════════════════════════════════╗
+        ║  变量区 - 修改以下数值即可             ║
+        ║  换行使用 \n                           ║
+        ╚══════════════════════════════════════════╝
+        */
+
+        const CHAR_NAME_CN = '爱德蒙·邓蒂斯';
+        const CHAR_NAME_EN = 'Edmond Dantès';
+        const CHAR_GENDER = '男';
+        const CHAR_HEIGHT = '177cm';
+        const CHAR_PERSONALITY = '坚韧、睿智、记仇';
+        const CHAR_JOB = '织机公司回收部门5号员工';
+        const CHAR_LIKE = '忠诚，恩情，美酒，海洋';
+        const CHAR_DISLIKE = '背叛，伪善，浪费时间，嘈杂';
+
+        const CHAR_DESCRIPTION = '姓名：爱德蒙·邓蒂斯 05\n职位：合伙人\n出身地：15区\n性别：男\n某人的留言：你可以相信他，现在的他只对你一个人唯命是从，他不仅可能是你强大的武器，也可能是最可靠的靠山。\n主管记录：有关他的事，我不能写太多...不管怎么说，能写的只有一一他是个值得信赖的人，我无法从他的面部看出太多表情，但我仍能理解他的事情，但那不是我现在可以插手的事情。\n我与他建立了信任关系，如果不是特别奇怪的请求，他总是能够完成。总之如果有什么需要处理的，可以让他执行。';
+
+        const RELATED_CHARS = [
+            // { role: '职业/关系', name: '角色名', url: 'xxx.html' },
+        ];
+
+        const ORIGIN_SOURCE = '爱德蒙·邓蒂斯出自法国作家大仲马1844年至1846年连载发表的长篇小说《基督山伯爵》，被公认为通俗小说史上的巅峰之作。\n该作讲述年轻水手爱德蒙·邓蒂斯遭人嫉妒诬陷，在订婚之日被逮捕，囚禁于马赛伊夫堡暗无天日的地牢长达十四年。他在狱中得遇法利亚神父，获知基督山岛藏有巨额宝藏的秘密，并受其教诲脱胎换骨。越狱后他寻得宝藏，化身为神秘富有的基督山伯爵，以上帝之名逐一接近并摧毁三位仇人——夺其妻的费尔南、逐其职的唐格拉尔、枉法裁判的维尔福，同时救助了曾善待他的恩人。复仇大业完成后，他留下“等待与希望”的箴言，将财富赠予后辈，自己与海黛远走东方，在正义与宽恕的交替中寻得内心安宁。';
+        const ORIGIN_RELATION = '爱德蒙的ego「十字架」对应《基督山伯爵》中爱德蒙·邓蒂斯在伊夫堡地牢中从法利亚神父那里真正获得的东西——知识、智慧与真相。同时十字架代表了，他从法利亚神父那里学会了如何等待、如何推演、如何识破人心。而他在故事结尾对海黛说出“等待与希望”时，放下的是他握了半生的审判权。';
+
+        const SPOILER_LOCKED = true;
+        const SPOILER_PASSWORD = '006618';
+        const SPOILER_CONTENT = '爱德蒙·邓蒂斯是法老号商船的大副，年轻有为、正直善良。他在一次航行中受前任船长临终托付，前往厄尔巴岛为中指送货物。航行途中想着返航后，他即将与心爱的梅尔塞苔丝订婚，前途一片光明。然而，同船的会计唐格拉尔因嫉妒他的晋升、情敌费尔南因觊觎他的未婚妻，二人合谋让船进入了未知的海域，诬陷爱德蒙是这一切行为的执行者。获救后回到U巢，爱德蒙被逮捕。审理此案的检察官维尔福根据8协会与U巢人员的调查出来的“证据”，未经公正审判便将其投入马赛伊夫堡的地牢。\n爱德蒙在暗无天日的地牢中度过了十四年，从希望到绝望，从绝望到濒临自杀。但也因此，不知道外面打了烟霾战争。\n在爱德蒙即将放弃生命的时刻，他听到了隔壁囚室传来的挖掘声——那是法利亚神父试图越狱的通道。两人相遇后，法利亚神父不仅教会了爱德蒙数学、物理、历史、语言等多门学问，更重要的是帮他拼凑出了陷害他的真相：唐格拉尔的诱导、费尔南的背叛、维尔福的私心。\n法利亚神父临终前，将红衣主教斯帕达家族的宝藏秘密传给了爱德蒙——他告诉爱德蒙，那批宝藏藏在基督山岛上。\n神父死后，爱德蒙藏进裹尸袋，被狱卒抛入大海，成功越狱。\n爱德蒙被一艘走私船救起，随后前往基督山岛，果然找到了法利亚神父所说的宝藏。一夜之间，他成为了拥有无限财富的人。\n但他没有立即复仇。为了报仇，他需要找到一个强大的或者说值得信赖的同伴。';
+        
+        /*前篇 第八章
+塔吉尔 - Thagirion
+质点： 虚荣
+· 含义： “争论者”或“污秽之探求者”。它扭曲了中心的和谐与美丽，使其变成了丑陋、痛苦和永无休止的争论。代表美丽事物的腐败、内在的冲突和因过度分析而产生的痛苦。\n· 关键词： 丑陋、争论、痛苦、腐败、琐碎的分析\n后篇 第十七章 （不一定是这一章）\n质点： 美丽-存在意义的憧憬\nLCR-5号员工\n对应罪种：傲慢\nX故事本身对应着卡巴拉之树的Tiphereth（存在意义的憧憬+卡巴拉之树的这个质点本来的含义）
+只是整个剧情关联着这个质点（不要在剧情内提到这个质点/也不要提及获得ego的方式）
+        
+        /*
+        ╔══════════════════════════════════════════╗
+        ║  渲染逻辑                               ║
+        ╚══════════════════════════════════════════╝
+        */
+
+        document.getElementById('charNameCN').textContent = CHAR_NAME_CN;
+        document.getElementById('charNameEN').textContent = CHAR_NAME_EN;
+        document.getElementById('charGender').textContent = CHAR_GENDER;
+        document.getElementById('charHeight').textContent = CHAR_HEIGHT;
+        document.getElementById('charPersonality').textContent = CHAR_PERSONALITY;
+        document.getElementById('charJob').textContent = CHAR_JOB;
+        document.getElementById('charLike').textContent = CHAR_LIKE;
+        document.getElementById('charDislike').textContent = CHAR_DISLIKE;
+        document.getElementById('charDescription').textContent = CHAR_DESCRIPTION;
+
+        if (RELATED_CHARS.length === 0) {
+            document.getElementById('relatedChars').innerHTML = '<span class="text-content">暂无</span>';
+        } else {
+            document.getElementById('relatedChars').innerHTML = RELATED_CHARS.map(c =>
+                '<a href="' + c.url + '" class="related-char-card">' +
+                '<div class="char-role">' + c.role + '</div>' +
+                '<div class="char-name">' + c.name + '</div>' +
+                '</a>'
+            ).join('');
+        }
+
+        document.getElementById('originSource').textContent = ORIGIN_SOURCE;
+        document.getElementById('originRelation').textContent = ORIGIN_RELATION;
+
+        const spoilerSection = document.getElementById('spoilerSection');
+        if (SPOILER_LOCKED) {
+            spoilerSection.innerHTML = `
+                <div class="spoiler-locked" id="spoilerLocked">
+                    <div class="warning-text">⚠Warning⚠ 权限不足 无法访问 ⚠Warning⚠</div>
+                    <div class="hint-text">输入密码：006618 即可访问</div>
+                    <div class="spoiler-password">
+                        <input type="password" id="spoilerInput" placeholder="密码">
+                        <button onclick="unlockSpoiler()">确认</button>
+                    </div>
+                    <div class="spoiler-error" id="spoilerError">密码错误</div>
+                </div>
+                <div class="spoiler-content" id="spoilerContent">${SPOILER_CONTENT}</div>
+            `;
+
+            window.unlockSpoiler = function() {
+                const input = document.getElementById('spoilerInput').value;
+                if (input === SPOILER_PASSWORD) {
+                    document.getElementById('spoilerLocked').style.display = 'none';
+                    document.getElementById('spoilerContent').classList.add('unlocked');
+                } else {
+                    document.getElementById('spoilerError').style.display = 'block';
+                }
+            };
+        } else {
+            spoilerSection.innerHTML = '<div class="text-content">' + SPOILER_CONTENT + '</div>';
+        }
+    </script>
+
+    <script>
+        fetch('/loomcompanywiki/nav.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('nav-placeholder').innerHTML = html;
+                const current = document.querySelector('[data-nav="employee"]');
+                if (current) current.classList.add('active');
+            });
+    </script>
+
+</body>
+</html>
