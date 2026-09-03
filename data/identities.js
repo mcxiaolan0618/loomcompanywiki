@@ -151,7 +151,7 @@ const IDENTITIES_INDEX = [
         resist: {
             slash:  { physics: '斩击', resistance: '[×1.0]' },
             pierce: { physics: '突刺', resistance: '[×2.0]' },
-            blunt:  { physics: '打击', resistance: '[×1.0]' }
+            blunt:  { physics: '打击', resistance: '[×0.5]' }
         },
         skillTop:    { physics: '斩击', sin: '暴食' },
         skillMiddle: { physics: '斩击', sin: '怠惰' },
