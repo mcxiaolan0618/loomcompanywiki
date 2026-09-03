@@ -101,9 +101,9 @@ const IDENTITIES_INDEX = [
         extract: '常驻',
         keywords: ['织机公司', 'LCR'],
         resist: {
-            slash:  { physics: '斩击', resistance: '0.5' },
-            pierce: { physics: '突刺', resistance: '1.0' },
-            blunt:  { physics: '打击', resistance: '2.0' }
+            slash:  { physics: '斩击', resistance: '[×0.5]' },
+            pierce: { physics: '突刺', resistance: '[×1.0]' },
+            blunt:  { physics: '打击', resistance: '[×2.0]' }
         },
         skillTop:    { physics: '打击', sin: '色欲' },
         skillMiddle: { physics: '打击', sin: '暴食' },
@@ -117,9 +117,9 @@ const IDENTITIES_INDEX = [
         extract: '常驻',
         keywords: ['织机公司', 'LCR'],
         resist: {
-            slash:  { physics: '斩击', resistance: '2.0' },
-            pierce: { physics: '突刺', resistance: '1.0' },
-            blunt:  { physics: '打击', resistance: '0.5' }
+            slash:  { physics: '斩击', resistance: '[×2.0]' },
+            pierce: { physics: '突刺', resistance: '[×1.0]' },
+            blunt:  { physics: '打击', resistance: '[×0.5]' }
         },
         skillTop:    { physics: '突刺', sin: '色欲' },
         skillMiddle: { physics: '打击', sin: '怠惰' },
@@ -133,10 +133,10 @@ const IDENTITIES_INDEX = [
         extract: '常驻',
         keywords: ['织机公司', 'LCR'],
         resist: {
-            slash:  { physics: '斩击', resistance: '2.0' },
-            pierce: { physics: '突刺', resistance: '1.0' },
-            blunt:  { physics: '打击', resistance: '0.5' }
-        },
+            slash:  { physics: '斩击', resistance: '[×2.0]' },
+            pierce: { physics: '突刺', resistance: '[×1.0]' },
+            blunt:  { physics: '打击', resistance: '[×0.5]' }
+        }
         skillTop:    { physics: '斩击', sin: '忧郁' },
         skillMiddle: { physics: '斩击', sin: '怠惰' },
         skillBottom: { physics: '斩击', sin: '傲慢' },
@@ -149,14 +149,14 @@ const IDENTITIES_INDEX = [
         extract: '常驻',
         keywords: ['织机公司', 'LCR'],
         resist: {
-            slash:  { physics: '斩击', resistance: '1.0' },
-            pierce: { physics: '突刺', resistance: '2.0' },
-            blunt:  { physics: '打击', resistance: '1.0' }
+            slash:  { physics: '斩击', resistance: '[×1.0]' },
+            pierce: { physics: '突刺', resistance: '[×2.0]' },
+            blunt:  { physics: '打击', resistance: '[×1.0]' }
         },
-        skillTop:    { physics: '打击', sin: '傲慢' },
-        skillMiddle: { physics: '斩击', sin: '忧郁' },
-        skillBottom: { physics: '突刺', sin: '暴怒' },
-        combatPassive:  { sin: '傲慢', way: '持有', need: '3' },
-        supportPassive: { sin: '忧郁', way: '共鸣', need: '5' }
+        skillTop:    { physics: '斩击', sin: '暴食' },
+        skillMiddle: { physics: '斩击', sin: '怠惰' },
+        skillBottom: { physics: '斩击', sin: '忧郁' },
+        combatPassive:  { sin: '暴食', way: '持有', need: '4' },
+        supportPassive: { sin: '暴食', way: '持有', need: '5' }
     }
 ];
