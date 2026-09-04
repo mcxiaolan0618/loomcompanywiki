@@ -441,6 +441,7 @@
 
             DEFENSE_SKILLS.forEach((skill, idx) => {
                 const defaultStage = skill.stages[skill.stages.length - 1];
+                let tabsHTML = '';
                 let iconHTML = '';
                 if (skill.skillImg) {
                     iconHTML = '<span class="skill-icons"><img src="/loomcompanywiki/img/' + skill.skillImg + '"> ×' + (skill.count || 1) + '</span>' +
