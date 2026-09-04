@@ -85,9 +85,9 @@ const IDENTITIES_INDEX = [
         extract: '常驻',
         keywords: ['织机公司', 'LCR'],
         resist: {
-            slash:  { physics: '斩击', resistance: '2.0' },
-            pierce: { physics: '突刺', resistance: '0.5' },
-            blunt:  { physics: '打击', resistance: '1.0' }
+            slash:  { physics: '斩击', resistance: '[×2.0]' },
+            pierce: { physics: '突刺', resistance: '[×0.5]' },
+            blunt:  { physics: '打击', resistance: '[×1.0]' }
         },
         skillTop:    { physics: '打击', sin: '怠惰' },
         skillMiddle: { physics: '打击', sin: '暴怒' },
