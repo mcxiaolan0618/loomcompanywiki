@@ -227,10 +227,25 @@
             </div>
             <div class="stage-tabs" id="awakeTabs"></div>
             <div class="skill-desc-row">
-                <img id="awakeSkillImg" src="" onerror="this.style.display='none'">
+                <img id="awakeSkillImg" src="">
                 <span class="skill-desc-text" id="awakeDesc"></span>
             </div>
             <div class="skill-voice" id="awakeVoice"></div>
+        </div>
+
+        <div class="info-card sin-frame" id="corrodeCard">
+            <h3>E.G.O.侵蚀</h3>
+            <div class="skill-header-row">
+                <span class="info-item">硬币：<img src="/loomcompanywiki/img/Coin.png"> ×<span id="corrodeCoin"></span></span>
+                <span class="info-item">理智消耗：<img src="/loomcompanywiki/img/sans.png"> <span id="corrodeSanity"></span></span>
+                <span class="info-item"><img src="/loomcompanywiki/img/Attack.png"> <span id="corrodeAttack"></span></span>
+            </div>
+            <div class="stage-tabs" id="corrodeTabs"></div>
+            <div class="skill-desc-row">
+                <img id="corrodeSkillImg" src="">
+                <span class="skill-desc-text" id="corrodeDesc"></span>
+            </div>
+            <div class="skill-voice" id="corrodeVoice"></div>
         </div>
 
         <div class="info-card">
@@ -239,6 +254,11 @@
                 <div class="passive-name" id="passiveName"></div>
                 <div class="passive-effect" id="passiveEffect"></div>
             </div>
+        </div>
+
+        <div class="info-card">
+            <h3>相关异想体</h3>
+            <div id="abnoInfo"></div>
         </div>
 
     </div>
@@ -252,13 +272,8 @@
         const OWNERS = [{ name: '角色名', file: 'EGO名称-角色名' }];
         const RELEASE_TIME = '在此填写登场时间';
         const OBTAIN_WAY = '在此填写获取方式';
-        const RESOURCES = [
-            { sin: '忧郁', count: 2 },
-            { sin: '傲慢', count: 2 }
-        ];
-        const SIN_RESISTS = [
-            
-        ];
+        const RESOURCES = [];
+        const SIN_RESISTS = [];
 
         const AWAKE_SIN = '暴怒';
         const AWAKE_COIN = 0;
@@ -269,9 +284,22 @@
         const AWAKE_DESC = { 'I': '', 'II': '', 'III': '', 'IV': '' };
         const AWAKE_VOICE = '“”';
 
+        const CORRODE_SIN = '色欲';
+        const CORRODE_COIN = 0;
+        const CORRODE_SANITY = 0;
+        const CORRODE_ATTACK = 0;
+        const CORRODE_SKILL_IMG = '技能-物理-罪孽.png';
+        const CORRODE_STAGES = ['I', 'II', 'III', 'IV'];
+        const CORRODE_DESC = { 'I': '', 'II': '', 'III': '', 'IV': '' };
+        const CORRODE_VOICE = '“”';
+
         const PASSIVE_NAME = '在此填写被动名称';
         const PASSIVE_STAGES = ['II'];
         const PASSIVE_EFFECTS = { 'II': '在此填写被动效果' };
+
+        const ABNO_LEVEL = 'ZAYIN';
+        const ABNO_CODE = '在此填写编号';
+        const ABNO_NAME = '在此填写异想体名字';
 
         const SIN_MAP = { '暴怒': 'wrath', '色欲': 'lust', '怠惰': 'sloth', '暴食': 'gluttony', '忧郁': 'gloom', '傲慢': 'pride', '嫉妒': 'envy' };
 
@@ -305,6 +333,7 @@
         }
 
         document.getElementById('awakeCard').classList.add('sin-' + (SIN_MAP[AWAKE_SIN] || 'wrath'));
+        document.getElementById('corrodeCard').classList.add('sin-' + (SIN_MAP[CORRODE_SIN] || 'lust'));
 
         const currentOwner = OWNERS[0].name;
         document.getElementById('egoTitle').textContent = EGO_NAME + '-' + currentOwner;
@@ -343,6 +372,22 @@
             if (btn) btn.classList.add('active');
         };
 
+        document.getElementById('corrodeCoin').textContent = CORRODE_COIN;
+        document.getElementById('corrodeSanity').textContent = CORRODE_SANITY;
+        document.getElementById('corrodeAttack').textContent = CORRODE_ATTACK;
+        document.getElementById('corrodeSkillImg').src = '/loomcompanywiki/img/' + CORRODE_SKILL_IMG;
+        document.getElementById('corrodeVoice').textContent = CORRODE_VOICE;
+        const corrodeDefault = CORRODE_STAGES[CORRODE_STAGES.length - 1];
+        document.getElementById('corrodeTabs').innerHTML = CORRODE_STAGES.map(s =>
+            '<button class="stage-tab' + (s === corrodeDefault ? ' active' : '') + '" onclick="switchCorrodeStage(\'' + s + '\')">异想解析阶段' + s + '</button>').join('');
+        document.getElementById('corrodeDesc').innerHTML = parseStatusEffects(CORRODE_DESC[corrodeDefault] || '');
+        window.switchCorrodeStage = function(stage) {
+            document.getElementById('corrodeDesc').innerHTML = parseStatusEffects(CORRODE_DESC[stage] || '');
+            document.querySelectorAll('#corrodeTabs .stage-tab').forEach(t => t.classList.remove('active'));
+            const btn = Array.from(document.querySelectorAll('#corrodeTabs .stage-tab')).find(t => t.textContent.trim().startsWith(stage));
+            if (btn) btn.classList.add('active');
+        };
+
         document.getElementById('passiveName').textContent = PASSIVE_NAME;
 
         const passiveDefault = PASSIVE_STAGES[PASSIVE_STAGES.length - 1];
@@ -360,6 +405,12 @@
             const btn = Array.from(document.querySelectorAll('#passiveEffect .stage-tab')).find(t => t.textContent.trim() === stage);
             if (btn) btn.classList.add('active');
         };
+
+        const abnoLevelColors = { 'ZAYIN': '#5a9a5a', 'TETH': '#5a8aaa', 'HE': '#c9a62c', 'WAW': '#8b3a6b', 'ALEPH': '#8b3a3a' };
+        document.getElementById('abnoInfo').innerHTML =
+            '<span style="color:' + (abnoLevelColors[ABNO_LEVEL] || '#fff') + ';font-weight:bold;">' + ABNO_LEVEL + '</span>' +
+            '<span style="color:var(--text-dim);margin:0 8px;">' + ABNO_CODE + '</span>' +
+            '<a href="/loomcompanywiki/data/abnormalities/abnormality/' + ABNO_NAME + '.html" class="abno-link">' + ABNO_NAME + '</a>';
     </script>
 
     <script>
