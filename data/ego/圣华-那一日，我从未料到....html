@@ -171,7 +171,7 @@
         .skill-desc-text a { color: var(--gold); text-decoration: none; }
         .skill-desc-text a:hover { text-decoration: underline; }
         .skill-voice {
-            color: #0000FF;
+            color: #A6F3AE;
             font-size: 1.4rem;
             font-style: italic;
             margin-top: 4px;
@@ -246,39 +246,38 @@
 
     <script src="/loomcompanywiki/data/status-effects.js"></script>
     <script>
-        const EGO_NAME = '十字架';
+        const EGO_NAME = '那一日，我从未料到...';
         const EGO_LEVEL = 'ZAYIN';
-        const OWNERS = [{ name: '爱德蒙', file: '十字架-爱德蒙' }];
+        const OWNERS = [{ name: '圣华', file: '那一日，我从未料到...-圣华' }];
         const RELEASE_TIME = '2026-09-06';
         const OBTAIN_WAY = '初始';
         const RESOURCES = [
-            { sin: '暴怒', count: 1 },
-            { sin: '暴食', count: 2 },
-            { sin: '嫉妒', count: 1 }
+            { sin: '怠惰', count: 2 },
+            { sin: '暴食', count: 2 }
         ];
         const SIN_RESISTS = [
-            { sin: '暴怒', value: '[×0.75]' },
-            { sin: '怠惰', value: '[×2.0]' },
-            { sin: '忧郁', value: '[×2.0]' },
+            { sin: '色欲', value: '[×2.0]' },
+            { sin: '暴食', value: '[×0.75]' },
+            { sin: '嫉妒', value: '[×2.0]' },
         ];
 
         const AWAKE_SIN = '暴食';
         const AWAKE_COIN = 1;
         const AWAKE_SANITY = 10;
-        const AWAKE_ATTACK = '+0';
-        const AWAKE_SKILL_IMG = '技能-斩击-暴食.png';
+        const AWAKE_ATTACK = '-3';
+        const AWAKE_SKILL_IMG = '技能-突刺-暴食.png';
         const AWAKE_STAGES = ['I', 'II', 'III', 'IV'];
         const AWAKE_DESC = {
-        'I': '基础值:15\n变动值:+6\n攻击容量:1\n若自身速度高于目标，则使自身下回合获得1层[强壮]\nI [命中时]下回合使除自身以外的全体友方单位获得1层[迅捷]', 
-        'II': '基础值:15\n变动值:+6\n攻击容量:1\n若自身速度高于目标，则使自身下回合获得1层[强壮]\nI [命中时]下回合使除自身以外的全体友方单位获得1层[迅捷]', 
-        'III': '基础值:15\n变动值:+10\n攻击容量:1\n若自身速度高于目标，则使自身下回合获得1层[强壮]\nI [命中时]下回合使除自身以外的全体友方单位获得3层[迅捷]', 
-        'IV': '基础值:15\n变动值:+10\n攻击容量:1\n若自身速度高于目标，则使自身下回合获得1层[强壮]\nI [命中时]下回合使除自身以外的全体友方单位获得3层[迅捷]\n[命中时]下回合对目标施加2层[束缚]' };
-        const AWAKE_VOICE = '"我不曾忘记过那个人的教诲，因此在那一天到来之前，还需忍耐……"';
+        'I': '基础值:10\n变动值:+13\n攻击容量:1\nI [命中时]使自身增加2层随机效果，该效果可能为呼吸法，充能，强壮，忍耐或守护', 
+        'II': '基础值:10\n变动值:+13\n攻击容量:1\nI [命中时]使自身增加2层随机效果，该效果可能为呼吸法，充能，强壮，忍耐或守护', 
+        'III': '基础值:12\n变动值:+15\n攻击容量:1\nI [命中时]使自身增加2层随机效果，该效果可能为呼吸法，充能，强壮，忍耐或守护', 
+        'IV': '基础值:12\n变动值:+15\n攻击容量:1\nI [命中时]使自身增加4层随机效果，该效果可能为呼吸法，充能，强壮，忍耐或守护' };
+        const AWAKE_VOICE = '"……这一击会以这种方式来临"';
 
-        const PASSIVE_NAME = '等待时机';
+        const PASSIVE_NAME = '被吞噬的记忆';
         const PASSIVE_STAGES = ['II'];
         const PASSIVE_EFFECTS = {
-            'II': '回合开始时，若自身上回合使用过守备技能，则使自身获得3层伤害强化'
+            'II': '回合开始时，自身随机一个技能添加[无差别攻击]的词条\n若命中了友方单位，扣除自身10点理智值，并使自身下回合获得3层[伤害弱化]\n若命中了敌方单位，恢复自身10点理智值，并使自身下回合获得3层[伤害提升]'
         };
 
         const SIN_MAP = { '暴怒': 'wrath', '色欲': 'lust', '怠惰': 'sloth', '暴食': 'gluttony', '忧郁': 'gloom', '傲慢': 'pride', '嫉妒': 'envy' };
