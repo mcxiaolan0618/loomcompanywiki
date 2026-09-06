@@ -302,73 +302,72 @@
     <script src="/loomcompanywiki/data/identities.js"></script>
     <script src="/loomcompanywiki/data/status-effects.js"></script>
     <script>
-        const MY_ID = 'LCR员工-伍符';
+        const MY_ID = 'LCR员工-爱德蒙';
         const DEFAULT_LEVEL = 30;
-        const UPDATE_TIME = '2026-09-04';
-        const HP_BASE = 96;
-        const HP_GROWTH = 2.4;
+        const UPDATE_TIME = '2026-09-06';
+        const HP_BASE = 76;
+        const HP_GROWTH = 2.51;
         const DEF_BASE = 1;
-        const DEF_SHIFT = -2;
-        const STAGGER_RATIOS = [0.5, 0.2];
-        const SPEED = { I: { min: 1, max: 2 }, II: { min: 1, max: 3 }, III: { min: 2, max: 3 }, IV: { min: 2, max: 3 } };
+        const DEF_SHIFT = -3;
+        const STAGGER_RATIOS = [0.7, 0.3];
+        const SPEED = { I: { min: 2, max: 4 }, II: { min: 2, max: 4 }, III: { min: 3, max: 5 }, IV: { min: 3, max: 5 } };
         const SANITY_POSITIVE = ['• 拼点胜利后根据拼点次数按比例增加 （增加量：基础值为10，从第二次拼点起，每次拼点增加20%）\n• 击杀敌方单位时，若击杀的敌方单位等级不低于自身，则增加10\n• 若友方单位击杀的敌方单位等级不低于自身等级，则增加5'];
         const SANITY_NEGATIVE = ['• 友方单位阵亡时，若该友方单位等级不低于自身等级， 根据等级差相应减少 （减少量：基础值为10，根据等级差相应增加10）'];
 
         const SKILLS = [
-            { tag: '一技能', name: '暴揍', count: 3, coin: 3, attack: '-2', capacity: 1, stages: ['I', 'II', 'III', 'IV'], desc: { 
-                'I': '基础值:3\n变动值:+1\nII [正面命中时]使目标增加2级[震颤]强度', 
-                'II': '基础值:3\n变动值:+1\nII [命中时]使目标增加2级[震颤]强度', 
-                'III': '基础值:3\n变动值:+2\nII [命中时]使目标增加2级[震颤]强度',
-                'IV': '基础值:3\n变动值:+2\nII [命中时]使目标增加2级[震颤]强度\n[正面命中时]使目标增加1级[震颤]强度' } }, 
-            { tag: '二技能', name: '痛扁', count: 2, coin: 2, attack: '-2', capacity: 1, stages: ['I', 'II', 'III', 'IV'], desc: { 
-                'I': '基础值:3\n变动值:+4\nI [正面命中时]使目标增加2级[震颤]强度', 
-                'II': '基础值:3\n变动值:+4\nI [命中时]使目标增加2级[震颤]强度', 
-                'III': '基础值:4\n变动值:+4\nI [命中时]使目标增加2级[震颤]强度\nII [正面命中时]对目标施加1层[虚弱]', 
-                'IV': '基础值:4\n变动值:+4\nI [命中时]使目标增加2级[震颤]强度\nII [正面命中时]对目标施加1层[虚弱]与1层[麻痹]' } },
-            { tag: '三技能', name: '猛击', count: 1, coin: 1, attack: '-2', capacity: 1, stages: ['III', 'IV'], desc: { 
-                'III': '基础值:7\n变动值:+12\nI [命中时]对目标施加2层[震颤]\n[命中时]使目标[震颤引爆]', 
-                'IV': '基础值:8\n变动值:+12\nI [命中时]对目标施加2层[震颤]\n[命中时]使目标[震颤引爆]' } },
+            { tag: '一技能', name: '进攻', count: 3, coin: 1, attack: '+5', capacity: 1, stages: ['I', 'II', 'III', 'IV'], desc: { 
+                'I': '基础值:2\n变动值:+7\nI [正面命中时]对目标施加1层[麻痹]', 
+                'II': '基础值:2\n变动值:+7\nI [正面命中时]对目标施加1层[麻痹]', 
+                'III': '基础值:3\n变动值:+7\nI [正面命中时]对目标施加2层[麻痹]',
+                'IV': '基础值:4\n变动值:+7\nI [正面命中时]对目标施加2层[麻痹]' } }, 
+            { tag: '二技能', name: '飞刺', count: 2, coin: 2, attack: '+5', capacity: 1, stages: ['I', 'II', 'III', 'IV'], desc: { 
+                'I': '基础值:3\n变动值:+4\nI [正面命中时]下回合对目标施加1层[拼点威力降低]', 
+                'II': '基础值:3\n变动值:+4\nI [正面命中时]下回合对目标施加1层[拼点威力降低]', 
+                'III': '基础值:4\n变动值:+4\nI [命中时]下回合对目标施加1层[拼点威力降低]', 
+                'IV': '基础值:5\n变动值:+4\nI [命中时]下回合对目标施加1层[拼点威力降低]' } },
+            { tag: '三技能', name: '长刺', count: 1, coin: 2, attack: '+5', capacity: 1, stages: ['III', 'IV'], desc: { 
+                'III': '基础值:6\n变动值:+2\n若自身速度高于目标，则使本技能的硬币威力+2', 
+                'IV': '基础值:7\n变动值:+2\n若自身速度高于目标，则使本技能的硬币威力+2\nI [正面命中时]对目标施加2层[虚弱]' } },
         ];
 
         const DEFENSE_SKILLS = [
-            { name: '反击', defenseType: '反击', sin: '色欲', skillImg: '技能-打击-色欲.png', count: 0, coin: 1, attack: '-2', capacity: 1, stages: ['I-III', 'IV'], desc: { 
-                'I-III': '基础值:7\n变动值:+4', 
-                'IV': '基础值:7\n变动值:+4' } },
+            { name: '闪避', defenseType: '闪避', coin: 1, defense: '+0', capacity: 1, stages: ['I-III', 'IV'], desc: { 
+             'I-III': '基础值:2\n变动值:10', 
+             'IV': '基础值:2\n变动值:10' } }, 
         ];
 
         const COMBAT_PASSIVES = [
-            { name: '意志', stages: ['I'], effects: { 
-                'I': '战斗开始时，自身受到的单方面攻击造成的伤害-20%'} },
+            { name: '乘胜追击', stages: ['I'], effects: { 
+                'I': '击杀敌人后，下回合使自身获得1层强壮'} },
         ];
 
-        const SUPPORT_PASSIVE = { name: '奇迹', stages: ['III'], effects: { 
-            'III': '使理智值最高的1名友方单位硬币正面时造成的伤害+20%', } };
+        const SUPPORT_PASSIVE = { name: '天使投资', stages: ['III'], effects: { 
+            'III': '使现存体力最高且高于50%的1名友方单位的拼点威力+1', } };
 
         const VOICE_LINES = [
-            { label: '获得时', text: '伍符！奇志会的！相信奇迹！然后…守住！我会守住大家的！没问题！' }, 
-            { label: '早间问候', text: '早，吃了吗您' }, 
-            { label: '午间问候', text: '不太早' },
-            { label: '晚间问候', text: '不早，还没吃的话就吃我两拳' }, 
-            { label: '对话 1', text: '你信奇迹吗，得信啊这个' }, 
-            { label: '对话 2', text: '我可不癫，我清醒得很！' },
-            { label: '对话 3', text: '正是我！带来奇迹与意志！' }, 
-            { label: '对话 4', text: '没关系的！大伙只要站在我身后即可！...'}, 
-            { label: '对话 5', text: '我没有事！区区噩梦而已...！' },
-            { label: '闲置', text: '奇迹…奇怪地让你消声灭迹，意志…' }, 
-            { label: '人格出战', text: '把他们全部揍一遍就行了！' }, 
-            { label: '进入战斗', text: '你是真没见过奇迹与意志啊！咱们比划比划！' },
-            { label: '战斗中选中人格', text: '真是令人热血沸腾啊！' }, 
-            { label: '进行攻击', text: '欧拉欧拉！' }, 
-            { label: '敌方混乱', text: '就这啊！' },
-            { label: '陷入混乱', text: '呃啊……' }, 
-            { label: '击杀敌方', text: '去死吧！' }, 
-            { label: '友方阵亡', text: '你咋死了呢？' },
-            { label: '判定成功', text: '哼，我早知道是这个结果了' }, 
-            { label: '判定失败', text: '诶，woc' }, 
-            { label: '战斗胜利', text: '简简单单！' },
-            { label: 'EX CLEAR战斗胜利', text: '奇迹与意志！我就说嘛，得信这个！' }, 
-            { label: '战斗失败', text: '我怎会败了？我伍符怎会败了！没道理啊，我没道理在他们之下啊！（红温ing）' }
-
+            { label: '获得时', text: '我是爱德蒙·邓蒂斯。你可以信任我，正如我已经选择了信任你。' },
+            { label: '早间问候', text: '清晨的海风总是让人清醒。要来一杯吗？' },
+            { label: '午间问候', text: '阳光正好。我以前……并不总是能看到太阳。' },
+            { label: '晚间问候', text: '夜晚适合思考，也适合等待。而你似乎在寻找什么。' },
+            { label: '对话 1', text: '背叛是一道缓慢愈合的伤口。我已经学会了如何与它共存。' },
+            { label: '对话 2', text: '我花了很长时间去学习如何等待。你也一样，对吗？' },
+            { label: '对话 3', text: '你问过我“信任”的定义。我的回答是：愿意把后背交给一个人。' },
+            { label: '对话 4', text: '我曾经一无所有——连名字都是他人赋予的。所以你记得什么、不记得什么，对我来说并不改变事实。' },
+            { label: '对话 5', text: '我见过最深的深渊。而你……你让我觉得，走出那里并非全无意义。' },
+            { label: '闲置', text: '你在思考。我不会打扰你——但我会守在这里。' },
+            { label: '人格出战', text: '该出发了。请站在我身后。' },
+            { label: '进入战斗', text: '记住：忍耐与等待之后，才是出手的时机。' },
+            { label: '战斗中选中人格', text: '需要我改变方向吗？' },
+            { label: '进行攻击', text: '抱歉——这是必须的。' },
+            { label: '敌方混乱', text: '……正是此刻。' },
+            { label: '陷入混乱', text: '呃……' },
+            { label: '击杀敌方', text: '结束了。下一个。' },
+            { label: '友方阵亡', text: '你的名字……我会记住。' },
+            { label: '判定成功', text: '意料之中。' },
+            { label: '判定失败', text: '……看来我的判断还不够精确。' },
+            { label: '战斗胜利', text: '辛苦了。活着回来才是最重要的。' },
+            { label: 'EX CLEAR战斗胜利', text: '完美的清扫。我会在列车上等你。' },
+            { label: '战斗失败', text: '撤退。该是你履行职责的时候了，主管。' },
         ];
 
         const SIN_MAP = { '暴怒': 'wrath', '色欲': 'lust', '怠惰': 'sloth', '暴食': 'gluttony', '忧郁': 'gloom', '傲慢': 'pride', '嫉妒': 'envy' };
