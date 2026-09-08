@@ -447,8 +447,7 @@
                     iconHTML = '<span class="skill-icons"><img src="/loomcompanywiki/img/' + skill.skillImg + '"> ×' + (skill.count || 1) + '</span>' +
                     '<span class="skill-icons"><img src="/loomcompanywiki/img/Attack.png"> ' + (skill.attack || '') + '</span>';
                 } else {
-                    iconHTML = '<span class="skill-icons">' + skill.defenseType + ' +' + skill.defense + '</span>' +
-                    '<span class="skill-icons"><img src="/loomcompanywiki/img/Attack.png"> ' + (skill.attack || '') + '</span>';
+                    iconHTML = '<span class="skill-icons">' + skill.defense + '</span>';
                 }
                 skill.stages.forEach(st => {
                     let label = st + '阶';
