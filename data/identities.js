@@ -21,15 +21,15 @@ const IDENTITIES_INDEX = [
         extract: '常驻',
         keywords: ['织机公司', 'LCR'],
         resist: {
-            slash:  { physics: '斩击', resistance: '1.0' },
-            pierce: { physics: '突刺', resistance: '2.0' },
-            blunt:  { physics: '打击', resistance: '1.0' }
+            slash:  { physics: '斩击', resistance: '[×1.0]' },
+            pierce: { physics: '突刺', resistance: '[×0.5]' },
+            blunt:  { physics: '打击', resistance: '[×2.0]' }
         },
-        skillTop:    { physics: '突刺', sin: '色欲' },
-        skillMiddle: { physics: '打击', sin: '暴怒' },
-        skillBottom: { physics: '斩击', sin: '忧郁' },
-        combatPassive:  { sin: '色欲', way: '持有', need: '3' },
-        supportPassive: { sin: '暴怒', way: '共鸣', need: '2' }
+        skillTop:    { physics: '突刺', sin: '傲慢' },
+        skillMiddle: { physics: '突刺', sin: '嫉妒' },
+        skillBottom: { physics: '突刺', sin: '色欲' },
+        combatPassive:  { sin: '色欲', way: '共鸣', need: '2' },
+        supportPassive: { sin: '色欲', way: '持有', need: '5' }
     },
     {
         id: 'LCR员工-帕菲',
@@ -37,9 +37,9 @@ const IDENTITIES_INDEX = [
         extract: '常驻',
         keywords: ['织机公司', 'LCR'],
         resist: {
-            slash:  { physics: '斩击', resistance: '0.5' },
-            pierce: { physics: '突刺', resistance: '1.0' },
-            blunt:  { physics: '打击', resistance: '2.0' }
+            slash:  { physics: '斩击', resistance: '[×0.5]' },
+            pierce: { physics: '突刺', resistance: '[×1.0]' },
+            blunt:  { physics: '打击', resistance: '[×2.0]' }
         },
         skillTop:    { physics: '突刺', sin: '忧郁' },
         skillMiddle: { physics: '突刺', sin: '傲慢' },
