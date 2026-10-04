@@ -7,7 +7,7 @@
 ╚══════════════════════════════════════════╝
 */
 const EGOS_INDEX = [
-    { id: '萨尔温-认知失调理论', owner: '萨尔温', name: '认知失调理论', level: 'ZAYIN', obtain: '初始' },
+    { id: '萨尔温-时间病理学', owner: '萨尔温', name: '时间病理学', level: 'ZAYIN', obtain: '初始' },
     { id: '墨严卿-海德之镰',   owner: '墨严卿', name: '海德之镰',   level: 'ZAYIN', obtain: '初始' },
     { id: '帕菲-诸行无常',     owner: '帕菲',   name: '诸行无常',   level: 'ZAYIN', obtain: '初始' },
     { id: '珂赛特-替罪羔羊',   owner: '珂赛特', name: '替罪羔羊',   level: 'ZAYIN', obtain: '初始' },
