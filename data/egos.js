@@ -13,7 +13,7 @@ const EGOS_INDEX = [
     { id: '珂赛特-替罪羔羊',   owner: '珂赛特', name: '替罪羔羊',   level: 'ZAYIN', obtain: '初始' },
     { id: '加拉哈德-湖中圣域', owner: '加拉哈德', name: '湖中圣域', level: 'ZAYIN', obtain: '初始' },
     { id: '爱德蒙-十字架',     owner: '爱德蒙', name: '十字架',     level: 'ZAYIN', obtain: '初始' },
-    { id: '于连-律师徽章',     owner: '于连',   name: '律师徽章',   level: 'ZAYIN', obtain: '初始' },
+    { id: '于连-告发信',     owner: '于连',   name: '告发信',   level: 'ZAYIN', obtain: '初始' },
     { id: '阿里-万念俱灰',     owner: '阿里',   name: '万念俱灰',   level: 'ZAYIN', obtain: '初始' },
     { id: '伍符-不朽的荣耀与苦难', owner: '伍符', name: '不朽的荣耀与苦难', level: 'ZAYIN', obtain: '初始' },
     { id: '圣华-那一日，我从未料到...', owner: '圣华', name: '那一日，我从未料到...', level: 'ZAYIN', obtain: '初始' },
