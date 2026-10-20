@@ -133,7 +133,7 @@
         .story-link:hover { text-decoration: underline; }
 
         .sanity-section { margin-top: 14px; }
-        .sanity-box { padding: 12px; border-radius: 6px; margin-bottom: 8px; font-size: 1rem; white-space: pre-line;}
+        .sanity-box { padding: 12px; border-radius: 6px; margin-bottom: 8px; font-size: 1rem; }
         .sanity-box.positive { border: 1px solid #3a6ab5; background: rgba(58,106,181,0.08); }
         .sanity-box.positive .sanity-title { color: #5a9af5; font-weight: bold; margin-bottom: 6px; }
         .sanity-box.negative { border: 1px solid #8b3a3a; background: rgba(139,58,58,0.08); }
@@ -322,12 +322,12 @@
                 'IV': '基础值:4\n变动值:+7\nI [命中时]使目标增加2级[沉沦]强度' } },
             { tag: '二技能', name: '偷梁换柱', count: 2, coin: 2, attack: '+0', capacity: 1, stages: ['I', 'II', 'III', 'IV'], desc: { 
                 'I': '基础值:3\n变动值:+4\nI [正面命中时]使目标增加2级[沉沦]强度\nII [正面命中时]使目标增加2级[沉沦]强度', 
-                'II': '基础值:3\n变动值:+4\n[命中时]使目标增加2级[沉沦]强度\nII [命中时]使目标增加2级[沉沦]强度', 
-                'III': '基础值:4\n变动值:+4\n[命中时]使目标增加2级[沉沦]强度\nII [命中时]使目标增加2级[沉沦]强度', 
-                'IV': '基础值:4\n变动值:+4\n[命中时]使目标增加2级[沉沦]强度\nII [命中时]使目标增加2级[沉沦]强度\n[正面命中时]使目标增加1层[沉沦]' } },
+                'II': '基础值:3\n变动值:+4\nI [命中时]使目标增加2级[沉沦]强度\nII [命中时]使目标增加2级[沉沦]强度', 
+                'III': '基础值:4\n变动值:+4\nI [命中时]使目标增加2级[沉沦]强度\nII [命中时]使目标增加2级[沉沦]强度', 
+                'IV': '基础值:4\n变动值:+4\nI [命中时]使目标增加2级[沉沦]强度\nII [命中时]使目标增加2级[沉沦]强度\n[正面命中时]使目标增加1层[沉沦]' } },
             { tag: '三技能', name: '银狼工坊', count: 1, coin: 4, attack: '+0', capacity: 1, stages: ['III', 'IV'], desc: { 
-                'III': '基础值:2\n变动值:+2\n[正面命中时]使本技能硬币威力+1', 
-                'IV': '基础值:2\n变动值:+3\n[正面命中时]使本技能硬币威力+1\nII [命中时]使目标增加1级[沉沦]强度\nIII [命中时]使目标增加1级[沉沦]强度\nIV [命中时]下回合对其施加1级[沉沦]强度' } },
+                'III': '基础值:2\n变动值:+2\nI [正面命中时]使本技能硬币威力+1', 
+                'IV': '基础值:2\n变动值:+3\nI [正面命中时]使本技能硬币威力+1\nII [命中时]使目标增加1级[沉沦]强度\nIII [命中时]使目标增加1级[沉沦]强度\nIV [命中时]下回合对其施加1级[沉沦]强度' } },
         ];
 
         const DEFENSE_SKILLS = [
@@ -343,7 +343,7 @@
         ];
 
         const SUPPORT_PASSIVE = { name: '意向性时间体验', stages: ['III'], effects: { 
-            'III': '上回合结束、战斗开始与本回合结束时，使当前理智值最低的1名友方单位恢复3点理智值。\n（条件触发时，理智值最低的友方单位恢复理智值）', } };
+            'III': '战斗开始与本回合结束时，使当前理智值最低的1名友方单位恢复3点理智值。\n（条件触发时，理智值最低的友方单位恢复理智值）', } };
 
         const VOICE_LINES = [
             { label: '获得时', text: '好的，主管。我是萨尔温，和之前一样！请多关照，主管！' }, 
