@@ -308,7 +308,7 @@
         const HP_BASE = 71;
         const HP_GROWTH = 2.51;
         const DEF_BASE = 1;
-        const DEF_SHIFT = +2;
+        const DEF_SHIFT = 2;
         const STAGGER_RATIOS = [0.7, 0.4, 0.2];
         const SPEED = { I: { min: 2, max: 5 }, II: { min: 2, max: 6 }, III: { min: 3, max: 6 }, IV: { min: 3, max: 6 } };
         const SANITY_POSITIVE = ['• 拼点胜利后根据拼点次数按比例增加 （增加量：基础值为10，从第二次拼点起，每次拼点增加20%）\n• 击杀敌方单位时，若击杀的敌方单位等级不低于自身，则增加10\n• 若友方单位击杀的敌方单位等级不低于自身等级，则增加5'];
@@ -369,7 +369,6 @@
             { label: '战斗胜利', text: '望胜者实至名归' },
             { label: 'EX CLEAR战斗胜利', text: '完美！怎么样主管，我的计算没错吧？' }, 
             { label: '战斗失败', text: '未能如愿…' }
-
         ];
 
         const SIN_MAP = { '暴怒': 'wrath', '色欲': 'lust', '怠惰': 'sloth', '暴食': 'gluttony', '忧郁': 'gloom', '傲慢': 'pride', '嫉妒': 'envy' };
@@ -443,6 +442,13 @@
             DEFENSE_SKILLS.forEach((skill, idx) => {
                 const defaultStage = skill.stages[skill.stages.length - 1];
                 let tabsHTML = '';
+                let iconHTML = '';
+                if (skill.skillImg) {
+                    iconHTML = '<span class="skill-icons"><img src="/loomcompanywiki/img/' + skill.skillImg + '"> ×' + (skill.count || 1) + '</span>' +
+                    '<span class="skill-icons"><img src="/loomcompanywiki/img/Attack.png"> ' + (skill.attack || '') + '</span>';
+                } else {
+                    iconHTML = '<span class="skill-icons"><img src="/loomcompanywiki/img/守备.png"> ' + (skill.defense || '') + '</span>';
+                }
                 skill.stages.forEach(st => {
                     let label = st + '阶';
                     if (st === 'IV' && skill.extraSin) label += ' 追加属性：<img src="/loomcompanywiki/img/' + skill.extraSin + '.png" style="width:18px;height:18px;vertical-align:middle;">';
@@ -453,7 +459,7 @@
                     <div class="skill-header">
                         <span class="skill-name" style="color:#b0a590;">${skill.name}</span>
                         <span class="skill-icons"><img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}</span>
-                        <span class="skill-icons"><img src="/loomcompanywiki/img/守备.png"> +${skill.defense}</span>
+                        ${iconHTML}
                         <span class="skill-icons"><img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}</span>
                     </div>
                     <div class="stage-tabs">${tabsHTML}</div>
@@ -585,7 +591,6 @@
         document.getElementById('speedDisplay').innerHTML = speedHTML || '（未设置）';
         document.getElementById('sanityPositive').innerHTML = SANITY_POSITIVE.map(t => '<div style="padding:2px 0;">' + t + '</div>').join('') || '<div>（未设置）</div>';
         document.getElementById('sanityNegative').innerHTML = SANITY_NEGATIVE.map(t => '<div style="padding:2px 0;">' + t + '</div>').join('') || '<div>（未设置）</div>';
-
 
         function updateStats() {
             const level = parseInt(document.getElementById('levelInput').value) || 1;
