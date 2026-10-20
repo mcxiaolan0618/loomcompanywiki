@@ -11,7 +11,7 @@ const IDENTITIES_INDEX = [
         },
         skillTop:    { physics: '斩击', sin: '忧郁' },
         skillMiddle: { physics: '斩击', sin: '嫉妒' },
-        skillBottom: { physics: '斩击', sin: '怠惰' },
+        skillBottom: { physics: '斩击', sin: '暴食' },
         combatPassive:  { sin: '暴食', way: '共鸣', need: '2' },
         supportPassive: { sin: '暴食', way: '持有', need: '5' }
     },
