@@ -121,9 +121,9 @@ const IDENTITIES_INDEX = [
             pierce: { physics: '突刺', resistance: '[×1.0]' },
             blunt:  { physics: '打击', resistance: '[×0.5]' }
         },
-        skillTop:    { physics: '突刺', sin: '色欲' },
+        skillTop:    { physics: '打击', sin: '色欲' },
         skillMiddle: { physics: '打击', sin: '怠惰' },
-        skillBottom: { physics: '突刺', sin: '忧郁' },
+        skillBottom: { physics: '打击', sin: '忧郁' },
         combatPassive:  { sin: '忧郁', way: '持有', need: '4' },
         supportPassive: { sin: '忧郁', way: '持有', need: '3' }
     },
