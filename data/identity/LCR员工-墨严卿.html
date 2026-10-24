@@ -443,6 +443,13 @@
             DEFENSE_SKILLS.forEach((skill, idx) => {
                 const defaultStage = skill.stages[skill.stages.length - 1];
                 let tabsHTML = '';
+                let iconHTML = '';
+                if (skill.skillImg) {
+                    iconHTML = '<span class="skill-icons"><img src="/loomcompanywiki/img/' + skill.skillImg + '"> ×' + (skill.count || 1) + '</span>' +
+                    '<span class="skill-icons"><img src="/loomcompanywiki/img/Attack.png"> ' + (skill.attack || '') + '</span>';
+                } else {
+                    iconHTML = '<span class="skill-icons"><img src="/loomcompanywiki/img/守备.png"> ' + (skill.defense || '') + '</span>';
+                }
                 skill.stages.forEach(st => {
                     let label = st + '阶';
                     if (st === 'IV' && skill.extraSin) label += ' 追加属性：<img src="/loomcompanywiki/img/' + skill.extraSin + '.png" style="width:18px;height:18px;vertical-align:middle;">';
@@ -453,7 +460,7 @@
                     <div class="skill-header">
                         <span class="skill-name" style="color:#b0a590;">${skill.name}</span>
                         <span class="skill-icons"><img src="/loomcompanywiki/img/Coin.png"> ×${skill.coin}</span>
-                        <span class="skill-icons"><img src="/loomcompanywiki/img/守备.png"> +${skill.defense}</span>
+                        ${iconHTML}
                         <span class="skill-icons"><img src="/loomcompanywiki/img/容量.png"> ×${skill.capacity}</span>
                     </div>
                     <div class="stage-tabs">${tabsHTML}</div>
@@ -585,7 +592,6 @@
         document.getElementById('speedDisplay').innerHTML = speedHTML || '（未设置）';
         document.getElementById('sanityPositive').innerHTML = SANITY_POSITIVE.map(t => '<div style="padding:2px 0;">' + t + '</div>').join('') || '<div>（未设置）</div>';
         document.getElementById('sanityNegative').innerHTML = SANITY_NEGATIVE.map(t => '<div style="padding:2px 0;">' + t + '</div>').join('') || '<div>（未设置）</div>';
-
 
         function updateStats() {
             const level = parseInt(document.getElementById('levelInput').value) || 1;
