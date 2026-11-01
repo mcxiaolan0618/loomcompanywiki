@@ -144,6 +144,22 @@ const IDENTITIES_INDEX = [
         supportPassive: { sin: '怠惰', way: '持有', need: '6' }
     },
     {
+        id: 'W公司2级清扫人员-阿里',
+        rarity: 2,
+        extract: '常驻',
+        keywords: ['W公司'],
+        resist: {
+            slash:  { physics: '斩击', resistance: '[×0.5]' },
+            pierce: { physics: '突刺', resistance: '[×2.0]' },
+            blunt:  { physics: '打击', resistance: '[×1.0]' }
+        },
+        skillTop:    { physics: '斩击', sin: '嫉妒' },
+        skillMiddle: { physics: '斩击', sin: '色欲' },
+        skillBottom: { physics: '斩击', sin: '暴食' },
+        combatPassive:  { sin: '嫉妒', way: '持有', need: '5' },
+        supportPassive: { sin: '嫉妒', way: '共鸣', need: '4' }
+    },
+    {
         id: 'LCR员工-珂赛特',
         rarity: 1,
         extract: '常驻',

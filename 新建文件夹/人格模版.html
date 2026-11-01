@@ -306,8 +306,8 @@
         const DEF_SHIFT = 0;
         const STAGGER_RATIOS = [0, 0, 0];
         const SPEED = { I: { min: 0, max: 0 }, II: { min: 0, max: 0 }, III: { min: 0, max: 0 }, IV: { min: 0, max: 0 } };
-        const SANITY_POSITIVE = [];
-        const SANITY_NEGATIVE = [];
+        const SANITY_POSITIVE = ['• 拼点胜利后根据拼点次数按比例增加 （增加量：基础值为10，从第二次拼点起，每次拼点增加20%）\n• 击杀敌方单位时，若击杀的敌方单位等级不低于自身，则增加10\n• 若友方单位击杀的敌方单位等级不低于自身等级，则增加5'];
+        const SANITY_NEGATIVE = ['• 友方单位阵亡时，若该友方单位等级不低于自身等级， 根据等级差相应减少 （减少量：基础值为10，根据等级差相应增加10）'];
 
         const SKILLS = [
             { tag: '一技能', name: '在此填写技能名', count: 3, coin: 0, attack: '', capacity: 1, stages: ['I', 'II', 'III', 'IV'], desc: { 

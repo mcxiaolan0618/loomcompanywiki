@@ -10,7 +10,7 @@ const EGOS_INDEX = [
     { id: '萨尔温-时间病理学', owner: '萨尔温', name: '时间病理学', level: 'ZAYIN', obtain: '初始' },
     { id: '墨严卿-海德之镰',   owner: '墨严卿', name: '海德之镰',   level: 'ZAYIN', obtain: '初始' },
     { id: '帕菲-诸行无常',     owner: '帕菲',   name: '诸行无常',   level: 'ZAYIN', obtain: '初始' },
-    { id: '珂赛特-替罪羔羊',   owner: '珂赛特', name: '替罪羔羊',   level: 'ZAYIN', obtain: '初始' },
+    { id: '特瑞斯-自我之茧',   owner: '特瑞斯', name: '自我之茧',   level: 'ZAYIN', obtain: '初始' },
     { id: '加拉哈德-湖中圣域', owner: '加拉哈德', name: '湖中圣域', level: 'ZAYIN', obtain: '初始' },
     { id: '爱德蒙-十字架',     owner: '爱德蒙', name: '十字架',     level: 'ZAYIN', obtain: '初始' },
     { id: '于连-告发信',     owner: '于连',   name: '告发信',   level: 'ZAYIN', obtain: '初始' },
