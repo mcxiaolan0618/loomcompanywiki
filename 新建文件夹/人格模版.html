@@ -302,7 +302,7 @@
         const UPDATE_TIME = '2026-08-';
         const HP_BASE = 0;
         const HP_GROWTH = 0;
-        const DEF_BASE = 0;
+        const DEF_BASE = 1;
         const DEF_SHIFT = 0;
         const STAGGER_RATIOS = [0, 0, 0];
         const SPEED = { I: { min: 0, max: 0 }, II: { min: 0, max: 0 }, III: { min: 0, max: 0 }, IV: { min: 0, max: 0 } };
@@ -311,7 +311,10 @@
 
         const SKILLS = [
             { tag: '一技能', name: '在此填写技能名', count: 3, coin: 0, attack: '', capacity: 1, stages: ['I', 'II', 'III', 'IV'], desc: { 
-                'I': '基础值:\n变动值:\n', 'II': '基础值:\n变动值:\n', 'III': '基础值:\n变动值:\n', 'IV': '基础值:\n变动值:\n' } },
+                'I': '基础值:\n变动值:\n', 
+                'II': '基础值:\n变动值:\n', 
+                'III': '基础值:\n变动值:\n', 
+                'IV': '基础值:\n变动值:\n' } },
             /*
             // ===== 额外一技能模板 =====
             { tag: '一技能', name: '额外一技能名称', sin: '色欲', skillImg: '技能-突刺-色欲.png', count: 3, coin: 0, attack: '', capacity: 1, stages: ['I', 'II', 'III', 'IV'], desc: {
@@ -321,9 +324,14 @@
                 'IV': '基础值:\n变动值:\n' } },
             */
             { tag: '二技能', name: '在此填写技能名', count: 2, coin: 0, attack: '', capacity: 1, stages: ['I', 'II', 'III', 'IV'], desc: { 
-                'I': '基础值:\n变动值:\n', 'II': '基础值:\n变动值:\n', 'III': '基础值:\n变动值:\n', 'IV': '基础值:\n变动值:\n' } },
+                'I': '基础值:\n变动值:\n', 
+                'II': '基础值:\n变动值:\n', 
+                'III': '基础值:\n变动值:\n', 
+                'IV': '基础值:\n变动值:\n' } },
+
             { tag: '三技能', name: '在此填写技能名', count: 1, coin: 0, attack: '', capacity: 1, stages: ['III', 'IV'], desc: { 
-                'III': '基础值:\n变动值:\n', 'IV': '基础值:\n变动值:\n' } },
+                'III': '基础值:\n变动值:\n', 
+                'IV': '基础值:\n变动值:\n' } },
         ];
 
         const DEFENSE_SKILLS = [
