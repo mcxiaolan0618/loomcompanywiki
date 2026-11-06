@@ -80,6 +80,22 @@ const IDENTITIES_INDEX = [
         supportPassive: { sin: '暴食', way: '持有', need: '6' }
     },
     {
+        id: '六协会南部5科-伍符',
+        rarity: 2,
+        extract: '常驻',
+        keywords: ['六协会', '收尾人'],
+        resist: {
+            slash:  { physics: '斩击', resistance: '[×2.0]' },
+            pierce: { physics: '突刺', resistance: '[×0.5]' },
+            blunt:  { physics: '打击', resistance: '[×1.0]' }
+        },
+        skillTop:    { physics: '打击', sin: '怠惰' },
+        skillMiddle: { physics: '打击', sin: '暴怒' },
+        skillBottom: { physics: '突刺', sin: '色欲' },
+        combatPassive:  { sin: '暴怒', way: '持有', need: '5' },
+        supportPassive: { sin: '暴怒', way: '持有', need: '4' }
+    },
+    {
         id: 'LCR员工-伍符',
         rarity: 1,
         extract: '常驻',

@@ -322,45 +322,27 @@
                 'III': '基础值:4\n变动值:+5\n[使用时]若自身目标的[烧伤]层数不低于5层，则使本技能拼点威力+1\nI [命中时]使目标增加1级[烧伤]强度\nII [命中时]使目标增加1级[烧伤]强度', 
                 'IV': '基础值:4\n变动值:+5\n[使用时]若自身目标的[烧伤]层数不低于5层，则使本技能拼点威力+1\n若自身目标的[烧伤]层数不低于5层，则使本技能硬币威力+1\nI [命中时]使目标增加1级[烧伤]强度\nII [命中时]使目标增加1级[烧伤]强度' } },
                 
-            { tag: '三技能', name: '在此填写技能名', count: 1, coin: 0, attack: '+2', capacity: 1, stages: ['III', 'IV'], desc: { 
-                'III': '基础值:\n变动值:\n', 
-                'IV': '基础值:\n变动值:\n' } },
+            { tag: '三技能', name: '一点突破', count: 1, coin: 2, attack: '+2', capacity: 1, stages: ['III', 'IV'], desc: { 
+                'III': '基础值:3\n变动值:+6\nI [命中时]使目标增加2级[烧伤]强度\n[正面命中时]使目标增加2层[烧伤]\nII [命中时]使目标增加2级[烧伤]强度\n[正面命中时]使目标增加2层[烧伤]', 
+                'IV': '基础值:3\n变动值:+6\n[使用时]目标带有5级[烧伤]强度，使本技能的基础威力+1\nI [命中时]使目标增加2级[烧伤]强度\n[正面命中时]使目标增加2层[烧伤]\nII [命中时]使目标增加2级[烧伤]强度\n[正面命中时]使目标增加2层[烧伤]' } },
         ];
 
         const DEFENSE_SKILLS = [
-            /*
-            // ===== 守备技能类型模板 =====
-            // 防御
-            { name: '防御', defenseType: '防御', coin: 0, defense: '', capacity: 1, stages: ['I-III', 'IV'], desc: { 
-             'I-III': '基础值:\n变动值:\n', 
-             'IV': '基础值:\n变动值:\n' }, 
-             extraSin: '' },
-            // 可拼点防御
-            { name: '可拼点防御', defenseType: '可拼点防御', coin: 0, defense: '', capacity: 1, stages: ['I-III', 'IV'], desc: { 
-             'I-III': '基础值:\n变动值:\n', 
-             'IV': '基础值:\n变动值:\n' }, 
-             extraSin: '' },
-            // 反击（有技能图）
-            { name: '反击', defenseType: '反击', sin: '色欲', skillImg: '技能-突刺-色欲.png', count: 3, coin: 0, attack: '', capacity: 1, stages: ['I-III', 'IV'], desc: { 
-             'I-III': '基础值:\n变动值:\n', 
-             'IV': '基础值:\n变动值:\n' } },
-            // 可拼点反击（有技能图）
-            { name: '可拼点反击', defenseType: '可拼点反击', sin: '暴怒', skillImg: '技能-打击-暴怒.png', count: 3, coin: 0, attack: '', capacity: 1, stages: ['I-III', 'IV'], desc: { 
-             'I-III': '基础值:\n变动值:\n', 
-             'IV': '基础值:\n变动值:\n' } },
-            // 闪避
-            { name: '闪避', defenseType: '闪避', coin: 0, defense: '', capacity: 1, stages: ['I-III', 'IV'], desc: { 
-             'I-III': '基础值:\n变动值:\n', 
-             'IV': '基础值:\n变动值:\n' }, 
-             extraSin: '' },
-            */
+            { name: '防御', defenseType: '防御', coin: 1, defense: '-1', capacity: 1, stages: ['I-III', 'IV'], desc: { 
+             'I-III': '基础值:8\n变动值:+8', 
+             'IV': '基础值:8\n变动值:+8' }, 
+             extraSin: '暴怒' },
         ];
 
         const COMBAT_PASSIVES = [
-            { name: '在此填写战斗被动名', stages: ['I', 'II', 'III', 'IV'], effects: { 'I': '', 'II': '', 'III': '', 'IV': '' } },
+            { name: '熊熊燃烧', stages: ['II', 'IV'], effects: { 
+                'II': '拼点胜利攻击命中时，对目标施加1层[烧伤]（每回合最多3次）', 
+                'IV': '拼点胜利攻击命中时，对目标施加1层[烧伤]（每回合最多3次）\n若目标未带有[烧伤]，则改为施加3层[烧伤]' } },
         ];
 
-        const SUPPORT_PASSIVE = { name: '在此填写支援被动名', stages: ['III', 'IV'], effects: { 'III': '', 'IV': '' } };
+        const SUPPORT_PASSIVE = { name: '惹火烧身', stages: ['III'], effects: { 
+            'III': '使体力值最低的1名友方的技能命中目标时\n每带有6级[烧伤]强度造成的伤害+10%（最多30%）' 
+        } };
 
         const VOICE_LINES = [
             { label: '获得时', text: '' }, 
