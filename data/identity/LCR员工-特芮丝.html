@@ -302,9 +302,9 @@
     <script src="/loomcompanywiki/data/identities.js"></script>
     <script src="/loomcompanywiki/data/status-effects.js"></script>
     <script>
-        const MY_ID = 'LCR员工-于连';
+        const MY_ID = 'LCR员工-特芮丝';
         const DEFAULT_LEVEL = 30;
-        const UPDATE_TIME = '2026-09-11';
+        const UPDATE_TIME = '2026-11-06';
         const HP_BASE = 79;
         const HP_GROWTH = 2.82;
         const DEF_BASE = 1;
@@ -326,23 +326,23 @@
                 'III': '基础值:4\n变动值:+4\n目标的[流血]的强度与层数之和大于4时，使本技能的拼点威力+1\nI [命中时]使目标增加1级[流血]强度\nII [命中时]使目标增加2级[流血]强度', 
                 'IV': '基础值:4\n变动值:+4\n目标的[流血]的强度与层数之和大于4时，使本技能的拼点威力+1\nI [命中时]使目标增加2级[流血]强度\nII [命中时]使目标增加2级[流血]强度' } },
             { tag: '三技能', name: '处斩', count: 1, coin: 4, attack: '-1', capacity: 1, stages: ['III', 'IV'], desc: { 
-                'III': '基础值:5\n变动值:+2\n若自身上回合未受到伤害，则使本技能的硬币威力+2\nI [命中时]若目标带有[流血]，则使本硬币造成的伤害+10%\nII [命中时]若目标带有[流血]，则使本硬币造成的伤害+10%', 
-                'IV': '基础值:5\n变动值:+3\nI [命中时]若目标带有[流血]，则使本硬币造成的伤害+10%\nII [命中时]若目标带有[流血]，则使本硬币造成的伤害+10%' } },
+                'III': '基础值:5\n变动值:+2\n若自身的体力值值不高于50%，则使本技能威力+1\nIV [命中时]若目标带有[流血]，则使本硬币造成的伤害+20%', 
+                'IV': '基础值:5\n变动值:+3\n若自身的体力值值不高于50%，则使本技能威力+1\nI [正面命中时]使目标增加1级[流血]强度\nII [正面命中时]使目标增加1级[流血]强度\nIII [正面命中时]使目标增加1级[流血]强度\nIV [命中时]若目标带有[流血]，则使本硬币造成的伤害+20%' } },
         ];
 
         const DEFENSE_SKILLS = [
-            { name: '反击', defenseType: '反击', sin: '色欲', skillImg: '技能-突刺-色欲.png', count: 0, coin: 1, attack: '-3', capacity: 1, stages: ['I-III', 'IV'], desc: { 
+            { name: '反击', defenseType: '反击', sin: '嫉妒', skillImg: '技能-斩击-嫉妒.png', count: 0, coin: 1, attack: '-1', capacity: 1, stages: ['I-III', 'IV'], desc: { 
                 'I-III': '基础值:7\n变动值:+4', 
                 'IV': '基础值:7\n变动值:+4' } },
         ];
 
         const COMBAT_PASSIVES = [
-            { name: '赤色野心', stages: ['I'], effects: { 
-                'I': '目标带有[流血]时，使自身对其造成的伤害+10%'} },
+            { name: '偏执', stages: ['I'], effects: { 
+                'I': '若自身的体力不高于50%，则攻击命中时，使目标额外增加1级[流血]强度'} },
         ];
 
-        const SUPPORT_PASSIVE = { name: '黑衣伪面', stages: ['III'], effects: { 
-            'III': '使理智值最高的敌方单位对现存体力值最低的友方单位造成的伤害-30%', } };
+        const SUPPORT_PASSIVE = { name: '嫉妒', stages: ['III'], effects: { 
+            'III': '使理智值最低的1名友方单位对带有[流血]的目标造成的伤害+30%', } };
 
         const VOICE_LINES = [
             { label: '获得时', text: '你好呀，主管！我是特芮丝。以后请多指教……只要你别乱翻我的旧档案，我们会相处得很愉快的。' },

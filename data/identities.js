@@ -160,19 +160,19 @@ const IDENTITIES_INDEX = [
         supportPassive: { sin: '嫉妒', way: '共鸣', need: '4' }
     },
     {
-        id: 'LCR员工-珂赛特',
+        id: 'LCR员工-特芮丝',
         rarity: 1,
         extract: '常驻',
         keywords: ['织机公司', 'LCR'],
         resist: {
-            slash:  { physics: '斩击', resistance: '[×1.0]' },
-            pierce: { physics: '突刺', resistance: '[×2.0]' },
-            blunt:  { physics: '打击', resistance: '[×0.5]' }
+            slash:  { physics: '斩击', resistance: '[×0.5]' },
+            pierce: { physics: '突刺', resistance: '[×1.0]' },
+            blunt:  { physics: '打击', resistance: '[×2.0]' }
         },
         skillTop:    { physics: '斩击', sin: '暴食' },
-        skillMiddle: { physics: '斩击', sin: '怠惰' },
-        skillBottom: { physics: '斩击', sin: '忧郁' },
-        combatPassive:  { sin: '暴食', way: '持有', need: '4' },
-        supportPassive: { sin: '暴食', way: '持有', need: '5' }
+        skillMiddle: { physics: '斩击', sin: '嫉妒' },
+        skillBottom: { physics: '斩击', sin: '傲慢' },
+        combatPassive:  { sin: '嫉妒', way: '持有', need: '5' },
+        supportPassive: { sin: '嫉妒', way: '持有', need: '5' }
     }
 ];
